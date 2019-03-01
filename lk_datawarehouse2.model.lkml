@@ -40,6 +40,8 @@ explore: ad_networks {}
 
 explore: apps {}
 
+explore: ltv_for_14_30_60_and_90_days {}
+
 explore: bucket_campaign_info {
   join: apps {
     type: left_outer
@@ -384,6 +386,12 @@ explore: reporting_metrics {
   join: campaign_buckets {
     type: left_outer
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ltv_for_14_30_60_and_90_days {
+    type: left_outer
+    sql_on: ${reporting_metrics.Key} = ${ltv_for_14_30_60_and_90_days.Key} ;;
     relationship: many_to_one
   }
 }

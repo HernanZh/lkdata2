@@ -13,6 +13,12 @@ view: reporting_metrics {
     sql: ${TABLE}.app_id ;;
   }
 
+  dimension: Key {
+    type: string
+    # hidden: yes
+    sql: ${date_date}||${site_id}||${ad_network_id}||${app_id}||${campaign_id}||${country} ;;
+  }
+
   dimension: campaign_id {
     type: string
     # hidden: yes
@@ -57,7 +63,7 @@ view: reporting_metrics {
 
   dimension: publisher_ad_revenue {
     type: string
-    sql: ${TABLE}.publisher_ad_revenue ;;
+    sql: ${TABLE}.publisher_ad_revenue;;
   }
 
   dimension: reported_clicks {
@@ -108,6 +114,104 @@ view: reporting_metrics {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: distinct_dates {
+    type: count_distinct
+    sql: ${date_date} ;;
+  }
+
+  measure: track_installs {
+    type: sum
+    sql: ${TABLE}.tracked_installs ;;
+  }
+
+  measure: rep_spend {
+    type: number
+    sql: SUM(cast(${TABLE}.reported_spend as float64))/100;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: DAU{
+    type: number
+    sql: (sum(${TABLE}.daily_active_users)/${distinct_dates}) ;;
+  }
+
+  measure: ad_revenue {
+    type: number
+    sql: sum(cast(${TABLE}.publisher_ad_revenue as float64))/100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: avg_ad_revenue {
+    type: number
+    sql: (${ad_revenue}/${distinct_dates});;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Ad_ARPDAU {
+    type: number
+    sql: CASE WHEN ${DAU} <> 0 and ${ad_revenue} <> 0
+    THEN ${avg_ad_revenue}/${DAU}
+    ELSE 0
+    END;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Iap_revenue {
+    type: number
+    sql: sum(case when (${TABLE}.date) >= '2019-02-01'
+          then ${TABLE}.iap_revenue
+          else 0
+          end)/100;;
+    value_format: "$#,##0.00"
+  }
+
+measure: avg_iap_revenue {
+    type: number
+    sql: (${Iap_revenue}/${distinct_dates});;
+    value_format: "$#,##0.00"
+  }
+
+  measure: IAP_ARPDAU {
+    type: number
+    sql: CASE WHEN ${DAU} <> 0 and ${Iap_revenue} <> 0
+    THEN ${avg_iap_revenue}/${DAU}
+    ELSE 0
+    END;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Total_ARPDAU {
+    type: number
+    sql: ${Ad_ARPDAU}+${IAP_ARPDAU};;
+    value_format: "$#,##0.00"
+  }
+
+  measure: CPI {
+    type: number
+    sql: case when ${rep_spend} <> 0 and ${track_installs} <>0
+    then ${rep_spend}/${track_installs}
+    else 0
+    end;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Total_revenue{
+    type: number
+    sql: CASE
+              WHEN ${ad_revenue} is not Null and ${Iap_revenue} is not Null
+              THEN
+              ${ad_revenue} + ${Iap_revenue}
+              WHEN ${ad_revenue} is null and ${Iap_revenue} is not Null
+              THEN
+              ${Iap_revenue}
+              WHEN ${ad_revenue} is not Null and ${Iap_revenue} is null
+              THEN
+              ${ad_revenue}
+              ELSE 0
+          END;;
+    value_format: "$#,##0.00"
   }
 
   # ----- Sets of fields for drilling ------
