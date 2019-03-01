@@ -37,7 +37,7 @@ order BY 1,
 
   dimension: date {
     type: date
-    sql: ${TABLE}.date ;;
+    sql: CAST(${TABLE}.date as TIMESTAMP) ;;
   }
 
   dimension: Key {
