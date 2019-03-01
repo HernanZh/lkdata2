@@ -40,7 +40,30 @@ explore: ad_networks {}
 
 explore: apps {}
 
-explore: ltv_for_14_30_60_and_90_days {}
+explore: ltv_for_14_30_60_and_90_days {join: ad_networks {
+    type: left_outer
+    sql_on: ${ltv_for_14_30_60_and_90_days.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${ltv_for_14_30_60_and_90_days.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaigns {
+    type: left_outer
+    sql_on: ${ltv_for_14_30_60_and_90_days.campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaign_buckets {
+    type: left_outer
+    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+    relationship: many_to_one
+  }
+  }
 
 explore: bucket_campaign_info {
   join: apps {
@@ -389,11 +412,11 @@ explore: reporting_metrics {
     relationship: many_to_one
   }
 
-  join: ltv_for_14_30_60_and_90_days {
-    type: left_outer
-    sql_on: ${reporting_metrics.Key} = ${ltv_for_14_30_60_and_90_days.Key} ;;
-    relationship: many_to_one
-  }
+#   join: ltv_for_14_30_60_and_90_days {
+#     type: left_outer
+#     sql_on: ${reporting_metrics.Key} = ${ltv_for_14_30_60_and_90_days.Key} ;;
+#     relationship: many_to_one
+#   }
 }
 
 explore: schema_migrations {}

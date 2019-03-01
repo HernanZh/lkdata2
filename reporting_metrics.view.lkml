@@ -214,6 +214,18 @@ measure: avg_iap_revenue {
     value_format: "$#,##0.00"
   }
 
+  measure: ROI {
+    type: number
+    sql: (${Total_revenue}-${rep_spend})/${rep_spend};;
+    value_format: "$#,##0.00"
+  }
+
+  measure: ROAS {
+    type: number
+    sql: ${ad_revenue}/${rep_spend};;
+    value_format: "$#,##0.00"
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

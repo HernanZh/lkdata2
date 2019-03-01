@@ -6,10 +6,10 @@ view: ltv_for_14_30_60_and_90_days {
        reporting_cohort_metrics.campaign_id,
        reporting_cohort_metrics.site_id,
        reporting_cohort_metrics.country,
-       SUM(CASE WHEN days_since_install <= 1 THEN (cast(publisher_ad_revenue as float64) + iap_revenue) / 100.0 ELSE 0 END) AS d1_total_LTV,
-       SUM(CASE WHEN days_since_install <= 7 THEN (cast(publisher_ad_revenue as float64) + iap_revenue) / 100.0 ELSE 0 END) AS d7_total_LTV,
-       SUM(CASE WHEN days_since_install <= 14 THEN (cast(publisher_ad_revenue as float64) + iap_revenue) / 100.0 ELSE 0 END) AS d14_total_LTV,
-       SUM(CASE WHEN days_since_install <= 30 THEN (cast(publisher_ad_revenue as float64) + iap_revenue) / 100.0 ELSE 0 END) AS d30_total_LTV,
+       SUM(CASE WHEN days_since_install <= 1 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d1_total_LTV,
+       SUM(CASE WHEN days_since_install <= 7 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d7_total_LTV,
+       SUM(CASE WHEN days_since_install <= 14 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d14_total_LTV,
+       SUM(CASE WHEN days_since_install <= 30 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d30_total_LTV,
        SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS d1_retained_users
 FROM reporting_cohort_metrics
   LEFT JOIN apps ON apps.id = reporting_cohort_metrics.app_id
@@ -124,6 +124,24 @@ order BY 1,
   measure: first_day_users {
     type: sum
     sql: ${TABLE}.d1_retained_users ;;
+  }
+
+  measure: LTV_per_Users_7_Days {
+    type: number
+    sql: ${day_7_ltv}/${first_day_users} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: LTV_per_Users_14_Days {
+    type: number
+    sql: ${day_14_ltv}/${first_day_users} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: LTV_per_Users_30_Days {
+    type: number
+    sql: ${day_30_ltv}/${first_day_users} ;;
+    value_format: "$#,##0.00"
   }
 
   set: detail {

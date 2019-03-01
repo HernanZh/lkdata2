@@ -95,6 +95,15 @@ view: reporting_cohort_metrics {
     drill_fields: [detail*]
   }
 
+  measure: Iap_revenue {
+    type: number
+    sql: sum(case when (${TABLE}.date) >= '2019-02-01'
+          then ${TABLE}.iap_revenue
+          else 0
+          end)/100;;
+    value_format: "$#,##0.00"
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
