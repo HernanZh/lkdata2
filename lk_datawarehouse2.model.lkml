@@ -169,6 +169,12 @@ explore: cohort_behavior {
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
     relationship: many_to_one
   }
+
+  join: ltv_predict{
+    type: left_outer
+    sql_on: ${cohort_behavior.xday} = ${ltv_predict.xday} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: countries {}

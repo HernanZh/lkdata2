@@ -1,7 +1,6 @@
 view: ltv_model{
   derived_table: {
     persist_for: "10 minutes"
-    distribution_style: all
     # datagroup_trigger: tenjin_test2_model_datagroup
     sql: SELECT
         CAST(cohort_behavior.xday AS INT64)  AS xday,
@@ -23,7 +22,7 @@ view: ltv_model{
 #campaigns.id  AS "campaigns.id",
 
 
-view: ltv_training {
+view: ltv_regression {
   derived_table: {
     persist_for: "24 hours"
     #datagroup_trigger: tenjin_test2_model_datagroup
@@ -33,7 +32,8 @@ view: ltv_training {
       OPTIONS
           ( model_type='linear_reg',
             labels=['daily_user'],
-            max_iteration=50 )
+            min_rel_progress = 0.00001,
+            max_iteration = 50 )
       AS
       SELECT
         *
@@ -46,7 +46,7 @@ view: ltv_training {
 
 
 explore: ltv_evaluation {}
-explore: ltv_training {}
+explore: ltv_regression {}
 
 view: ltv_evaluation {
   derived_table: {
@@ -54,7 +54,7 @@ view: ltv_evaluation {
       Select
       *
       FROM
-      ML.EVALUATE( MODEL ${ltv_training.SQL_TABLE_NAME}),
+      ML.EVALUATE(MODEL ${ltv_regression.SQL_TABLE_NAME}),
       (SELECT
         *
       FROM
@@ -66,4 +66,45 @@ view: ltv_evaluation {
   dimension: median_absolute_error {type: number}
   dimension: r2_score {type: number}
   dimension: explained_variance {type: number}
+}
+
+view: ltv_training {
+  derived_table: {
+    sql:
+      Select
+      *
+      FROM
+      ML.TRAINING_INFO(MODEL ${ltv_regression.SQL_TABLE_NAME}),
+      (SELECT
+        *
+      FROM
+        ${ltv_model.SQL_TABLE_NAME});;
+  }
+  dimension: training_run {type: number}
+  dimension: iteration {type: number}
+  dimension: loss {type: number}
+  dimension: eval_loss {type: number}
+  dimension: duration_ms {label:"Duration (ms)" type: number}
+  dimension: learning_rate{type: number}
+  measure: iterations {type: count}
+  measure: total_loss {type: sum sql:${loss} ;;}
+}
+
+explore: ltv_training {}
+explore: ltv_predict {}
+
+view: ltv_predict {
+  derived_table: {
+    sql:
+      Select
+      *
+      FROM
+      ML.PREDICT(MODEL ${ltv_regression.SQL_TABLE_NAME},
+      (SELECT
+        *
+      FROM
+        ${ltv_model.SQL_TABLE_NAME}));;
+  }
+  dimension: daily_user {type: number}
+  dimension: xday {type: number}
 }
