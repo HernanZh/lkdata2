@@ -128,12 +128,13 @@ view: reporting_metrics {
 
   measure: rep_installs {
     type: number
-    sql: SUM(cast(${TABLE}.reported_installs as INT64)) ;;
+    sql: SUM(cast(${TABLE}.reported_installs as FLOAT64)) ;;
   }
 
   measure: rep_impressions {
     type: number
-    sql: sum(cast(${TABLE}.reported_impressions as INT64)) ;;
+    sql: sum(cast(${TABLE}.reported_impressions as FLOAT64)) ;;
+    value_format: "0"
   }
 
   measure: track_impressions {
@@ -143,7 +144,7 @@ view: reporting_metrics {
 
   measure: rep_clicks {
     type: number
-    sql: sum(cast(${TABLE}.reported_clicks as INT64)) ;;
+    sql: sum(cast(${TABLE}.reported_clicks as FLOAT64)) ;;
   }
 
   measure: CTR {
