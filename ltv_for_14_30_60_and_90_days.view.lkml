@@ -7,9 +7,13 @@ view: ltv_for_14_30_60_and_90_days {
        reporting_cohort_metrics.site_id,
        reporting_cohort_metrics.country,
        SUM(CASE WHEN days_since_install <= 1 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d1_total_LTV,
+       SUM(CASE WHEN days_since_install <= 2 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d2_total_LTV,
+       SUM(CASE WHEN days_since_install <= 3 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d3_total_LTV,
        SUM(CASE WHEN days_since_install <= 7 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d7_total_LTV,
        SUM(CASE WHEN days_since_install <= 14 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d14_total_LTV,
+       SUM(CASE WHEN days_since_install <= 21 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d21_total_LTV,
        SUM(CASE WHEN days_since_install <= 30 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d30_total_LTV,
+       SUM(CASE WHEN days_since_install <= 60 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS d60_total_LTV,
        SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS d1_retained_users
 FROM reporting_cohort_metrics
   LEFT JOIN apps ON apps.id = reporting_cohort_metrics.app_id
@@ -77,6 +81,16 @@ order BY 1,
     sql: ${TABLE}.d1_total_ltv ;;
   }
 
+  dimension: d2_total_ltv {
+    type: number
+    sql: ${TABLE}.d2_total_ltv ;;
+  }
+
+  dimension: d3_total_ltv {
+    type: number
+    sql: ${TABLE}.d3_total_ltv ;;
+  }
+
   dimension: d7_total_ltv {
     type: number
     sql: ${TABLE}.d7_total_ltv ;;
@@ -84,10 +98,20 @@ order BY 1,
 
   dimension: d14_total_ltv {
     type: number
-    sql: ${TABLE}.d30_total_ltv ;;
+    sql: ${TABLE}.d14_total_ltv ;;
+  }
+
+  dimension: d21_total_ltv {
+    type: number
+    sql: ${TABLE}.d21_total_ltv ;;
   }
 
   dimension: d30_total_ltv {
+    type: number
+    sql: ${TABLE}.d30_total_ltv ;;
+  }
+
+  dimension: d60_total_ltv {
     type: number
     sql: ${TABLE}.d60_total_ltv ;;
   }
@@ -103,6 +127,18 @@ order BY 1,
     value_format: "$#,##0.00"
   }
 
+  measure: day_2_ltv {
+    type: sum
+    sql: ${TABLE}.d2_total_ltv ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: day_3_ltv {
+    type: sum
+    sql: ${TABLE}.d3_total_ltv ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: day_7_ltv {
     type: sum
     sql: ${TABLE}.d7_total_ltv ;;
@@ -115,9 +151,21 @@ order BY 1,
     value_format: "$#,##0.00"
   }
 
+  measure: day_21_ltv {
+    type: sum
+    sql: ${TABLE}.d21_total_ltv ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: day_30_ltv {
     type: sum
     sql: ${TABLE}.d30_total_ltv ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: day_60_ltv {
+    type: sum
+    sql: ${TABLE}.d60_total_ltv ;;
     value_format: "$#,##0.00"
   }
 
