@@ -149,13 +149,19 @@ view: reporting_metrics {
 
   measure: CTR {
     type: number
-    sql: (${rep_clicks}/${rep_impressions})*100 ;;
+    sql: CASE WHEN ${rep_clicks} <> 0 and ${rep_impressions} <> 0
+    THEN (${rep_clicks}/${rep_impressions})*100
+    ELSE 0
+    END ;;
     value_format: "0.00\%"
   }
 
   measure: IPM {
     type: number
-    sql: (${rep_installs}/${rep_impressions})*1000 ;;
+    sql: CASE WHEN ${rep_installs} <> 0 and ${rep_impressions} <> 0
+    THEN (${rep_installs}/${rep_impressions})*1000
+    ELSE 0
+    END ;;
     value_format: "0"
   }
 
