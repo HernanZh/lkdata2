@@ -153,6 +153,12 @@ view: reporting_metrics {
     value_format: "0.00\%"
   }
 
+  measure: IPM {
+    type: number
+    sql: (${rep_installs}/${rep_impressions})*1000 ;;
+    value_format: "0"
+  }
+
   measure: rep_spend {
     type: number
     sql: SUM(cast(${TABLE}.reported_spend as float64))/100 ;;
