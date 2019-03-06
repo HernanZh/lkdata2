@@ -126,9 +126,35 @@ view: reporting_metrics {
     sql: ${TABLE}.tracked_installs ;;
   }
 
+  measure: rep_installs {
+    type: number
+    sql: SUM(cast(${TABLE}.reported_installs as INT64)) ;;
+  }
+
+  measure: rep_impressions {
+    type: number
+    sql: sum(cast(${TABLE}.reported_impressions as INT64)) ;;
+  }
+
+  measure: track_impressions {
+    type: sum
+    sql: ${TABLE}.tracked_impressions ;;
+  }
+
+  measure: rep_clicks {
+    type: number
+    sql: sum(cast(${TABLE}.reported_clicks as INT64)) ;;
+  }
+
+  measure: CTR {
+    type: number
+    sql: (${rep_clicks}/${rep_impressions})*100 ;;
+    value_format: "0.00\%"
+  }
+
   measure: rep_spend {
     type: number
-    sql: SUM(cast(${TABLE}.reported_spend as float64))/100;;
+    sql: SUM(cast(${TABLE}.reported_spend as float64))/100 ;;
     value_format: "$#,##0.00"
   }
 
@@ -190,8 +216,8 @@ measure: avg_iap_revenue {
 
   measure: CPI {
     type: number
-    sql: case when ${rep_spend} <> 0 and ${track_installs} <>0
-    then ${rep_spend}/${track_installs}
+    sql: case when ${rep_spend} <> 0 and ${rep_installs} <> 0
+    then ${rep_spend}/${rep_installs}
     else 0
     end;;
     value_format: "$#,##0.00"
