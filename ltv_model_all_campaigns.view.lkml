@@ -129,6 +129,7 @@ explore: ltv_pred {
     ${ltv_pred.xday_final} = ${ltv_model_all_campaigns.xday_final};;
     relationship: many_to_one
   }
+
 }
 
 view: ltv_pred_all_campaigns {
@@ -195,3 +196,49 @@ view: ltv_pred {
     sql: exp(${predicted_Retention});; }
 
 }
+
+# If necessary, uncomment the line below to include explore_source.
+
+# include: "ltv_model_all_campaigns.view.lkml"
+
+view: ltv_pred_final {
+  derived_table: {
+    explore_source: ltv_pred {
+      column: ad_networks_name {}
+      column: campaign_name {}
+      column: xday {}
+      column: xday_final {}
+      column: Retention { field: ltv_model_all_campaigns.Retention }
+      column: Retention_final { field: ltv_model_all_campaigns.Retention_final }
+      column: predicted_Retention {}
+      column: predicted_Ret_final {}
+    }
+  }
+  dimension: ad_networks_name {}
+  dimension: campaign_name {}
+  dimension: xday {
+    type: number
+  }
+  dimension: xday_final {
+    type: number
+  }
+  dimension: Retention {
+    type: number
+  }
+  dimension: Retention_final {
+    type: number
+  }
+  dimension: predicted_Retention {
+    type: number
+  }
+  dimension: predicted_Ret_final {
+    type: number
+  }
+  dimension: Pred_actual_Ret { type: number
+  sql: case when ${Retention_final} is null then ${predicted_Ret_final} else ${Retention_final} end  ;;
+  }
+  measure: Pred_actual_Ret_measure {type:sum
+    sql:${Pred_actual_Ret};;}
+}
+
+explore: ltv_pred_final {}
