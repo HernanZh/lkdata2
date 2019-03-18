@@ -2,8 +2,8 @@ view: ltv_model_all_campaigns {
   derived_table: {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
-    sql: select a.campaign_id, a.ad_networks_name, ln(a.xday) as xday,ln(a.daily_user/b.daily_user) as Retention from
-    ( SELECT cast(campaigns.id as STRING) as campaign_id,
+    sql: select a.campaign_name, a.ad_networks_name, ln(a.xday) as xday,ln(a.daily_user/b.daily_user) as Retention from
+    ( SELECT cast(campaigns.name as STRING) as campaign_name,
     cast(ad_networks.name as STRING)  AS ad_networks_name,
         CAST(cohort_behavior.xday AS INT64)  AS xday,
         CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
@@ -17,7 +17,7 @@ view: ltv_model_all_campaigns {
       (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       and cohort_behavior.xday>0
       GROUP BY 1,2,3
-      ORDER BY 1,2,3) as a inner join ( SELECT cast(campaigns.id as STRING) as campaign_id,
+      ORDER BY 1,2,3) as a inner join ( SELECT cast(campaigns.name as STRING) as campaign_name,
       cast(ad_networks.name as STRING)  AS ad_networks_name,
 
         CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
@@ -36,7 +36,7 @@ view: ltv_model_all_campaigns {
           ;;
   }
 
-  dimension: campaign_id {type: string}
+  dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
 
   dimension: xday {type: number}
@@ -125,7 +125,7 @@ explore: ltv_train {}
 explore: ltv_pred {
   join: ltv_model_all_campaigns {
     type: left_outer
-    sql_on: ${ltv_pred.campaign_id} = ${ltv_model_all_campaigns.campaign_id} and
+    sql_on: ${ltv_pred.campaign_name} = ${ltv_model_all_campaigns.campaign_name} and
     ${ltv_pred.xday_final} = ${ltv_model_all_campaigns.xday_final};;
     relationship: many_to_one
   }
@@ -136,7 +136,7 @@ view: ltv_pred_all_campaigns {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
     sql: SELECT
-       b.campaign_id, b.ad_networks_name, ln(a.xday) as xday
+       b.campaign_name, b.ad_networks_name, ln(a.xday) as xday
 
       FROM  (select CAST(cohort_behavior.xday AS INT64)  AS xday from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
@@ -144,7 +144,7 @@ view: ltv_pred_all_campaigns {
       where cohort_behavior.xday>0 and xday<=365
       GROUP BY 1
       ORDER BY 1) as a cross join
-      (select cohort_behavior.campaign_id as campaign_id,
+      (select cast(campaigns.name as STRING) as campaign_name,
       cast(ad_networks.name as STRING)  AS ad_networks_name
       from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
@@ -159,7 +159,7 @@ view: ltv_pred_all_campaigns {
           ;;
   }
 
-  dimension: campaign_id {type: string}
+  dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
 
   dimension: xday {type: number}
@@ -182,7 +182,7 @@ view: ltv_pred {
       FROM
         ${ltv_pred_all_campaigns.SQL_TABLE_NAME}));;
   }
-  dimension: campaign_id {type: string}
+  dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
   measure: Channel_count {type: count_distinct
     sql: ${ad_networks_name};;}
