@@ -184,6 +184,8 @@ view: ltv_pred {
   }
   dimension: campaign_id {type: string}
   dimension: ad_networks_name {type: string}
+  measure: Channel_count {type: count_distinct
+    sql: ${ad_networks_name};;}
   dimension: xday {type: number}
   dimension: xday_final {type: number
     sql:round(exp(${xday}),0);;}
