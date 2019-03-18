@@ -2,36 +2,42 @@ view: ltv_model_all_campaigns {
   derived_table: {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
-    sql: select a.campaign_id,ln(a.xday) as xday,ln(a.daily_user/b.daily_user) as Retention from
+    sql: select a.campaign_id, a.ad_networks_name, ln(a.xday) as xday,ln(a.daily_user/b.daily_user) as Retention from
     ( SELECT cast(campaigns.id as STRING) as campaign_id,
+    cast(ad_networks.name as STRING)  AS ad_networks_name,
         CAST(cohort_behavior.xday AS INT64)  AS xday,
         CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
       FROM tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
       (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and
       (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       and cohort_behavior.xday>0
-      GROUP BY 1,2
-      ORDER BY 1,2) as a inner join ( SELECT cast(campaigns.id as STRING) as campaign_id,
+      GROUP BY 1,2,3
+      ORDER BY 1,2,3) as a inner join ( SELECT cast(campaigns.id as STRING) as campaign_id,
+      cast(ad_networks.name as STRING)  AS ad_networks_name,
 
         CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
       FROM tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
       (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and
       (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       and cohort_behavior.xday=0
-      GROUP BY 1
+      GROUP BY 1,2
+      ORDER BY 1,2
       ) as b on a.campaign_id=b.campaign_id where a.daily_user>0
           ;;
   }
 
   dimension: campaign_id {type: string}
+  dimension: ad_networks_name {type: string}
 
   dimension: xday {type: number}
   dimension: xday_final {type: number
@@ -130,7 +136,7 @@ view: ltv_pred_all_campaigns {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
     sql: SELECT
-       b.campaign_id, ln(a.xday) as xday
+       b.campaign_id, b.ad_networks_name, ln(a.xday) as xday
 
       FROM  (select CAST(cohort_behavior.xday AS INT64)  AS xday from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
@@ -138,19 +144,23 @@ view: ltv_pred_all_campaigns {
       where cohort_behavior.xday>0 and xday<=365
       GROUP BY 1
       ORDER BY 1) as a cross join
-      (select cohort_behavior.campaign_id as campaign_id  from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
+      (select cohort_behavior.campaign_id as campaign_id,
+      cast(ad_networks.name as STRING)  AS ad_networks_name
+      from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
       (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
-      GROUP BY 1
-      ORDER BY 1
+      GROUP BY 1,2
+      ORDER BY 1,2
       ) as b
           ;;
   }
 
   dimension: campaign_id {type: string}
+  dimension: ad_networks_name {type: string}
 
   dimension: xday {type: number}
 #   measure: daily_user {type:sum
@@ -173,6 +183,7 @@ view: ltv_pred {
         ${ltv_pred_all_campaigns.SQL_TABLE_NAME}));;
   }
   dimension: campaign_id {type: string}
+  dimension: ad_networks_name {type: string}
   dimension: xday {type: number}
   dimension: xday_final {type: number
     sql:round(exp(${xday}),0);;}
