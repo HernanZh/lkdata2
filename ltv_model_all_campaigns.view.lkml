@@ -32,7 +32,7 @@ view: ltv_model_all_campaigns {
       and cohort_behavior.xday=0
       GROUP BY 1,2
       ORDER BY 1,2
-      ) as b on a.campaign_id=b.campaign_id where a.daily_user>0
+      ) as b on a.campaign_name=b.campaign_name and a.ad_networks_name=b.ad_networks_name where a.daily_user>0
           ;;
   }
 
