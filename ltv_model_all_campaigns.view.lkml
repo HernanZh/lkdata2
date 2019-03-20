@@ -13,7 +13,7 @@ view: ltv_model_all_campaigns {
       LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and
+      (cohort_behavior.date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
       (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       and cohort_behavior.xday>0
       GROUP BY 1,2,3
@@ -27,7 +27,7 @@ view: ltv_model_all_campaigns {
       LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and
+      (cohort_behavior.date ) <= (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
       (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       and cohort_behavior.xday=0
       GROUP BY 1,2
@@ -153,7 +153,7 @@ view: ltv_pred_all_campaigns {
       LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
       WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) < (CAST('2018-12-31' AS DATE))))) and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
+      (cohort_behavior.date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       GROUP BY 1,2
       ORDER BY 1,2
       ) as b
