@@ -30,6 +30,11 @@ view: reporting_cohort_metrics {
     sql: ${TABLE}.daily_active_users ;;
   }
 
+  measure: dau {
+    type: sum
+    sql: ${TABLE}.daily_active_users ;;
+  }
+
   dimension: days_since_install {
     type: number
     sql: ${TABLE}.days_since_install ;;
@@ -97,12 +102,29 @@ view: reporting_cohort_metrics {
 
   measure: Iap_revenue {
     type: number
-    sql: sum(case when (${TABLE}.date) >= '2019-02-01'
+    sql: sum(case when (${TABLE}.install_date) >= '2019-02-01'
           then ${TABLE}.iap_revenue
           else 0
-          end)/100;;
+          end);;
     value_format: "$#,##0.00"
   }
+
+  measure: ad_revenue {
+    type: number
+    sql: sum(cast(${TABLE}.publisher_ad_revenue as FLOAT64)) ;;
+  }
+
+  measure: Total_revenue {
+    type: number
+    sql: (${Iap_revenue}+${ad_revenue})/100 ;;
+  }
+
+  measure: Total_revenue_per_User {
+    type: number
+    sql: ${Total_revenue}/${dau} ;;
+    value_format: "$#,##0.00"
+  }
+
 
   # ----- Sets of fields for drilling ------
   set: detail {
