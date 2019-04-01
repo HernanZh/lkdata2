@@ -58,6 +58,16 @@ view: cohort_behavior {
     sql: ${TABLE}.xday ;;
   }
 
+  measure: dau {
+    type: sum
+    sql: ${TABLE}.users ;;
+  }
+
+  measure: rev {
+    type: sum
+    sql: ${TABLE}.revenue ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [campaigns.name, campaigns.id]
