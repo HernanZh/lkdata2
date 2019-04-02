@@ -285,6 +285,11 @@ explore: events {
   }
 }
 
+explore: data_export {
+  label: "Game Analytics"
+}
+
+
 explore: pg_aggregate {}
 
 explore: pg_am {}
