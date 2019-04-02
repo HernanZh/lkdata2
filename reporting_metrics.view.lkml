@@ -255,8 +255,8 @@ measure: avg_iap_revenue {
 
   measure: ROI {
     type: number
-    sql: (${Total_revenue}-${rep_spend})/${rep_spend};;
-    value_format: "0.00\%"
+    sql: ((${Total_revenue}-${rep_spend})/${rep_spend});;
+    value_format: "0.00%"
   }
 
   measure: ROAS {
