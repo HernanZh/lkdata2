@@ -273,6 +273,35 @@ view: ltv_pred_final {
   }
   measure: Pred_actual_Ret_measure {type:sum
     sql:${Pred_actual_Ret};;}
+
+  measure: PlTV1 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=1"
+      }
+    sql: ${Pred_actual_Ret};;
+    }
+
+
+  measure: PlTV7 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=7"
+    }
+    sql: ${Pred_actual_Ret};;
+  }
+
+  measure: PlTV30 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=30"
+    }
+    sql: ${Pred_actual_Ret};;
+  }
+
 }
 
 explore: ltv_pred_final {}
