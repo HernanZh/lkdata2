@@ -111,17 +111,23 @@ view: reporting_cohort_metrics {
 
   measure: ad_revenue {
     type: number
-    sql: sum(cast(${TABLE}.publisher_ad_revenue as FLOAT64)) ;;
+    sql: sum(cast(${TABLE}.publisher_ad_revenue as FLOAT64))/100 ;;
   }
 
   measure: Total_revenue {
     type: number
-    sql: (${Iap_revenue}+${ad_revenue})/100 ;;
+    sql: (${Iap_revenue}/100+${ad_revenue})/100 ;;
   }
 
   measure: Total_revenue_per_User {
     type: number
     sql: ${Total_revenue}/${dau} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: ad_revenue_per_User {
+    type: number
+    sql: ${ad_revenue}/${dau} ;;
     value_format: "$#,##0.00"
   }
 

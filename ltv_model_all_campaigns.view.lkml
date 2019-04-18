@@ -2,47 +2,61 @@ view: ltv_model_all_campaigns {
   derived_table: {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
-    sql: select a.campaign_name, a.ad_networks_name, ln(a.xday) as xday,ln(a.daily_user/b.daily_user) as Retention from
-    ( SELECT cast(campaigns.name as STRING) as campaign_name,
-    cast(ad_networks.name as STRING)  AS ad_networks_name,
-        CAST(cohort_behavior.xday AS INT64)  AS xday,
-        CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
-      FROM tenjin_BigQuery.cohort_behavior  AS cohort_behavior
-      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
-      LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
-      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
+    sql: select a.campaign_name, a.ad_networks_name,
+          a.apps_platform, a.apps_bundle_id, a.country,
+          ln(a.days_since_install) as days_since_install,ln(a.daily_active_users/b.daily_active_users) as Retention from
+                (SELECT cast(campaigns.name as STRING) as campaign_name,
+                        cast(ad_networks.name as STRING)  AS ad_networks_name,
+                        cast(apps.platform as STRING)  AS apps_platform,
+                        cast(apps.bundle_id as STRING)  AS apps_bundle_id,
+                        cast(reporting_cohort_metrics.country as STRING)  AS country,
+                        CAST(reporting_cohort_metrics.days_since_install AS INT64) AS days_since_install,
+                        CAST(SUM(reporting_cohort_metrics.daily_active_users ) AS INT64) AS daily_active_users
+                  FROM tenjin_BigQuery.reporting_cohort_metrics  AS reporting_cohort_metrics
+                  LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON reporting_cohort_metrics.campaign_id = campaigns.id
+                  LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+                  LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-      WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
-      (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
-      and cohort_behavior.xday>0
-      GROUP BY 1,2,3
-      ORDER BY 1,2,3) as a inner join ( SELECT cast(campaigns.name as STRING) as campaign_name,
-      cast(ad_networks.name as STRING)  AS ad_networks_name,
+                  WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+                        and (reporting_cohort_metrics.install_date ) >= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+                        and reporting_cohort_metrics.days_since_install>0
+                  GROUP BY 1,2,3,4,5,6
+                  ORDER BY 1,2,3,4,5,6) as a inner join
+                  (SELECT cast(campaigns.name as STRING) as campaign_name,
+                          cast(ad_networks.name as STRING)  AS ad_networks_name,
+                          cast(apps.platform as STRING)  AS apps_platform,
+                          cast(apps.bundle_id as STRING)  AS apps_bundle_id,
+                          cast(reporting_cohort_metrics.country as STRING)  AS country,
+                          CAST(SUM(reporting_cohort_metrics.daily_active_users ) AS INT64) AS daily_active_users
+                  FROM tenjin_BigQuery.reporting_cohort_metrics  AS reporting_cohort_metrics
+                  LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON reporting_cohort_metrics.campaign_id = campaigns.id
+                  LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+                  LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-        CAST(SUM(cohort_behavior.users ) AS INT64) AS daily_user
-      FROM tenjin_BigQuery.cohort_behavior  AS cohort_behavior
-      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
-      LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
-      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
-
-      WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) <= (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
-      (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
-      and cohort_behavior.xday=0
-      GROUP BY 1,2
-      ORDER BY 1,2
-      ) as b on a.campaign_name=b.campaign_name and a.ad_networks_name=b.ad_networks_name where a.daily_user>0
-          ;;
+                  WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+                  and (reporting_cohort_metrics.install_date )>= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+                        and reporting_cohort_metrics.days_since_install=0
+                  GROUP BY 1,2,3,4,5
+                  ORDER BY 1,2,3,4,5) as b on
+                  a.campaign_name=b.campaign_name and
+                  a.ad_networks_name=b.ad_networks_name
+                  and a.apps_platform=b.apps_platform and
+                  a.apps_bundle_id=b.apps_bundle_id and
+                  a.country=b.country
+                  where a.daily_active_users>0
+                      ;;
   }
 
   dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
+  dimension: apps_platform {type: string}
+  dimension: apps_bundle_id {type: string}
+  dimension: country {type: string}
 
-  dimension: xday {type: number}
-  dimension: xday_final {type: number
-    sql: round(exp(${xday}),0);;
-    }
+  dimension: days_since_install {type: number}
+  dimension: days_since_install_final {type: number
+    sql: round(exp(${days_since_install}),0);;
+  }
   dimension: Retention {type:number}
   measure:  Ret {type:sum
     sql:${Retention};;}
@@ -55,7 +69,7 @@ explore: ltv_model_all_campaigns {}
 
 view: ltv_reg {
   derived_table: {
-    persist_for: "24 hours"
+    persist_for: "10 minutes"
     #datagroup_trigger: tenjin_test2_model_datagroup
     sql_create:
       CREATE OR REPLACE MODEL
@@ -126,7 +140,7 @@ explore: ltv_pred {
   join: ltv_model_all_campaigns {
     type: left_outer
     sql_on: ${ltv_pred.campaign_name} = ${ltv_model_all_campaigns.campaign_name} and
-    ${ltv_pred.xday_final} = ${ltv_model_all_campaigns.xday_final};;
+      ${ltv_pred.days_since_install_final} = ${ltv_model_all_campaigns.days_since_install_final};;
     relationship: many_to_one
   }
 
@@ -137,33 +151,44 @@ view: ltv_pred_all_campaigns {
     persist_for: "10 minutes"
     # datagroup_trigger: tenjin_test2_model_datagroup
     sql: SELECT
-       b.campaign_name, b.ad_networks_name, ln(a.xday) as xday
+       b.campaign_name, b.ad_networks_name, b.apps_platform, b.apps_bundle_id, b.country, ln(a.days_since_install) as days_since_install
 
-      FROM  (select CAST(cohort_behavior.xday AS INT64)  AS xday from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
-      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
+      FROM  (select CAST(reporting_cohort_metrics.days_since_install AS INT64)  AS days_since_install
+      from tenjin_BigQuery.reporting_cohort_metrics  AS reporting_cohort_metrics
+/*      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON reporting_cohort_metrics.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
-      where cohort_behavior.xday>0 and xday<=365
+      */
+
+      where reporting_cohort_metrics.days_since_install>0 and days_since_install<=365
       GROUP BY 1
       ORDER BY 1) as a cross join
-      (select cast(campaigns.name as STRING) as campaign_name,
-      cast(ad_networks.name as STRING)  AS ad_networks_name
-      from tenjin_BigQuery.cohort_behavior  AS cohort_behavior
-      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON cohort_behavior.campaign_id = campaigns.id
-      LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
-      LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
+      (SELECT cast(campaigns.name as STRING) as campaign_name,
+                          cast(ad_networks.name as STRING)  AS ad_networks_name,
+                          cast(apps.platform as STRING)  AS apps_platform,
+                          cast(apps.bundle_id as STRING)  AS apps_bundle_id,
+                          cast(reporting_cohort_metrics.country as STRING)  AS country
+                             FROM tenjin_BigQuery.reporting_cohort_metrics  AS reporting_cohort_metrics
+                  LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON reporting_cohort_metrics.campaign_id = campaigns.id
+                  LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
+                  LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-      WHERE ((((cohort_behavior.date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (cohort_behavior.date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
-      GROUP BY 1,2
-      ORDER BY 1,2
+                  WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+                  and (reporting_cohort_metrics.install_date )>= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+                        and reporting_cohort_metrics.days_since_install>0
+                  GROUP BY 1,2,3,4,5
+                  ORDER BY 1,2,3,4,5
       ) as b
+      where b.campaign_name is not null and b.campaign_name<>'Organic'
           ;;
   }
 
   dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
+  dimension: apps_platform {type: string}
+  dimension: apps_bundle_id {type: string}
+  dimension: country {type: string}
 
-  dimension: xday {type: number}
+  dimension: days_since_install {type: number}
 #   measure: daily_user {type:sum
 #     sql: ${TABLE}.daily_user ;;
 #   }
@@ -185,11 +210,14 @@ view: ltv_pred {
   }
   dimension: campaign_name {type: string}
   dimension: ad_networks_name {type: string}
+  dimension: apps_platform {type: string}
+  dimension: apps_bundle_id {type: string}
+  dimension: country {type: string}
   measure: Channel_count {type: count_distinct
     sql: ${ad_networks_name};;}
-  dimension: xday {type: number}
-  dimension: xday_final {type: number
-    sql:round(exp(${xday}),0);;}
+  dimension: days_since_install {type: number}
+  dimension: days_since_install_final {type: number
+    sql:round(exp(${days_since_install}),0);;}
 
   dimension: predicted_Retention {type: number}
   dimension: predicted_Ret_final {type:number
@@ -206,8 +234,11 @@ view: ltv_pred_final {
     explore_source: ltv_pred {
       column: ad_networks_name {}
       column: campaign_name {}
-      column: xday {}
-      column: xday_final {}
+      column: apps_platform {}
+      column: apps_bundle_id {}
+      column: country {}
+      column: days_since_install {}
+      column: days_since_install_final {}
       column: Retention { field: ltv_model_all_campaigns.Retention }
       column: Retention_final { field: ltv_model_all_campaigns.Retention_final }
       column: predicted_Retention {}
@@ -216,10 +247,13 @@ view: ltv_pred_final {
   }
   dimension: ad_networks_name {}
   dimension: campaign_name {}
-  dimension: xday {
+  dimension: apps_platform {type: string}
+  dimension: apps_bundle_id {type: string}
+  dimension: country {type: string}
+  dimension: days_since_install {
     type: number
   }
-  dimension: xday_final {
+  dimension: days_since_install_final {
     type: number
   }
   dimension: Retention {
@@ -235,10 +269,39 @@ view: ltv_pred_final {
     type: number
   }
   dimension: Pred_actual_Ret { type: number
-  sql: case when ${Retention_final} is null then ${predicted_Ret_final} else ${Retention_final} end  ;;
+    sql: case when ${Retention_final} is null then ${predicted_Ret_final} else ${Retention_final} end  ;;
   }
   measure: Pred_actual_Ret_measure {type:sum
     sql:${Pred_actual_Ret};;}
+
+  measure: PlTV1 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=1"
+      }
+    sql: ${Pred_actual_Ret};;
+    }
+
+
+  measure: PlTV7 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=7"
+    }
+    sql: ${Pred_actual_Ret};;
+  }
+
+  measure: PlTV30 {
+    type:sum
+    filters: {
+      field: days_since_install_final
+      value: "<=30"
+    }
+    sql: ${Pred_actual_Ret};;
+  }
+
 }
 
 explore: ltv_pred_final {}

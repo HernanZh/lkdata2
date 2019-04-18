@@ -12,9 +12,9 @@ view: ltv_model_all_campaigns_v2 {
             LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
             LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-            WHERE ((((reporting_cohort_metrics.install_date ) >= (CAST('2018-01-01' AS DATE)) AND
-            (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
-            (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
+            WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+            and (reporting_cohort_metrics.install_date ) >= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+            and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
             and reporting_cohort_metrics.days_since_install>0
             GROUP BY 1,2,3
             ORDER BY 1,2,3) as a inner join ( SELECT cast(campaigns.name as STRING) as campaign_name,
@@ -26,9 +26,9 @@ view: ltv_model_all_campaigns_v2 {
             LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
             LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-            WHERE ((((reporting_cohort_metrics.install_date ) >= (CAST('2018-01-01' AS DATE)) AND
-            (reporting_cohort_metrics.install_date ) <= (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and
-            (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
+            WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+            and (reporting_cohort_metrics.install_date ) >= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+            and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
             and reporting_cohort_metrics.days_since_install=0
             GROUP BY 1,2
             ORDER BY 1,2
@@ -152,8 +152,9 @@ view: ltv_pred_all_campaigns_v2 {
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
       LEFT JOIN tenjin_BigQuery.ad_networks  AS ad_networks ON campaigns.ad_network_id = ad_networks.id
 
-      WHERE ((((reporting_cohort_metrics.install_date ) >= (CAST('2018-01-01' AS DATE)) AND
-      (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))))) and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
+      WHERE (reporting_cohort_metrics.install_date ) < (DATE_ADD(CURRENT_DATE(), interval -3 month))
+            and (reporting_cohort_metrics.install_date ) >= (DATE_ADD(CURRENT_DATE(), interval -15 month))
+            and (apps.bundle_id = 'com.luckykat.kaijurush') AND (apps.platform = 'ios')
       GROUP BY 1,2
       ORDER BY 1,2
       ) as b
