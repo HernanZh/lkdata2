@@ -1,5 +1,5 @@
-view: data_export {
-  sql_table_name: game_analytics.data_export ;;
+view: game_analytics {
+  sql_table_name: game_analytics.data_export_new ;;
 
   dimension: amount {
     type: number
@@ -22,7 +22,7 @@ view: data_export {
       quarter,
       year
     ]
-    sql: ${TABLE}.arrival_ts ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
   }
 
   dimension: attempt_num {
@@ -61,7 +61,7 @@ view: data_export {
       quarter,
       year
     ]
-    sql: ${TABLE}.client_ts ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.client_ts) ;;
   }
 
   dimension: cohort_month {
@@ -185,7 +185,7 @@ view: data_export {
       quarter,
       year
     ]
-    sql: ${TABLE}.install_ts ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
   }
 
   dimension: ios_app_build {
@@ -311,6 +311,11 @@ view: data_export {
   dimension: value {
     type: number
     sql: ${TABLE}.value ;;
+  }
+
+  dimension: bundle_id {
+    type: string
+    sql: ${TABLE}.bundle_id ;;
   }
 
   measure: count {
