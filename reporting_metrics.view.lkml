@@ -122,8 +122,8 @@ view: reporting_metrics {
   }
 
   measure: track_installs {
-    type: sum
-    sql: ${TABLE}.tracked_installs ;;
+    type: number
+    sql: SUM(${TABLE}.tracked_installs) ;;
   }
 
   measure: rep_installs {
