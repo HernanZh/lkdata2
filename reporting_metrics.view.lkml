@@ -265,6 +265,11 @@ measure: avg_iap_revenue {
     value_format: "0.00\%"
   }
 
+  measure: org_installs {
+    type: number
+    sql: CASE campaigns.name WHEN "Organic" THEN ${track_installs} ELSE 0 END;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
