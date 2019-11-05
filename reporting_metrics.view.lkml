@@ -14,9 +14,10 @@ view: reporting_metrics {
   }
 
   dimension: Key {
+    primary_key: yes
     type: string
     # hidden: yes
-    sql: ${date_date}||${site_id}||${ad_network_id}||${app_id}||${campaign_id}||${country} ;;
+    sql: concat(cast(${date_date} AS STRING),${site_id},cast(${ad_network_id} AS STRING),${app_id},${campaign_id},${country}) ;;
   }
 
   dimension: campaign_id {
@@ -266,9 +267,22 @@ measure: avg_iap_revenue {
   }
 
   measure: org_installs {
-    type: number
-    sql: CASE campaigns.name WHEN "Organic" THEN ${track_installs} ELSE 0 END;;
+    type: sum
+    filters: {
+      field: campaigns.name
+      value: "Organic"
+    }
+    sql: ${TABLE}.tracked_installs;;
   }
+
+#   measure: key_count {
+#     type: count
+#   }
+#
+#   measure: key_distinct_count {
+#     type: count_distinct
+#     sql: ${Key} ;;
+#   }
 
   # ----- Sets of fields for drilling ------
   set: detail {
