@@ -327,4 +327,11 @@ view: game_analytics {
     type: count_distinct
     sql: ${user_id} ;;
   }
+
+  dimension_group: days_since_install {
+    type: duration
+    intervals: [day]
+    sql_start: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
+    sql_end: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+  }
 }
