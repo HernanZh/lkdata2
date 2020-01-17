@@ -165,4 +165,11 @@ view: events {
     type: count
     drill_fields: [creative_name, apps.name, apps.id]
   }
+
+  dimension_group: days_since_install {
+    type: duration
+    intervals: [day]
+    sql_start: ${TABLE}.acquired_at ;;
+    sql_end: ${TABLE}.created_at ;;
+  }
 }
