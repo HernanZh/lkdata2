@@ -328,10 +328,24 @@ view: game_analytics {
     sql: ${user_id} ;;
   }
 
-  dimension_group: days_since_install {
+  measure: session_count {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+  }
+  measure: avg_session_length {
+    type: average
+    sql: ${TABLE}.length ;;
+  }
+
+  measure: playtime {
+    type: number
+    sql: ${session_count} * ${avg_session_length} / ${uniqueUsers} ;;
+  }
+
+  dimension_group: since_install {
     type: duration
     intervals: [day]
-    sql_start: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
-    sql_end: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+    sql_start: ${install_ts_date::datetime} ;;
+    sql_end: ${arrival_ts_date::datetime} ;;
   }
 }

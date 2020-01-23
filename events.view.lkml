@@ -1,5 +1,5 @@
 view: events {
-  sql_table_name: tenjin_BigQuery.events ;;
+  sql_table_name: tenjin_BigQuery.rs_events ;;
 
   dimension_group: acquired {
     type: time
@@ -166,10 +166,13 @@ view: events {
     drill_fields: [creative_name, apps.name, apps.id]
   }
 
-  dimension_group: days_since_install {
+  dimension_group: since_install {
     type: duration
     intervals: [day]
-    sql_start: ${TABLE}.acquired_at ;;
-    sql_end: ${TABLE}.created_at ;;
+#     sql_start: ${TABLE}.acquired_at ;;
+#     sql_end: ${TABLE}.created_at ;;
+    sql_start: ${acquired_date::datetime} ;;
+    sql_end: ${created_date::datetime} ;;
+
   }
 }
