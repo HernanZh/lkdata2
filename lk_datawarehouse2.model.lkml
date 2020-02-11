@@ -514,3 +514,30 @@ explore: user_attributes {
     relationship: many_to_one
   }
 }
+
+explore: user_ad_revenue {
+  join: user_attributes {
+    type: left_outer
+    sql_on: ${user_attributes.id} = ${user_ad_revenue.advertising_id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaigns {
+    type: left_outer
+    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+}

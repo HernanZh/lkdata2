@@ -15,6 +15,11 @@ view: user_attributes {
     sql: ${TABLE}.acquired_at ;;
   }
 
+  dimension: id {
+    type: string
+    sql: COALESCE(${TABLE}.advertising_id, ${TABLE}.developer_device_id) ;;
+  }
+
   dimension: advertising_id {
     type: string
     sql: ${TABLE}.advertising_id ;;
@@ -53,7 +58,7 @@ view: user_attributes {
 
   dimension: limit_ad_tracking {
     type: yesno
-    sql: ${TABLE}.limit_ad_tracking ;;
+    sql: ${TABLE}.limit_ad_tracking = 1 ;;
   }
 
   dimension: site_id {
