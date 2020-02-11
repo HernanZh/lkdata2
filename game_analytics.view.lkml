@@ -323,7 +323,7 @@ view: game_analytics {
     drill_fields: []
   }
 
-  measure: uniqueUsers {
+  measure: DAU {
     type: count_distinct
     sql: ${user_id} ;;
   }
@@ -337,9 +337,19 @@ view: game_analytics {
     sql: ${TABLE}.length ;;
   }
 
+  measure: avg_value {
+    type: average
+    sql: ${TABLE}.value ;;
+  }
+
+  measure: sum_value {
+    type: sum
+    sql: ${TABLE}.value ;;
+  }
+
   measure: playtime {
     type: number
-    sql: ${session_count} * ${avg_session_length} / ${uniqueUsers} ;;
+    sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
   }
 
   dimension_group: since_install {
