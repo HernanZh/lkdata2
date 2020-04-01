@@ -53,9 +53,16 @@ explore: reporting_cohorted_revenue {
     relationship: many_to_one
   }
 
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_cohorted_revenue.campaign_id} = ${bucket_campaign_info.id} ;;
+    relationship: many_to_one
+  }
+
   join: campaigns {
     type: left_outer
-    sql_on: ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
+#     sql_on: ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
@@ -404,9 +411,16 @@ explore: reporting_cohort_metrics {
     relationship: many_to_one
   }
 
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_cohort_metrics.campaign_id} = ${bucket_campaign_info.id} ;;
+    relationship: many_to_one
+  }
+
   join: campaigns {
     type: left_outer
-    sql_on: ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
@@ -469,9 +483,16 @@ explore: reporting_metrics {
     relationship: many_to_one
   }
 
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_metrics.campaign_id} = ${bucket_campaign_info.id} ;;
+    relationship: many_to_one
+  }
+
   join: campaigns {
     type: left_outer
-    sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
