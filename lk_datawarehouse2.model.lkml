@@ -61,8 +61,8 @@ explore: reporting_cohorted_revenue {
 
   join: campaigns {
     type: left_outer
-#     sql_on: ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
-    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
@@ -74,13 +74,14 @@ explore: reporting_cohorted_revenue {
 
   join: reporting_metrics {
     type: left_outer
-    sql_on: ${reporting_cohorted_revenue.ad_network_id} = ${reporting_metrics.ad_network_id} AND
-          ${reporting_cohorted_revenue.app_id} = ${reporting_metrics.app_id} AND
-          ${reporting_cohorted_revenue.campaign_id} = ${reporting_metrics.campaign_id} AND
+    sql_on: ${ad_networks.id} = ${reporting_metrics.ad_network_id} AND
+          ${apps.id} = ${reporting_metrics.app_id} AND
+          ${bucket_campaign_info.id} = ${reporting_metrics.campaign_id} AND
+          (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_metrics.campaign_id} = ${campaigns.id}) AND
           ${reporting_cohorted_revenue.site_id} = ${reporting_metrics.site_id} AND
           ${reporting_cohorted_revenue.country} = ${reporting_metrics.country} AND
           ${reporting_cohorted_revenue.date} = ${reporting_metrics.date_date} AND
-          ${reporting_cohorted_revenue.platform} = ${reporting_metrics.platform}
+          ${apps.platform} = ${reporting_metrics.platform}
           ;;
     relationship: many_to_one
   }
@@ -419,8 +420,8 @@ explore: reporting_cohort_metrics {
 
   join: campaigns {
     type: left_outer
-#     sql_on: ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
-    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id}) OR (${reporting_cohort_metrics.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
@@ -491,8 +492,8 @@ explore: reporting_metrics {
 
   join: campaigns {
     type: left_outer
-#     sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
-    sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id}) OR (${reporting_metrics.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
