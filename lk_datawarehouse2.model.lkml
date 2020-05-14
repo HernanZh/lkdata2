@@ -513,7 +513,6 @@ explore: reporting_metrics {
 
 explore: schema_migrations {}
 
-explore: user_ad_revenue {}
 
 explore: user_ad_revenue_cohort {}
 
