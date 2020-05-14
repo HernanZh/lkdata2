@@ -10,6 +10,7 @@ datagroup: lk_datawarehouse2_default_datagroup {
 
 persist_with: lk_datawarehouse2_default_datagroup
 
+
 explore: ad_engagements {
   join: apps {
     type: left_outer
@@ -222,6 +223,12 @@ explore: daily_behavior {
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+  join: events {
+    type: left_outer
+    sql_on: ${campaigns.id} = ${events.source_campaign_id} ;;
     relationship: many_to_one
   }
 }
@@ -459,6 +466,11 @@ explore: reporting_metrics {
 }
 
 explore: schema_migrations {}
+
+explore: user_ad_revenue {}
+
+explore: user_ad_revenue_cohort {}
+
 
 explore: targeting_tags {}
 
