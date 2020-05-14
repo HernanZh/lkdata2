@@ -41,22 +41,29 @@ explore: ad_networks {}
 
 explore: apps {}
 
-explore: ltv_for_14_30_60_and_90_days {
+explore: reporting_cohorted_revenue {
   join: ad_networks {
     type: left_outer
-    sql_on: ${ltv_for_14_30_60_and_90_days.ad_network_id} = ${ad_networks.id} ;;
+    sql_on: ${reporting_cohorted_revenue.ad_network_id} = ${ad_networks.id} ;;
     relationship: many_to_one
   }
 
   join: apps {
     type: left_outer
-    sql_on: ${ltv_for_14_30_60_and_90_days.app_id} = ${apps.id} ;;
+    sql_on: ${reporting_cohorted_revenue.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_cohorted_revenue.campaign_id} = ${bucket_campaign_info.id} ;;
     relationship: many_to_one
   }
 
   join: campaigns {
     type: left_outer
-    sql_on: ${ltv_for_14_30_60_and_90_days.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_cohorted_revenue.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
@@ -65,7 +72,21 @@ explore: ltv_for_14_30_60_and_90_days {
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
     relationship: many_to_one
   }
+
+  join: reporting_metrics {
+    type: left_outer
+    sql_on: ${ad_networks.id} = ${reporting_metrics.ad_network_id} AND
+          ${apps.id} = ${reporting_metrics.app_id} AND
+          ${bucket_campaign_info.id} = ${reporting_metrics.campaign_id} AND
+          (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_metrics.campaign_id} = ${campaigns.id}) AND
+          ${reporting_cohorted_revenue.site_id} = ${reporting_metrics.site_id} AND
+          ${reporting_cohorted_revenue.country} = ${reporting_metrics.country} AND
+          ${reporting_cohorted_revenue.date} = ${reporting_metrics.date_date} AND
+          ${apps.platform} = ${reporting_metrics.platform}
+          ;;
+    relationship: many_to_one
   }
+}
 
 explore: bucket_campaign_info {
   join: apps {
@@ -291,6 +312,16 @@ explore: events {
     sql_on: ${events.app_id} = ${apps.id} ;;
     relationship: many_to_one
   }
+
+  join: campaigns {
+    type: left_outer
+    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+}
+
+explore: game_analytics {
+  label: "Game Analytics"
 }
 
 explore: pg_aggregate {}
@@ -388,15 +419,35 @@ explore: reporting_cohort_metrics {
     relationship: many_to_one
   }
 
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_cohort_metrics.campaign_id} = ${bucket_campaign_info.id} ;;
+    relationship: many_to_one
+  }
+
   join: campaigns {
     type: left_outer
     sql_on: ${reporting_cohort_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id}) OR (${reporting_cohort_metrics.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
   join: campaign_buckets {
     type: left_outer
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+    relationship: many_to_one
+  }
+
+  join: reporting_metrics {
+    type: left_outer
+    sql_on: ${reporting_cohort_metrics.ad_network_id} = ${reporting_metrics.ad_network_id} AND
+          ${reporting_cohort_metrics.app_id} = ${reporting_metrics.app_id} AND
+          ${reporting_cohort_metrics.campaign_id} = ${reporting_metrics.campaign_id} AND
+          ${reporting_cohort_metrics.site_id} = ${reporting_metrics.site_id} AND
+          ${reporting_cohort_metrics.country} = ${reporting_metrics.country} AND
+          ${reporting_cohort_metrics.install_date} = ${reporting_metrics.date_date} AND
+          ${reporting_cohort_metrics.platform} = ${reporting_metrics.platform}
+          ;;
     relationship: many_to_one
   }
 }
@@ -425,12 +476,6 @@ explore: reporting_metrics_Trac_Ins {
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
     relationship: many_to_one
   }
-
-#   join: ltv_for_14_30_60_and_90_days {
-#     type: left_outer
-#     sql_on: ${reporting_metrics.Key} = ${ltv_for_14_30_60_and_90_days.Key} ;;
-#     relationship: many_to_one
-#   }
 }
 
 explore: reporting_metrics {
@@ -446,9 +491,16 @@ explore: reporting_metrics {
     relationship: many_to_one
   }
 
+  join: bucket_campaign_info {
+    type: left_outer
+    sql_on: ${reporting_metrics.campaign_id} = ${bucket_campaign_info.id} ;;
+    relationship: many_to_one
+  }
+
   join: campaigns {
     type: left_outer
     sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: (${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id}) OR (${reporting_metrics.campaign_id} = ${campaigns.id}) ;;
     relationship: many_to_one
   }
 
@@ -457,12 +509,6 @@ explore: reporting_metrics {
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
     relationship: many_to_one
   }
-
-#   join: ltv_for_14_30_60_and_90_days {
-#     type: left_outer
-#     sql_on: ${reporting_metrics.Key} = ${ltv_for_14_30_60_and_90_days.Key} ;;
-#     relationship: many_to_one
-#   }
 }
 
 explore: schema_migrations {}
@@ -475,3 +521,57 @@ explore: user_ad_revenue_cohort {}
 explore: targeting_tags {}
 
 explore: updated_at {}
+
+
+explore: user_attributes {
+  join: campaigns {
+    type: left_outer
+    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaign_buckets {
+    type: left_outer
+    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+    relationship: many_to_one
+  }
+}
+
+explore: user_ad_revenue {
+  join: user_attributes {
+    type: left_outer
+    sql_on: ${user_attributes.id} = ${user_ad_revenue.advertising_id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaigns {
+    type: left_outer
+    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+}

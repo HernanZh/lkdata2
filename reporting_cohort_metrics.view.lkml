@@ -102,10 +102,7 @@ view: reporting_cohort_metrics {
 
   measure: Iap_revenue {
     type: number
-    sql: sum(case when (${TABLE}.install_date) >= '2019-02-01'
-          then ${TABLE}.iap_revenue
-          else 0
-          end);;
+    sql: sum(${TABLE}.iap_revenue);;
     value_format: "$#,##0.00"
   }
 
@@ -119,6 +116,12 @@ view: reporting_cohort_metrics {
     sql: (${Iap_revenue}/100+${ad_revenue})/100 ;;
   }
 
+  measure: Total_revenue_dollar {
+    type: number
+    sql: ${Total_revenue} * 100 ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: Total_revenue_per_User {
     type: number
     sql: ${Total_revenue}/${dau} ;;
@@ -128,6 +131,77 @@ view: reporting_cohort_metrics {
   measure: ad_revenue_per_User {
     type: number
     sql: ${ad_revenue}/${dau} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: days_installed {
+    type: number
+    sql: MAX(${TABLE}.days_since_install) + 1 ;;
+  }
+  measure: Total_revenue_d1 {
+    type: number
+    label: "Revenue D01"
+    sql: SUM(CASE WHEN days_since_install <= 0 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d2 {
+    type: number
+    label: "Revenue D02"
+    sql: SUM(CASE WHEN days_since_install <= 1 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d3 {
+    type: number
+    label: "Revenue D03"
+    sql: SUM(CASE WHEN days_since_install <= 2 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d4 {
+    type: number
+    label: "Revenue D04"
+    sql: SUM(CASE WHEN days_since_install <= 3 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d5 {
+    type: number
+    label: "Revenue D05"
+    sql: SUM(CASE WHEN days_since_install <= 4 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d6 {
+    type: number
+    label: "Revenue D06"
+    sql: SUM(CASE WHEN days_since_install <= 5 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d7 {
+    type: number
+    label: "Revenue D07"
+    sql: SUM(CASE WHEN days_since_install <= 6 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d14 {
+    type: number
+    label: "Revenue D14"
+    sql: SUM(CASE WHEN days_since_install <= 13 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d21 {
+    type: number
+    label: "Revenue D21"
+    sql: SUM(CASE WHEN days_since_install <= 20 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d30 {
+    type: number
+    label: "Revenue D30"
+    sql: SUM(CASE WHEN days_since_install <= 29 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Total_revenue_d60 {
+    type: number
+    label: "Revenue D60"
+    sql: SUM(CASE WHEN days_since_install <= 59 THEN (cast(${TABLE}.publisher_ad_revenue as float64) + ${TABLE}.Iap_revenue) / 100.0 ELSE 0 END) ;;
     value_format: "$#,##0.00"
   }
 
