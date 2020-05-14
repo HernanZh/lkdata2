@@ -36,6 +36,21 @@ view: reporting_metrics {
     sql: ${TABLE}.daily_active_users ;;
   }
 
+  measure: Date_Count{
+    type: count_distinct
+    sql: ${date_date} ;;
+  }
+
+  measure: Daily_Active_Users{
+    type: sum
+    sql: ${TABLE}.daily_active_users ;;
+  }
+
+  measure: D_Active_Users{
+    type: number
+    sql: ${Daily_Active_Users}/${Date_Count} ;;
+  }
+
   dimension_group: date {
     type: time
     timeframes: [
