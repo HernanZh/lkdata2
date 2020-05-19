@@ -516,6 +516,8 @@ explore: schema_migrations {}
 
 explore: user_ad_revenue_cohort {}
 
+explore: user_cohorts {}
+
 
 explore: targeting_tags {}
 
