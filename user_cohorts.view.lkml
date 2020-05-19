@@ -1,7 +1,6 @@
 view: user_cohorts {
-
     derived_table: {
-      sql: select user_id,platform,bundle_id,country,date_created,acquired_date,
+      sql: select user_id,platform,bundle_id,country,acquired_date,
 
                             sum(case when day_cohort=0 then revenue else 0 end) as Rev_0,
                             sum(case when day_cohort=1 then revenue else 0 end) as Rev_1,
@@ -57,7 +56,10 @@ view: user_cohorts {
                            rs_user_attributes.developer_device_id from
                         tenjin_BigQuery.rs_user_attributes ) AS user_attributes
                         ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id) c
-              group by 1,2,3,4,5,6
+
+
+              where user_id="000000ceda27492fb8c0e0dacb697dfd"
+              group by 1,2,3,4,5
                ;;
     }
 
@@ -84,11 +86,6 @@ view: user_cohorts {
     dimension: country {
       type: string
       sql: ${TABLE}.country ;;
-    }
-
-    dimension: date_created {
-      type: date
-      sql: ${TABLE}.date_created ;;
     }
 
     dimension: acquired_date {
@@ -267,7 +264,6 @@ view: user_cohorts {
         platform,
         bundle_id,
         country,
-        date_created,
         acquired_date,
         rev_0,
         rev_1,
