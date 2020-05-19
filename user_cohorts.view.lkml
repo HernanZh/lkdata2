@@ -58,7 +58,7 @@ view: user_cohorts {
                         ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id) c
 
 
-              where user_id="000000ceda27492fb8c0e0dacb697dfd"
+
               group by 1,2,3,4,5
                ;;
     }
