@@ -98,6 +98,8 @@ view: user_cohorts {
         quarter,
         year
       ]
+      convert_tz: no
+      datatype: date
       sql: ${TABLE}.acquired_date ;;
     }
 
