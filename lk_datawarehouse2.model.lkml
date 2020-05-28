@@ -516,7 +516,14 @@ explore: schema_migrations {}
 
 explore: user_ad_revenue_cohort {}
 
-explore: user_cohorts {}
+explore: user_cohorts {
+  join: campaigns {
+    type: left_outer
+    sql_on: ${user_cohorts.campaign_id}= ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+}
 
 
 explore: targeting_tags {}
