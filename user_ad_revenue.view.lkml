@@ -106,4 +106,10 @@ view: user_ad_revenue {
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0.00"
   }
+
+  measure: arpdau {
+    type: number
+    sql: SUM(${TABLE}.revenue) / COUNT(DISTINCT ${TABLE}.user_id) ;;
+    value_format: "$#,##0.0000"
+  }
 }
