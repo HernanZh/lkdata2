@@ -88,8 +88,16 @@ view: user_cohorts {
       sql: ${TABLE}.country ;;
     }
 
-    dimension: acquired_date {
-      type: date
+    dimension_group: acquired {
+      type: time
+      timeframes: [
+        raw,
+        date,
+        week,
+        month,
+        quarter,
+        year
+      ]
       sql: ${TABLE}.acquired_date ;;
     }
 
