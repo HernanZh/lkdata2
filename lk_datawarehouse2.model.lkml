@@ -523,6 +523,13 @@ explore: user_cohorts {
     relationship: many_to_one
   }
 
+  join: reporting_metrics {
+    type: left_outer
+    sql_on: ${user_cohorts.campaign_id}= ${reporting_metrics.campaign_id} ;;
+    relationship: many_to_many
+
+  }
+
 }
 
 
