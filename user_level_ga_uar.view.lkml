@@ -129,27 +129,27 @@ view: user_level_ga_uar {
   }
 
   measure: playtime {
-    type: number
+    type: sum
     sql: ${TABLE}.playtime ;;
   }
 
   measure: avg_session_length {
-    type: number
+    type: sum
     sql: ${TABLE}.avg_session_length ;;
   }
 
   measure: session_count {
-    type: number
+    type: sum
     sql: ${TABLE}.session_count ;;
   }
 
   measure: revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
   measure: impressions {
-    type: number
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
