@@ -589,3 +589,5 @@ explore: user_ad_revenue {
   }
 
 }
+
+explore: user_level_ga_uar {}
