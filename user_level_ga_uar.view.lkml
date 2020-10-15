@@ -5,6 +5,7 @@ view: user_level_ga_uar {
       created_date,
       bundle_id,
       build,
+      event_id,
       platform,
       country,
       ip,
@@ -25,6 +26,7 @@ view: user_level_ga_uar {
           game_analytics.custom_01  AS AB_custom_01,
           game_analytics.custom_02  AS AB_custom_02,
           game_analytics.custom_03  AS AB_custom_03,
+          game_analytics.event_id AS event_id,
           game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
           game_analytics.ip  AS ip,
@@ -34,7 +36,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8
+        GROUP BY 1,2,3,4,5,6,7,8,9
         ORDER BY 2 DESC
       )a
       inner join (
@@ -86,6 +88,11 @@ view: user_level_ga_uar {
   dimension: build {
     type: string
     sql: ${TABLE}.build ;;
+  }
+
+  dimension: event_id {
+    type: string
+    sql: ${TABLE}.event_id ;;
   }
 
   dimension: platform {
