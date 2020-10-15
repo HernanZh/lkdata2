@@ -127,27 +127,27 @@ view: user_level_ga_uar {
     sql: ${TABLE}.AB_custom_03 ;;
   }
 
-  dimension: playtime {
+  measure: playtime {
     type: number
     sql: ${TABLE}.playtime ;;
   }
 
-  dimension: avg_session_length {
+  measure: avg_session_length {
     type: number
     sql: ${TABLE}.avg_session_length ;;
   }
 
-  dimension: session_count {
+  measure: session_count {
     type: number
     sql: ${TABLE}.session_count ;;
   }
 
-  dimension: revenue {
+  measure: revenue {
     type: number
     sql: ${TABLE}.revenue ;;
   }
 
-  dimension: impressions {
+  measure: impressions {
     type: number
     sql: ${TABLE}.impressions ;;
   }
