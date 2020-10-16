@@ -146,7 +146,7 @@ view: user_level_ga_uar {
   }
 
   measure: session_count {
-    type: number
+    type: sum
     sql: ${TABLE}.session_count ;;
   }
 
@@ -156,7 +156,7 @@ view: user_level_ga_uar {
   }
 
   measure: impressions {
-    type: number
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
