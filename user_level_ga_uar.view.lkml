@@ -151,7 +151,7 @@ view: user_level_ga_uar {
   }
 
   measure: revenue {
-    type: number
+    type: average
     sql: ${TABLE}.revenue ;;
   }
 
