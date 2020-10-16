@@ -136,7 +136,7 @@ view: user_level_ga_uar {
   }
 
   measure: playtime {
-    type: sum
+    type: number
     sql: ${TABLE}.playtime ;;
   }
 
@@ -146,17 +146,17 @@ view: user_level_ga_uar {
   }
 
   measure: session_count {
-    type: sum
+    type: number
     sql: ${TABLE}.session_count ;;
   }
 
   measure: revenue {
-    type: sum
+    type: number
     sql: ${TABLE}.revenue ;;
   }
 
   measure: impressions {
-    type: sum
+    type: number
     sql: ${TABLE}.impressions ;;
   }
 
