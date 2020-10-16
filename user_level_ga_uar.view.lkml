@@ -136,7 +136,7 @@ view: user_level_ga_uar {
   }
 
   measure: playtime {
-    type: max
+    type: average
     sql: ${TABLE}.playtime ;;
   }
 
