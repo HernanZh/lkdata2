@@ -201,7 +201,6 @@ view: future_revenue_prediction {
   measure: revenue_d5{type:number}
   measure: revenue_d6{type:number}
   measure: revenue_d7{type:number}
-  measure: revenue_d14{type:number}
 
   dimension: date_date {type: date}
   measure: max_predicted_score {
