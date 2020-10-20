@@ -180,7 +180,7 @@ view: future_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "last month"
+        value: "yesterday"
       }
     }
   }
