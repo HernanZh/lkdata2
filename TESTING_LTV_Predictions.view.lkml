@@ -192,7 +192,7 @@ view: future_revenue_prediction {
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
   dimension: predicted_revenue{type: number}
-  dimension: date_date {type: number}
+  dimension: date_date {type: date}
   measure: max_predicted_score {
     type: max
     value_format_name: percent_2
