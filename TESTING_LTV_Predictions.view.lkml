@@ -14,6 +14,7 @@ view: training_input {
       column: revenue_d5 {}
       column: revenue_d6 {}
       column: revenue_d7 {}
+      column: revenue_d14 {}
       filters: {
         field: apps.bundle_id
         value: "com.gezellig.savethedate"
@@ -41,6 +42,7 @@ view: testing_input {
       column: revenue_d5 {}
       column: revenue_d6 {}
       column: revenue_d7 {}
+      column: revenue_d14 {}
       filters: {
         field: apps.bundle_id
         value: "com.gezellig.savethedate"
@@ -66,7 +68,7 @@ view: future_revenue_model {
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(model_type='logistic_reg'
-        , labels=['Revenue_forecast']
+        , labels=['revenue_d14']
         ) AS
       SELECT
          * EXCEPT(date_date)
@@ -191,16 +193,16 @@ view: future_revenue_prediction {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
-  dimension: predicted_revenue{type: number}
+  dimension: predicted_revenue_d14{type: number}
   dimension: date_date {type: date}
   measure: max_predicted_score {
     type: max
     value_format_name: percent_2
-    sql: ${predicted_revenue} ;;
+    sql: ${predicted_revenue_d14} ;;
   }
   measure: average_predicted_score {
     type: average
     value_format_name: percent_2
-    sql: ${predicted_revenue} ;;
+    sql: ${predicted_revenue_d14} ;;
   }
 }
