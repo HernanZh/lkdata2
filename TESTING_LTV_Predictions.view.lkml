@@ -194,13 +194,14 @@ view: future_revenue_prediction {
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
   dimension: predicted_revenue_d14{type: number}
-  dimension: revenue_d1{type:number}
-  dimension: revenue_d2{type:number}
-  dimension: revenue_d3{type:number}
-  dimension: revenue_d4{type:number}
-  dimension: revenue_d5{type:number}
-  dimension: revenue_d6{type:number}
-  dimension: revenue_d7{type:number}
+  measure: revenue_d1{type:max}
+  measure: revenue_d2{type:max}
+  measure: revenue_d3{type:max}
+  measure: revenue_d4{type:max}
+  measure: revenue_d5{type:max}
+  measure: revenue_d6{type:max}
+  measure: revenue_d7{type:max}
+
 
   dimension: date_date {type: date}
   measure: max_predicted_score {
