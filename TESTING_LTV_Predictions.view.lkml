@@ -191,17 +191,16 @@ view: future_revenue_prediction {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
-  dimension: predicted_will_purchase_in_future {type: number}
-  dimension: visitId {type: number hidden:yes}
-  dimension: fullVisitorId {type: number hidden: yes}
+  dimension: predicted_revenue{type: number}
+  dimension: date_date {type: number hidden:yes}
   measure: max_predicted_score {
     type: max
     value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+    sql: ${predicted_revenue} ;;
   }
   measure: average_predicted_score {
     type: average
     value_format_name: percent_2
-    sql: ${predicted_will_purchase_in_future} ;;
+    sql: ${predicted_revenue} ;;
   }
 }
