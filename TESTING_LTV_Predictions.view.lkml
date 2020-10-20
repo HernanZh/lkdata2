@@ -67,7 +67,7 @@ view: future_revenue_model {
     datagroup_trigger: prediction_trigger
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
-      OPTIONS(model_type='logistic_reg'
+      OPTIONS(model_type='linear_reg'
         , labels=['revenue_d14']
         ) AS
       SELECT
