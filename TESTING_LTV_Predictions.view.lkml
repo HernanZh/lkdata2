@@ -36,7 +36,7 @@ view: training_input {
 view: testing_input {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
-      column: date_date {field:reporting_cohorted_revenue.date}
+      column: date {field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
       column: revenue_d1 {}
@@ -166,7 +166,7 @@ view: future_revenue_model_training_info {
 view: future_input {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
-      column: date_date { field:reporting_cohorted_revenue.date}
+      column: date { field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
       column: revenue_d1 {}
@@ -209,7 +209,7 @@ view: future_revenue_prediction {
   measure: revenue_d7{type:max}
 
 
-  dimension: date_date {type: date}
+  dimension: date {type: date}
   dimension: bundle_id {type: string}
 
   # measure: max_predicted_score {
