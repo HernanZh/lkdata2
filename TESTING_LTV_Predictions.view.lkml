@@ -25,7 +25,7 @@ view: training_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "90 days ago for 21 days"
+        value: "60 days ago for 21 days"
       }
     }
   }
@@ -53,7 +53,7 @@ view: testing_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "60 days ago for 21 days"
+        value: "30 days ago for 21 days"
       }
     }
   }
@@ -71,7 +71,7 @@ view: future_revenue_model {
         , labels=['revenue_d14']
         ) AS
       SELECT
-         * EXCEPT(date_date)
+         * --EXCEPT(date_date)
       FROM ${training_input.SQL_TABLE_NAME};;
   }
 }
