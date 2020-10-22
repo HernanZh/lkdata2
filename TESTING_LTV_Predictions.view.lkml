@@ -28,7 +28,8 @@ view: training_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "60 days ago for 30 days"
+        value: "30 days"
+        # value: "60 days ago for 30 days"
       }
     }
   }
