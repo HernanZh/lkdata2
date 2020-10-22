@@ -28,7 +28,7 @@ view: training_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "30 days"
+        value: "60 days ago for 30 days"
         # value: "60 days ago for 30 days"
       }
     }
@@ -75,7 +75,7 @@ view: future_revenue_model {
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(model_type='linear_reg'
-        , labels=['revenue_d14']
+        , input_label_cols='revenue_d14'
         ) AS
       SELECT
          * EXCEPT(date, bundle_id,platform)
