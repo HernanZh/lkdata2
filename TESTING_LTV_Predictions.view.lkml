@@ -27,7 +27,7 @@ view: training_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "60 days ago for 21 days"
+        value: "90 days ago for 21 days"
       }
     }
   }
@@ -186,7 +186,7 @@ view: future_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "30 days ago for 30 days"
+        value: "60 days"
       }
     }
   }
@@ -211,6 +211,7 @@ view: future_revenue_prediction {
 
   dimension: date {type: date}
   dimension: bundle_id {type: string}
+
 
   # measure: max_predicted_score {
   #   type: max
