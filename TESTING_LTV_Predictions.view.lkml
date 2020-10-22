@@ -180,7 +180,7 @@ view: future_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "7 days"
+        value: "60 days"
       }
     }
   }
