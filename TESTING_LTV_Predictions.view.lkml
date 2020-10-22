@@ -193,7 +193,7 @@ view: future_revenue_prediction {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
-  dimension: predicted_revenue_d14{type: number}
+  measure: predicted_revenue_d14{type: number}
   measure: revenue_d1{type:max}
   measure: revenue_d2{type:max}
   measure: revenue_d3{type:max}
@@ -204,14 +204,14 @@ view: future_revenue_prediction {
 
 
   dimension: date_date {type: date}
-  measure: max_predicted_score {
-    type: max
-    value_format_name: percent_2
-    sql: ${predicted_revenue_d14} ;;
-  }
-  measure: average_predicted_score {
-    type: average
-    value_format_name: percent_2
-    sql: ${predicted_revenue_d14} ;;
-  }
+  # measure: max_predicted_score {
+  #   type: max
+  #   value_format_name: percent_2
+  #   sql: ${predicted_revenue_d14} ;;
+  # }
+  # measure: average_predicted_score {
+  #   type: average
+  #   value_format_name: percent_2
+  #   sql: ${predicted_revenue_d14} ;;
+  # }
 }

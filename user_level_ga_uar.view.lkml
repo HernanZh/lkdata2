@@ -156,7 +156,7 @@ view: user_level_ga_uar {
   }
 
   measure: impressions {
-    type: sum
+    type: average
     sql: ${TABLE}.impressions ;;
   }
 
