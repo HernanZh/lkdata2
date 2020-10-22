@@ -77,7 +77,7 @@ view: future_revenue_model {
         , labels=['revenue_d14']
         ) AS
       SELECT
-         * --EXCEPT(date, bundle_id,platform)
+         * EXCEPT(date, bundle_id,platform)
       FROM ${training_input.SQL_TABLE_NAME};;
   }
 }
