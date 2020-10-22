@@ -215,6 +215,7 @@ view: future_revenue_prediction {
 
   dimension: date {type: date}
   dimension: bundle_id {type: string}
+  dimension: platform {type: string}
   measure: installs{type:sum}
 
 
