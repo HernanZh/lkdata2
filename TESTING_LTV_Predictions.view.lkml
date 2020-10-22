@@ -200,13 +200,13 @@ view: future_revenue_prediction {
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
   measure: predicted_revenue_d14{type: max}
-  measure: revenue_d1{type:sum}
-  measure: revenue_d2{type:sum}
-  measure: revenue_d3{type:sum}
-  measure: revenue_d4{type:sum}
-  measure: revenue_d5{type:sum}
-  measure: revenue_d6{type:sum}
-  measure: revenue_d7{type:sum}
+  measure: revenue_d1{type:number}
+  measure: revenue_d2{type:number}
+  measure: revenue_d3{type:number}
+  measure: revenue_d4{type:number}
+  measure: revenue_d5{type:number}
+  measure: revenue_d6{type:number}
+  measure: revenue_d7{type:number}
 
 
   dimension: date {type: date}
