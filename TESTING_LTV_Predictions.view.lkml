@@ -9,6 +9,7 @@ view: training_input {
       column: date {field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
+      column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -39,6 +40,7 @@ view: testing_input {
       column: date {field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
+      column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -169,6 +171,7 @@ view: future_input {
       column: date { field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
+      column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -211,6 +214,7 @@ view: future_revenue_prediction {
 
   dimension: date {type: date}
   dimension: bundle_id {type: string}
+  measure: installs{type:sum}
 
 
   # measure: max_predicted_score {
