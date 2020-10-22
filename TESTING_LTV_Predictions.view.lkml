@@ -193,7 +193,7 @@ view: future_revenue_prediction {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
-  measure: predicted_revenue_d14{type: number}
+  measure: predicted_revenue_d14{type: max}
   measure: revenue_d1{type:max}
   measure: revenue_d2{type:max}
   measure: revenue_d3{type:max}
