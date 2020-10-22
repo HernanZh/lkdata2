@@ -6,7 +6,9 @@ datagroup: prediction_trigger {
 view: training_input {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
-      column: date_date { field: reporting_metrics.date_date }
+      column: date {field:reporting_cohorted_revenue.date}
+      column: bundle_id {field: apps.bundle_id}
+      column: platform {field: reporting_cohorted_revenue.platform}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -34,7 +36,9 @@ view: training_input {
 view: testing_input {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
-      column: date_date { field: reporting_metrics.date_date }
+      column: date_date {field:reporting_cohorted_revenue.date}
+      column: bundle_id {field: apps.bundle_id}
+      column: platform {field: reporting_cohorted_revenue.platform}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -162,7 +166,9 @@ view: future_revenue_model_training_info {
 view: future_input {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
-      column: date_date { field: reporting_metrics.date_date }
+      column: date_date { field:reporting_cohorted_revenue.date}
+      column: bundle_id {field: apps.bundle_id}
+      column: platform {field: reporting_cohorted_revenue.platform}
       column: revenue_d1 {}
       column: revenue_d2 {}
       column: revenue_d3 {}
@@ -204,6 +210,8 @@ view: future_revenue_prediction {
 
 
   dimension: date_date {type: date}
+  dimension: bundle_id {type: string}
+
   # measure: max_predicted_score {
   #   type: max
   #   value_format_name: percent_2
