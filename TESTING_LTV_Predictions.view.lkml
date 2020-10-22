@@ -75,7 +75,7 @@ view: future_revenue_model {
         , labels=['revenue_d14']
         ) AS
       SELECT
-         * --EXCEPT(date_date)
+         * EXCEPT(date, bundle_id,platform)
       FROM ${training_input.SQL_TABLE_NAME};;
   }
 }
@@ -186,7 +186,7 @@ view: future_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "60 days"
+        value: "30 days ago for 30 days"
       }
     }
   }
@@ -199,14 +199,14 @@ view: future_revenue_prediction {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
-  measure: predicted_revenue_d14{}
-  measure: revenue_d1{}
-  measure: revenue_d2{}
-  measure: revenue_d3{}
-  measure: revenue_d4{}
-  measure: revenue_d5{}
-  measure: revenue_d6{}
-  measure: revenue_d7{}
+  measure: predicted_revenue_d14{type: sum}
+  measure: revenue_d1{type: sum}
+  measure: revenue_d2{type: sum}
+  measure: revenue_d3{type: sum}
+  measure: revenue_d4{type: sum}
+  measure: revenue_d5{type: sum}
+  measure: revenue_d6{type: sum}
+  measure: revenue_d7{type: sum}
 
 
   dimension: date {type: date}
