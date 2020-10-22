@@ -28,7 +28,7 @@ view: training_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "90 days ago for 21 days"
+        value: "60 days ago for 30 days"
       }
     }
   }
@@ -189,7 +189,7 @@ view: future_input {
       }
       filters: {
         field: reporting_metrics.date_date
-        value: "60 days"
+        value: "30 days"
       }
     }
   }
