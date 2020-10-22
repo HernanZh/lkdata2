@@ -75,7 +75,7 @@ view: future_revenue_model {
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(model_type='linear_reg'
-        , input_label_cols='revenue_d14'
+        , input_label_cols=['revenue_d14']
         ) AS
       SELECT
          * EXCEPT(date, bundle_id,platform)
