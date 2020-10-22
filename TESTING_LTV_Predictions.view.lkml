@@ -27,7 +27,7 @@ view: training_input {
         value: "ios"
       }
       filters: {
-        field: reporting_metrics.date_date
+        field: reporting_cohorted_revenue.date
         value: "60 days ago for 30 days"
         # value: "60 days ago for 30 days"
       }
@@ -59,7 +59,7 @@ view: testing_input {
         value: "ios"
       }
       filters: {
-        field: reporting_metrics.date_date
+        field: reporting_cohorted_revenue.date
         value: "30 days ago for 21 days"
       }
     }
@@ -189,7 +189,7 @@ view: future_input {
         value: "ios"
       }
       filters: {
-        field: reporting_metrics.date_date
+        field: reporting_cohorted_revenue.date
         value: "30 days"
       }
     }
