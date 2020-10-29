@@ -188,7 +188,6 @@ view: future_revenue_prediction {
   measure: revenue_d5{type: sum}
   measure: revenue_d6{type: sum}
   measure: revenue_d7{type: sum}
-  measure: revenue_d14{type: sum}
 
 
   dimension: date {type: date}
