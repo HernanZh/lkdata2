@@ -19,10 +19,6 @@ view: training_input {
       column: revenue_d7 {}
       column: revenue_d14 {}
       filters: {
-        field: apps.platform
-        value: "ios"
-      }
-      filters: {
         field: reporting_cohorted_revenue.date
         value: "60 days ago for 30 days"
         # value: "60 days ago for 30 days"
@@ -46,10 +42,6 @@ view: testing_input {
       column: revenue_d6 {}
       column: revenue_d7 {}
       column: revenue_d14 {}
-      filters: {
-        field: apps.platform
-        value: "ios"
-      }
       filters: {
         field: reporting_cohorted_revenue.date
         value: "30 days ago for 21 days"
@@ -172,10 +164,6 @@ view: future_input {
       column: revenue_d5 {}
       column: revenue_d6 {}
       column: revenue_d7 {}
-      filters: {
-        field: apps.platform
-        value: "ios"
-      }
       filters: {
         field: reporting_cohorted_revenue.date
         value: "30 days"
