@@ -527,3 +527,5 @@ explore: user_level_ga_uar {}
 explore: future_revenue_prediction{}
 
 explore: future_revenue_prediction_d7 {}
+
+explore: future_revenue_prediction_d30 {}
