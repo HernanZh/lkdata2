@@ -192,11 +192,11 @@ explore: cohort_behavior {
     relationship: many_to_one
   }
 
-  join: ltv_predict{
-    type: left_outer
-    sql_on: ${cohort_behavior.xday} = ${ltv_predict.xday} ;;
-    relationship: many_to_one
-  }
+  # join: ltv_predict{
+  #   type: left_outer
+  #   sql_on: ${cohort_behavior.xday} = ${ltv_predict.xday} ;;
+  #   relationship: many_to_one
+  # }
 }
 
 explore: countries {}
