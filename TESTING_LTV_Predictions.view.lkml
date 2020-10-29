@@ -58,8 +58,8 @@ view: future_revenue_model {
     datagroup_trigger: prediction_trigger
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
-      OPTIONS(model_type='AUTOML_REGRESSOR'
-        , input_label_cols=['revenue_d7','revenue_d14']
+      OPTIONS(model_type='linear_reg'
+        , input_label_cols=['revenue_d14']
         ) AS
       SELECT
          * EXCEPT(date, bundle_id,platform)
