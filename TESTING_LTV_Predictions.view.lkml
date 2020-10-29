@@ -180,7 +180,7 @@ view: future_revenue_prediction {
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
   measure: predicted_revenue_d14{type: sum}
-  measure: predicted_revenue_d7{type:sum}
+  #measure: predicted_revenue_d7{type:sum}
   measure: revenue_d1{type: sum}
   measure: revenue_d2{type: sum}
   measure: revenue_d3{type: sum}
