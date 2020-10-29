@@ -524,8 +524,11 @@ explore: user_ad_revenue {
 
 explore: user_level_ga_uar {}
 
-explore: future_revenue_prediction{}
+
+explore: future_revenue_prediction_d3 {}
 
 explore: future_revenue_prediction_d7 {}
+
+explore: future_revenue_prediction_d14{}
 
 explore: future_revenue_prediction_d30 {}

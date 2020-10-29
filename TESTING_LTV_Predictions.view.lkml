@@ -161,7 +161,7 @@ view: future_input {
 }
 
 
-view: future_revenue_prediction {
+view: future_revenue_prediction_d14 {
   derived_table: {
     sql: SELECT * FROM ml.PREDICT(
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
