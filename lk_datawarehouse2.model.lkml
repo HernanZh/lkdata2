@@ -593,3 +593,5 @@ explore: user_ad_revenue {
 explore: user_level_ga_uar {}
 
 explore: future_revenue_prediction{}
+
+explore: future_revenue_prediction_d7 {}
