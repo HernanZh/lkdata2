@@ -59,7 +59,7 @@ view: future_revenue_model {
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(model_type='linear_reg'
-        , input_label_cols=['revenue_d14']
+        , input_label_cols=['revenue_d7','revenue_d14']
         ) AS
       SELECT
          * EXCEPT(date, bundle_id,platform)
@@ -180,6 +180,7 @@ view: future_revenue_prediction {
           (SELECT * FROM ${future_input.SQL_TABLE_NAME}));;
   }
   measure: predicted_revenue_d14{type: sum}
+  measure: predicted_revenue_d7{type:sum}
   measure: revenue_d1{type: sum}
   measure: revenue_d2{type: sum}
   measure: revenue_d3{type: sum}
@@ -187,6 +188,7 @@ view: future_revenue_prediction {
   measure: revenue_d5{type: sum}
   measure: revenue_d6{type: sum}
   measure: revenue_d7{type: sum}
+  measure: revenue_d14{type: sum}
 
 
   dimension: date {type: date}
