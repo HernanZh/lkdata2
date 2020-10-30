@@ -11,8 +11,6 @@ view: training_input_d30 {
       column: platform {field: reporting_cohorted_revenue.platform}
       column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
-      column: revenue_d2 {}
-      column: revenue_d3 {}
       column: revenue_d30 {}
       filters: {
         field: reporting_cohorted_revenue.date
@@ -50,8 +48,6 @@ view: future_input_d30 {
       column: platform {field: reporting_cohorted_revenue.platform}
       column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
-      column: revenue_d2 {}
-      column: revenue_d3 {}
       filters: {
         field: reporting_cohorted_revenue.date
         value: "30 days"
@@ -69,8 +65,6 @@ view: future_revenue_prediction_d30 {
   }
   #measure: predicted_revenue_d7{type:sum}
   measure: revenue_d1{type: sum}
-  measure: revenue_d2{type: sum}
-  measure: revenue_d3{type: sum}
   measure: predicted_revenue_d30{type: sum}
 
 
