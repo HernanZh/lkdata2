@@ -25,6 +25,36 @@ view: reporting_cohort_metrics {
     sql: ${TABLE}.country ;;
   }
 
+  dimension: country_bucket {
+    case: {
+    when: {
+    sql: ${country} IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
+    label: "T1"
+    }
+    when: {
+    sql: ${country} IN ('HK','JP','KR','TW') ;;
+    label: "T1_LOC"
+    }
+    when: {
+    sql: ${country} IN ('AT','BE','DK','FR','NL','SG','SE') ;;
+    label: "T2"
+    }
+    when: {
+    sql: ${country} IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
+    label: "T3"
+    }
+    when: {
+    sql: ${country} IN ('US') ;;
+    label: "US"
+    }
+    when: {
+    sql: ${country} IN ('CN') ;;
+    label: "CN"
+    }
+    else: "Unknown"
+  }
+  }
+
   dimension: daily_active_users {
     type: number
     sql: ${TABLE}.daily_active_users ;;
