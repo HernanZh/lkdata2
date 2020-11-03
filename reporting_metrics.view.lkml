@@ -32,6 +32,38 @@ view: reporting_metrics {
     sql: ${TABLE}.country ;;
   }
 
+  dimension: country_bucket {
+    type: string
+    case: {
+      when: {
+        sql: ${TABLE}.country IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
+        label: "T1"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('HK','JP','KR','TW') ;;
+        label: "T1_LOC"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('AT','BE','DK','FR','NL','SG','SE') ;;
+        label: "T2"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
+        label: "T3"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('US') ;;
+        label: "US"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('CN') ;;
+        label: "CN"
+      }
+      else: "Unknown"
+    }
+  }
+
+
   dimension: daily_active_users {
     type: number
     sql: ${TABLE}.daily_active_users ;;
