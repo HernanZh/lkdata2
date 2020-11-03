@@ -56,8 +56,8 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
