@@ -26,6 +26,7 @@ view: reporting_cohort_metrics {
   }
 
   dimension: country_bucket {
+    type: string
     case: {
     when: {
     sql: ${country} IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
