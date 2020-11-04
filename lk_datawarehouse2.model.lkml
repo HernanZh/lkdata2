@@ -41,6 +41,8 @@ explore: ad_networks {}
 
 explore: apps {}
 
+explore:  attribution_table{}
+
 explore: reporting_cohorted_revenue {
   join: ad_networks {
     type: left_outer
