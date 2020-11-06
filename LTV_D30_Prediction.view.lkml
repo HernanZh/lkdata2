@@ -19,7 +19,7 @@ view: training_input_d30 {
       column: revenue_d30 {}
       filters: {
         field: reporting_cohorted_revenue.date
-        value: "30 days"
+        value: "30 days ago for 28 days"
         # value: "60 days ago for 30 days"
       }
     }
