@@ -147,6 +147,7 @@ view: future_input {
       column: platform {field: reporting_cohorted_revenue.platform}
       column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
+      column: revenue_d2 {}
       filters: {
         field: reporting_cohorted_revenue.date
         value: "30 days"
