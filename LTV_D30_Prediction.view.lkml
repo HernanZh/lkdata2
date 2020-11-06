@@ -47,8 +47,8 @@ view: future_input_d30 {
   derived_table: {
     explore_source: reporting_cohorted_revenue {
       column: date { field:reporting_cohorted_revenue.date}
-#      column: bundle_id {field: apps.bundle_id}
-#      column: platform {field: reporting_cohorted_revenue.platform}
+      column: bundle_id {field: apps.bundle_id}
+      column: platform {field: reporting_cohorted_revenue.platform}
       column: installs {field: reporting_metrics.tracked_installs}
       column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
