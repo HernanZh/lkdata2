@@ -13,6 +13,9 @@ view: training_input_d30 {
       column: revenue_d1 {}
       column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
+      column: cpi {field: reporting_metrics.CPI}
+      column: clicks {field: reporting_metrics.reported_clicks}
+      column: arpdau {field: reporting_metrics.Ad_ARPDAU}
       column: revenue_d30 {}
       filters: {
         field: reporting_cohorted_revenue.date
@@ -52,6 +55,9 @@ view: future_input_d30 {
       column: installs {field: reporting_metrics.tracked_installs}
       column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
+      column: cpi {field: reporting_metrics.CPI}
+      column: clicks {field: reporting_metrics.reported_clicks}
+      column: arpdau {field: reporting_metrics.Ad_ARPDAU}
       column: revenue_d1 {}
       filters: {
         field: reporting_cohorted_revenue.date
