@@ -15,7 +15,7 @@ view: training_input {
       filters: {
         field: reporting_cohorted_revenue.date
         value: "15 days"
-        # value: "60 days ago for 30 days"
+        # value: "60 days ago for 30 days"F
       }
     }
   }
@@ -32,7 +32,7 @@ view: testing_input {
       column: revenue_d14 {}
       filters: {
         field: reporting_cohorted_revenue.date
-        value: "30 days ago for 21 days"
+        value: "15 days"
       }
     }
   }
