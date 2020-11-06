@@ -29,7 +29,7 @@ view: future_revenue_model_d30 {
     datagroup_trigger: prediction_trigger
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
-      OPTIONS(model_type='linear_reg'
+      OPTIONS(model_type='BOOSTED_TREE_REGRESSOR'
         , input_label_cols=['revenue_d30']
         ) AS
       SELECT
