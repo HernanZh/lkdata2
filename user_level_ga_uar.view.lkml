@@ -19,7 +19,7 @@ view: user_level_ga_uar {
       session_count,
       revenue,
       impressions,
-      arpdau
+      avg_arpdau
       from(
         SELECT
           game_analytics.ios_idfa  AS idfa,
@@ -156,8 +156,8 @@ view: user_level_ga_uar {
     sql: ${TABLE}.revenue ;;
   }
 
-  measure: arpdau {
-    type: sum
+  measure: avg_arpdau {
+    type: average
     sql: ${TABLE}.arpdau ;;
   }
 
