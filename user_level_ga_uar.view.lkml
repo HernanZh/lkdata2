@@ -150,8 +150,8 @@ view: user_level_ga_uar {
     sql: ${TABLE}.session_count ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
