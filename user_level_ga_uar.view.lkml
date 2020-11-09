@@ -19,7 +19,8 @@ view: user_level_ga_uar {
       session_count,
       revenue,
       impressions,
-      arpdau
+      arpdau,
+      dau
       from(
         SELECT
           game_analytics.ios_idfa  AS idfa,
@@ -33,7 +34,8 @@ view: user_level_ga_uar {
           game_analytics.ip  AS ip,
           AVG(game_analytics.length ) AS avg_session_length,
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
-          COUNT(DISTINCT game_analytics.session_id ) AS session_count
+          COUNT(DISTINCT game_analytics.session_id ) AS session_count,
+          COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
@@ -164,6 +166,11 @@ view: user_level_ga_uar {
   measure: avg_impressions {
     type: average
     sql: ${TABLE}.impressions ;;
+  }
+
+  measure: dau {
+    type: sum
+    sql: ${TABLE}.dau ;;
   }
 
   set: detail {
