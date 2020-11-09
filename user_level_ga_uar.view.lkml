@@ -161,7 +161,7 @@ view: user_level_ga_uar {
     sql: ${TABLE}.arpdau ;;
   }
 
-  measure: impressions {
+  measure: avg_impressions {
     type: average
     sql: ${TABLE}.impressions ;;
   }
@@ -184,7 +184,7 @@ view: user_level_ga_uar {
       avg_session_length,
       session_count,
       revenue,
-      impressions,
+      avg_impressions,
       avg_arpdau
     ]
   }
