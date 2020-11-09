@@ -1,5 +1,6 @@
 view: reporting_metrics {
-  sql_table_name: tenjin_BigQuery.reporting_metrics ;;
+  sql_table_name: tenjin.reporting_metrics ;;
+  #sql_table_name: tenjin_BigQuery.reporting_metrics ;;
 
   dimension: ad_network_id {
     type: number
