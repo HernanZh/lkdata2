@@ -4,6 +4,7 @@ view: user_level_ga_uar {
       filtered_uid,
       created_date,
       bundle_id,
+      days_since_install,
       build,
       event_id,
       platform,
@@ -31,6 +32,7 @@ view: user_level_ga_uar {
           game_analytics.event_id AS event_id,
           game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
+          CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install
           game_analytics.ip  AS ip,
           AVG(game_analytics.length ) AS avg_session_length,
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
@@ -39,7 +41,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9
+        GROUP BY 1,2,3,4,5,6,7,8,9,10
         ORDER BY 2 DESC
       )a
       inner join (
@@ -91,6 +93,11 @@ view: user_level_ga_uar {
   dimension: build {
     type: string
     sql: ${TABLE}.build ;;
+  }
+
+  dimension: days_since_install {
+    type:  number
+    sql:  ${TABLE}.days_since_install;;
   }
 
   dimension: event_id {
