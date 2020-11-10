@@ -9,6 +9,7 @@ view: user_level_ga_uar {
       event_id,
       platform,
       country,
+      country_bucket,
       ip,
       ad_network,
       ad_unit,
@@ -31,6 +32,25 @@ view: user_level_ga_uar {
           game_analytics.custom_03  AS AB_custom_03,
           game_analytics.event_id AS event_id,
           game_analytics.build  AS build,
+          SELECT
+            CASE
+          WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN '0'
+          WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN '1'
+          WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN '2'
+          WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN '3'
+          WHEN game_analytics.country_code IN ('US')  THEN '4'
+          WHEN game_analytics.country_code IN ('CN')  THEN '5'
+          ELSE '6'
+          END AS game_analytics_country_bucket__sort_,
+            CASE
+          WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+          WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+          WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+          WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+          WHEN game_analytics.country_code IN ('US')  THEN 'US'
+          WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
+          ELSE 'Unknown'
+          END AS country_bucket,
           game_analytics.bundle_id  AS bundle_id,
           CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           game_analytics.ip  AS ip,
@@ -41,7 +61,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9,10
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11
         ORDER BY 2 DESC
       )a
       inner join (
@@ -113,6 +133,11 @@ view: user_level_ga_uar {
   dimension: country {
     type: string
     sql: ${TABLE}.country ;;
+  }
+
+  dimension: country_bucket {
+    type:  string
+    sql: ${TABLE}.country_bucket ;;
   }
 
   dimension: ip {
@@ -188,6 +213,7 @@ view: user_level_ga_uar {
       build,
       platform,
       country,
+      country_bucket,
       ip,
       ad_network,
       ad_unit,
