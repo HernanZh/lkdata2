@@ -32,6 +32,7 @@ view: user_level_ga_uar {
           game_analytics.custom_03  AS AB_custom_03,
           game_analytics.event_id AS event_id,
           game_analytics.build  AS build,
+          game_analytics.country_code as country,
           (SELECT
             CASE
           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN '0'
@@ -61,13 +62,13 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
         ORDER BY 2 DESC
       )a
       inner join (
       SELECT
         CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_attributes.country  AS country,
+        --user_attributes.country  AS country,
         user_ad_revenue.advertising_id  AS advertising_id,
         user_ad_revenue.impressions  AS impressions,
         user_ad_revenue.ad_network  AS ad_network,
@@ -81,7 +82,7 @@ view: user_level_ga_uar {
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
 
       WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY)))) AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
-      GROUP BY 1,2,3,4,5,6,7
+      GROUP BY 1,2,3,4,5,6
       ORDER BY 7 DESC,6
       )b
       on a.filtered_uid = b.advertising_id
