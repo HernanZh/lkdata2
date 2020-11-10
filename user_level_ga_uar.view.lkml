@@ -35,15 +35,6 @@ view: user_level_ga_uar {
           game_analytics.country_code as country,
           (SELECT
             CASE
-          WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN '0'
-          WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN '1'
-          WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN '2'
-          WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN '3'
-          WHEN game_analytics.country_code IN ('US')  THEN '4'
-          WHEN game_analytics.country_code IN ('CN')  THEN '5'
-          ELSE '6'
-          END AS game_analytics_country_bucket__sort_,
-            CASE
           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
           WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
           WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
