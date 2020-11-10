@@ -33,7 +33,7 @@ view: user_level_ga_uar {
           game_analytics.event_id AS event_id,
           game_analytics.build  AS build,
           game_analytics.country_code as country,
-          (SELECT
+          SELECT
             CASE
           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN '0'
           WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN '1'
@@ -50,7 +50,7 @@ view: user_level_ga_uar {
           WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
           WHEN game_analytics.country_code IN ('US')  THEN 'US'
           WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
-          ELSE 'Unknown')
+          ELSE 'Unknown'
           END AS country_bucket,
           game_analytics.bundle_id  AS bundle_id,
           CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
