@@ -1,7 +1,7 @@
 view: d_conversionValue {
   derived_table: {
     sql: select 'Conversion Value' as Conversion_Value, 'RC ' as RC
-union ALL '1', '0.00109713190404027'
+union select '1', '0.00109713190404027'
 union all '2', '0.00264486414423989'
 union all '3', '0.00489953324867769'
 union all '4', '0.00786113921735365'
@@ -63,8 +63,7 @@ union all '59', '7.05452326887728'
 union all '60', '8.46853810313135'
 union all '61', '10.0118961602214'
 union all '62', '11.6845974401476'
-union all '63', '13.48664194'
-    ;;
+union all '63', '13.48664194';;
   }
 dimension: ConversionValue {
   type: number
