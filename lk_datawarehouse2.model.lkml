@@ -10,6 +10,8 @@ datagroup: lk_datawarehouse2_default_datagroup {
 
 persist_with: lk_datawarehouse2_default_datagroup
 
+explore: d_conversionValue {}
+
 
 explore: ad_engagements {
   join: apps {
