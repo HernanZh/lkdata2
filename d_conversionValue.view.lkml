@@ -1,7 +1,7 @@
 view: d_conversionValue {
   derived_table: {
     sql: select 'Conversion Value' as Conversion_Value, 'RC ' as RC
-union all '1', '0.00109713190404027'
+union all select '1', '0.00109713190404027'
 union all '2', '0.00264486414423989'
 union all '3', '0.00489953324867769'
 union all '4', '0.00786113921735365'
