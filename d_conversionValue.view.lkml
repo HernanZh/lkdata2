@@ -72,7 +72,7 @@ dimension: ConversionValue {
 }
 
   measure: RC {
-    type: max
+    type: sum
     sql: ${TABLE}.RC ;;
   }
 
