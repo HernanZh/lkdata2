@@ -12,7 +12,7 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: d_conversionValue {
   join: events {
-    type:  inner
+    type:  left_outer
     sql_on: ${events.value}=${d_conversionValue.ConversionValue} ;;
     relationship: many_to_one
   }
