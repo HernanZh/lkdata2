@@ -71,7 +71,7 @@ dimension: ConversionValue {
 }
 
   measure: RC {
-    type: number
+    type: max
     sql: ${TABLE}.RC ;;
   }
 
