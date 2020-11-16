@@ -13,7 +13,7 @@ persist_with: lk_datawarehouse2_default_datagroup
 explore: d_conversionValue {
   join: events {
     type:  left_outer
-    sql_on: ${events.value}=${d_conversionValue.ConversionValue} ;;
+    sql_on: ${d_conversionValue.ConversionValue} = save_cast(${events.value} as int64) ;;
     relationship: many_to_one
   }
 }
