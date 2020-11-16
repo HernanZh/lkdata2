@@ -10,7 +10,13 @@ datagroup: lk_datawarehouse2_default_datagroup {
 
 persist_with: lk_datawarehouse2_default_datagroup
 
-explore: d_conversionValue {}
+explore: d_conversionValue {
+  join: events {
+    type:  inner
+    sql_on: ${events.value}=${d_conversionValue.ConversionValue} ;;
+    relationship: many_to_one
+  }
+}
 
 
 explore: ad_engagements {
