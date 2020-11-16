@@ -73,7 +73,7 @@ dimension: ConversionValue {
 
   measure: RC {
     type: sum
-    sql: ${TABLE}.RC ;;
+    sql: safe_cast(${TABLE}.RC as float64);;
   }
 
 }
