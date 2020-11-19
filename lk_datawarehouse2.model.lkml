@@ -12,6 +12,8 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: d_conversionValue {}
 
+# explore: SKAdNetwork_Test {}
+
 
 explore: ad_engagements {
   join: apps {
@@ -89,6 +91,12 @@ explore: reporting_cohorted_revenue {
           ;;
     relationship: many_to_one
   }
+
+  # join: SKAdNetwork_Test {
+  #   type: left_outer
+  #   sql_on: ${SKAdNetwork_Test.created_date} = ${reporting_cohorted_revenue.date} ;;
+  #   relationship: one_to_one
+  # }
 }
 
 explore: bucket_campaign_info {
