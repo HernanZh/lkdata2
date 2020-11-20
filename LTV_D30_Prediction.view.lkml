@@ -10,7 +10,7 @@ view: training_input_d30 {
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
       # column: installs {field: reporting_metrics.tracked_installs}
-      #column: revenue_d1 {}
+      column: revenue_d1 {}
       # column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
       column: cpi {field: reporting_metrics.CPI}
@@ -59,7 +59,7 @@ view: future_input_d30 {
       # column: dau {field: reporting_metrics.DAU}
       #column: clicks {field: reporting_metrics.reported_clicks}
       column: arpdau {field:reporting_metrics.Ad_ARPDAU}
-      #column: revenue_d1 {}
+      column: revenue_d1 {}
       filters: {
         field: reporting_cohorted_revenue.date
         value: "30 days"
