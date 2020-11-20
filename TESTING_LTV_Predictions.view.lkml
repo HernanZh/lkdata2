@@ -68,11 +68,12 @@ view: future_revenue_model_evaluation {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${testing_input.SQL_TABLE_NAME}));;
   }
-  dimension: recall {type: number value_format_name:percent_2}
-  dimension: accuracy {type: number value_format_name:percent_2}
-  dimension: f1_score {type: number value_format_name:percent_3}
-  dimension: log_loss {type: number}
-  dimension: roc_auc {type: number}
+  dimension: mean_absolute_error {type: number value_format_name:percent_2}
+  dimension: mean_squared_error {type: number value_format_name:percent_2}
+  dimension: mean_squared_log_error {type: number value_format_name:percent_3}
+  dimension: median_absolute_error {type: number}
+  dimension: r2_score {type: number}
+  dimension: explained_variance {type: number}
 }
 
 view: roc_curve {
