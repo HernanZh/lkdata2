@@ -13,7 +13,7 @@ view: training_input_d30 {
       #column: revenue_d1 {}
       # column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
-      # column: cpi {field: reporting_metrics.CPI}
+      column: cpi {field: reporting_metrics.CPI}
       # column: dau {field: reporting_metrics.DAU}
       column: arpdau {field:reporting_metrics.Ad_ARPDAU}
       column: revenue_d30 {}
@@ -55,7 +55,7 @@ view: future_input_d30 {
       # column: installs {field: reporting_metrics.tracked_installs}
       # column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
-      # column: cpi {field: reporting_metrics.CPI}
+      column: cpi {field: reporting_metrics.CPI}
       # column: dau {field: reporting_metrics.DAU}
       #column: clicks {field: reporting_metrics.reported_clicks}
       column: arpdau {field:reporting_metrics.Ad_ARPDAU}
@@ -80,7 +80,7 @@ view: future_revenue_prediction_d30 {
   measure: predicted_revenue_d30{type: sum}
   measure: impressions {type:sum}
   # measure: rep_spend {type:sum}
-  # measure: cpi {type:sum}
+  measure: cpi {type:sum}
   # measure: dau {type:sum}
   measure: arpdau {type:sum}
   #measure: clicks {type:sum}
