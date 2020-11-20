@@ -32,7 +32,7 @@ view: testing_input {
       column: revenue_d14 {}
       filters: {
         field: reporting_cohorted_revenue.date
-        value: "30 days ago for 21 days"
+        value: "5 days ago for 5 days"
       }
     }
   }
