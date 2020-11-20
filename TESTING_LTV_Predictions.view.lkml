@@ -50,7 +50,7 @@ view: future_revenue_model {
         , input_label_cols=['revenue_d14']
         ) AS
       SELECT
-         * EXCEPT(date)
+         * EXCEPT(date, bundle_id,platform)
       FROM ${training_input.SQL_TABLE_NAME};;
   }
 }
