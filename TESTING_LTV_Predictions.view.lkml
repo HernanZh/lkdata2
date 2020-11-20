@@ -68,9 +68,9 @@ view: future_revenue_model_evaluation {
           MODEL ${future_revenue_model.SQL_TABLE_NAME},
           (SELECT * FROM ${testing_input.SQL_TABLE_NAME}));;
   }
-  dimension: mean_absolute_error {type: number value_format_name:percent_2}
-  dimension: mean_squared_error {type: number value_format_name:percent_2}
-  dimension: mean_squared_log_error {type: number value_format_name:percent_3}
+  dimension: mean_absolute_error {type: number }
+  dimension: mean_squared_error {type: number }
+  dimension: mean_squared_log_error {type: number}
   dimension: median_absolute_error {type: number}
   dimension: r2_score {type: number}
   dimension: explained_variance {type: number}
