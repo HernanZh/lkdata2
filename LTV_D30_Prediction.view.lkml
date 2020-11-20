@@ -39,7 +39,7 @@ view: future_revenue_model_d30 {
 
         ) AS
       SELECT
-         * EXCEPT(date, bundle_id,platform)
+         * EXCEPT( bundle_id,platform)
       FROM ${training_input_d30.SQL_TABLE_NAME};;
   }
 }
