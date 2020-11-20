@@ -9,12 +9,12 @@ view: training_input_d30 {
       column: date {field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
-      column: installs {field: reporting_metrics.tracked_installs}
+      # column: installs {field: reporting_metrics.tracked_installs}
       column: revenue_d1 {}
-      column: rep_spend {field: reporting_metrics.rep_spend}
+      # column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
-      column: cpi {field: reporting_metrics.CPI}
-      column: dau {field: reporting_metrics.DAU}
+      # column: cpi {field: reporting_metrics.CPI}
+      # column: dau {field: reporting_metrics.DAU}
       column: arpdau {field:reporting_metrics.Ad_ARPDAU}
       column: revenue_d30 {}
       filters: {
@@ -52,11 +52,11 @@ view: future_input_d30 {
       column: date { field:reporting_cohorted_revenue.date}
       column: bundle_id {field: apps.bundle_id}
       column: platform {field: reporting_cohorted_revenue.platform}
-      column: installs {field: reporting_metrics.tracked_installs}
-      column: rep_spend {field: reporting_metrics.rep_spend}
+      # column: installs {field: reporting_metrics.tracked_installs}
+      # column: rep_spend {field: reporting_metrics.rep_spend}
       column: impressions {field: reporting_metrics.rep_impressions}
-      column: cpi {field: reporting_metrics.CPI}
-      column: dau {field: reporting_metrics.DAU}
+      # column: cpi {field: reporting_metrics.CPI}
+      # column: dau {field: reporting_metrics.DAU}
       #column: clicks {field: reporting_metrics.reported_clicks}
       column: arpdau {field:reporting_metrics.Ad_ARPDAU}
       column: revenue_d1 {}
@@ -79,16 +79,16 @@ view: future_revenue_prediction_d30 {
   measure: revenue_d1{type: sum}
   measure: predicted_revenue_d30{type: sum}
   measure: impressions {type:sum}
-  measure: rep_spend {type:sum}
-  measure: cpi {type:sum}
-  measure: dau {type:sum}
+  # measure: rep_spend {type:sum}
+  # measure: cpi {type:sum}
+  # measure: dau {type:sum}
   measure: arpdau {type:sum}
   #measure: clicks {type:sum}
 
   dimension: date {type: date}
   dimension: bundle_id {type: string}
   dimension: platform {type: string}
-  measure: installs{type:sum}
+  # measure: installs{type:sum}
 
 
   # measure: max_predicted_score {
