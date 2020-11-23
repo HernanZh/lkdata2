@@ -7,7 +7,7 @@ view: user_level_ga_uar {
       days_since_install,
       build,
       event_id,
-      platform,
+      a.platform,
       country,
       country_bucket,
       ip,
@@ -32,6 +32,7 @@ view: user_level_ga_uar {
           game_analytics.custom_02  AS AB_custom_02,
           game_analytics.custom_03  AS AB_custom_03,
           game_analytics.event_id AS event_id,
+          game_analytics.platform as platform,
           game_analytics.build  AS build,
           game_analytics.country_code as country,
           (SELECT
@@ -54,7 +55,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
         ORDER BY 2 DESC
       )a
       inner join (
@@ -81,6 +82,7 @@ view: user_level_ga_uar {
       on a.filtered_uid = b.advertising_id
       and a.bundle_id = b.bundle_id
       and a.ts_date = b.created_date
+      and a.platform = b.platform
       --group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
 
        ;;
