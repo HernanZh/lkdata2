@@ -168,7 +168,7 @@ view: user_level_ga_uar {
   }
 
   measure: avg_session_length {
-    type: sum
+    type: average
     sql: ${TABLE}.avg_session_length ;;
   }
 
@@ -178,7 +178,7 @@ view: user_level_ga_uar {
   }
 
   measure: revenue {
-    type: sum
+    type: number
     sql: ${TABLE}.revenue ;;
   }
 
