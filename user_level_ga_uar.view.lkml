@@ -25,6 +25,7 @@ view: user_level_ga_uar {
       dau
       from(
         SELECT
+          CAST(TIMESTAMP_SECONDS(game_analytics.client_ts)  AS DATE) AS ts_date,
           game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.custom_01  AS AB_custom_01,
@@ -79,6 +80,7 @@ view: user_level_ga_uar {
       )b
       on a.filtered_uid = b.advertising_id
       and a.bundle_id = b.bundle_id
+      and a.ts_date = b.created_date
       group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
 
        ;;
