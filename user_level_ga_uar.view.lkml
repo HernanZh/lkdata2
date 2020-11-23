@@ -73,7 +73,7 @@ view: user_level_ga_uar {
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
 
       WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY)))) AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
-      GROUP BY 1,2,3,4,5
+      GROUP BY 1,2,3,4,5,6
       ORDER BY 7 DESC,6
       )b
       on a.filtered_uid = b.advertising_id
