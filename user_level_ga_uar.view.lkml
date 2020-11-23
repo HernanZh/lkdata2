@@ -3,7 +3,7 @@ view: user_level_ga_uar {
     sql: select
       filtered_uid,
       created_date,
-      bundle_id,
+      a.bundle_id,
       days_since_install,
       build,
       event_id,
@@ -62,6 +62,7 @@ view: user_level_ga_uar {
         --user_attributes.country  AS country,
         user_ad_revenue.advertising_id  AS advertising_id,
         user_ad_revenue.ad_network  AS ad_network,
+        user_ad_revenue.bundle_id as bundle_id,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.ad_unit  AS ad_unit,
         user_ad_revenue.impressions  AS impressions,
@@ -73,10 +74,11 @@ view: user_level_ga_uar {
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
 
       WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY)))) AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
-      GROUP BY 1,2,3,4,5,6
+      GROUP BY 1,2,3,4,5,6,7
       ORDER BY 7 DESC,6
       )b
       on a.filtered_uid = b.advertising_id
+      and a.bundle_id = b.bundle_id
       group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
 
        ;;
