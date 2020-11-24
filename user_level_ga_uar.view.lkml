@@ -26,7 +26,7 @@ view: user_level_ga_uar {
       from(
         SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.client_ts)  AS DATE) AS ts_date,
-          game_analytics.ios_idfa  AS idfa,
+          --game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.custom_01  AS AB_custom_01,
           game_analytics.custom_02  AS AB_custom_02,
@@ -55,7 +55,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
         ORDER BY 2 DESC
       )a
       inner join (
