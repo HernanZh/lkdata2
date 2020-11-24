@@ -26,7 +26,6 @@ view: user_level_ga_uar {
       from(
         SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.client_ts)  AS DATE) AS ts_date,
-          --game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.custom_01  AS AB_custom_01,
           game_analytics.custom_02  AS AB_custom_02,
@@ -53,15 +52,12 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-
-        WHERE game_analytics.bundle_id = 'com.gezellig.savethedate'
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
         ORDER BY 1 DESC
       )a
       inner join (
       SELECT
         CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        --user_attributes.country  AS country,
         user_ad_revenue.advertising_id  AS advertising_id,
         user_ad_revenue.ad_network  AS ad_network,
         user_ad_revenue.bundle_id as bundle_id,
@@ -71,11 +67,6 @@ view: user_level_ga_uar {
         SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau,
         COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
-      LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON user_attributes.campaign_id = campaigns.id
-      LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
-
-      WHERE user_ad_revenue.bundle_id = 'com.gezellig.savethedate'
       GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 DESC
       )b
@@ -83,7 +74,6 @@ view: user_level_ga_uar {
       and a.bundle_id = b.bundle_id
       and a.ts_date = b.created_date
       and a.platform = b.platform
-      --group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
 
        ;;
   }
