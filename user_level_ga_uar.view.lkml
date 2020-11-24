@@ -70,10 +70,10 @@ view: user_level_ga_uar {
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
         ORDER BY 1 DESC
       )b
-      on a.filtered_uid = b.advertising_id
-      and a.bundle_id = b.bundle_id
-      and a.ts_date = b.created_date
-      and a.platform = b.platform
+      on b.filtered_uid = a.advertising_id
+      and b.bundle_id = a.bundle_id
+      and b.ts_date = a.created_date
+      and b.platform = a.platform
 
        ;;
   }
