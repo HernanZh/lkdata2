@@ -47,6 +47,8 @@ explore: apps {}
 
 explore:  attribution_table{}
 
+explore: ga_uar_testing {}
+
 explore: reporting_cohorted_revenue {
   join: ad_networks {
     type: left_outer
