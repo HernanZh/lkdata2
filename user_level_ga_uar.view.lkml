@@ -54,9 +54,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
 
-        WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY)))
-        AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        AND game_analytics.bundle_id = 'com.gezellig.savethedate'
+        WHERE game_analytics.bundle_id = 'com.gezellig.savethedate'
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
         ORDER BY 1 DESC
       )a
@@ -77,9 +75,7 @@ view: user_level_ga_uar {
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON user_attributes.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
 
-      WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY))))
-      AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
-      AND user_ad_revenue.bundle_id = 'com.gezellig.savethedate'
+      WHERE user_ad_revenue.bundle_id = 'com.gezellig.savethedate'
       GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 DESC
       )b
