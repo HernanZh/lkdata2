@@ -31,12 +31,12 @@ view: user_level_ga_uar {
         user_ad_revenue.bundle_id as bundle_id,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.ad_unit  AS ad_unit,
+        user_ad_revenue.revenue AS revenue
         --user_ad_revenue.impressions  AS impressions,
         --SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau,
         COUNT(DISTINCT user_ad_revenue.user_id) as distinct_user,
-        user_ad_revenue.revenue AS revenue
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6
+      GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 DESC
       )a
       inner join (
