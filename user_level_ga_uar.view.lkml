@@ -25,6 +25,21 @@ view: user_level_ga_uar {
       dau
       from(
         SELECT
+        CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
+        user_ad_revenue.advertising_id  AS advertising_id,
+        user_ad_revenue.ad_network  AS ad_network,
+        user_ad_revenue.bundle_id as bundle_id,
+        user_ad_revenue.platform  AS platform,
+        user_ad_revenue.ad_unit  AS ad_unit,
+        user_ad_revenue.impressions  AS impressions,
+        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau,
+        COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
+      FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+      GROUP BY 1,2,3,4,5,6,7
+      ORDER BY 1 DESC
+      )a
+      inner join (
+      SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.client_ts)  AS DATE) AS ts_date,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.custom_01  AS AB_custom_01,
@@ -54,21 +69,6 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
         ORDER BY 1 DESC
-      )a
-      inner join (
-      SELECT
-        CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_ad_revenue.advertising_id  AS advertising_id,
-        user_ad_revenue.ad_network  AS ad_network,
-        user_ad_revenue.bundle_id as bundle_id,
-        user_ad_revenue.platform  AS platform,
-        user_ad_revenue.ad_unit  AS ad_unit,
-        user_ad_revenue.impressions  AS impressions,
-        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau,
-        COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
-      FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6,7
-      ORDER BY 1 DESC
       )b
       on a.filtered_uid = b.advertising_id
       and a.bundle_id = b.bundle_id
