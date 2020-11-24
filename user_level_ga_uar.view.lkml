@@ -36,7 +36,7 @@ view: user_level_ga_uar {
         COUNT(DISTINCT user_ad_revenue.user_id) as distinct_user,
         user_ad_revenue.revenue AS revenue
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6,7
+      GROUP BY 1,2,3,4,5,6
       ORDER BY 1 DESC
       )a
       inner join (
