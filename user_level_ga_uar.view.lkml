@@ -10,7 +10,7 @@ view: user_level_ga_uar {
       a.platform,
       country,
       country_bucket,
-      ip,
+     -- ip,
       ad_network,
       ad_unit,
       AB_custom_01,
@@ -26,7 +26,7 @@ view: user_level_ga_uar {
       from(
         SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS DATE) AS ts_date,
-          game_analytics.ios_idfa  AS idfa,
+          --game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.platform as platform,
           game_analytics.custom_01  AS AB_custom_01,
@@ -46,8 +46,8 @@ view: user_level_ga_uar {
           ELSE 'Unknown'
           END) AS country_bucket,
           game_analytics.bundle_id  AS bundle_id,
-          CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
-          game_analytics.ip  AS ip,
+          --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
+          --game_analytics.ip  AS ip,
           AVG(game_analytics.length ) AS avg_session_length,
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
@@ -55,7 +55,7 @@ view: user_level_ga_uar {
         FROM game_analytics.data_export_new  AS game_analytics
 
         --WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
+        GROUP BY 1,2,3,4,5,6,7,8,9,10
       )a
       inner join (
       SELECT
