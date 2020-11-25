@@ -65,7 +65,7 @@ view: user_level_ga_uar {
       and a.ts_date = b.created_date
       and a.platform = b.platform
       and a.bundle_id = b.bundle_id
-group by 1,2,3,4,5,6
+
        ;;
   }
 
