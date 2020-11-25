@@ -7,7 +7,7 @@ view: user_level_ga_uar {
       days_since_install,
       build,
       event_id,
-      platform,
+      a.platform,
       country,
       country_bucket,
       ip,
