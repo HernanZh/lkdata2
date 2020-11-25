@@ -5,17 +5,12 @@ view: user_level_ga_uar {
       created_date,
       a.bundle_id,
      -- days_since_install,
-      --build,
---      event_id,
       a.platform,
       country,
       country_bucket,
-     -- ip,
-      --ad_network,
-      --ad_unit,
-      AB_custom_01,
-      AB_custom_02,
-      AB_custom_03,
+      --AB_custom_01,
+      --AB_custom_02,
+      --AB_custom_03,
       playtime,
       avg_session_length,
       session_count,
@@ -70,7 +65,7 @@ view: user_level_ga_uar {
       and a.ts_date = b.created_date
       and a.platform = b.platform
       and a.bundle_id = b.bundle_id
-
+group by 1,2,3,4,5,6
        ;;
   }
 
