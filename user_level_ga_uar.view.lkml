@@ -4,7 +4,7 @@ view: user_level_ga_uar {
       filtered_uid,
       created_date,
       a.bundle_id,
-      days_since_install,
+     -- days_since_install,
       build,
 --      event_id,
       a.platform,
