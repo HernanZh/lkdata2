@@ -37,7 +37,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7
+        GROUP BY 1,2,3,4
       )a
       inner join (
       SELECT
