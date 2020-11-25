@@ -29,17 +29,6 @@ view: user_level_ga_uar {
           --game_analytics.custom_03  AS AB_custom_03,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
-          game_analytics.country_code as country,
-          (SELECT
-            CASE
-          WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
-          WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
-          WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
-          WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
-          WHEN game_analytics.country_code IN ('US')  THEN 'US'
-          WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
-          ELSE 'Unknown'
-          END) AS country_bucket,
           game_analytics.bundle_id  AS bundle_id,
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           --game_analytics.ip  AS ip,
@@ -90,16 +79,6 @@ view: user_level_ga_uar {
     sql: ${TABLE}.bundle_id ;;
   }
 
-  dimension: build {
-    type: string
-    sql: ${TABLE}.build ;;
-  }
-
-  dimension: days_since_install {
-    type:  number
-    sql:  ${TABLE}.days_since_install;;
-  }
-
   # dimension: event_id {
   #   type: string
   #   sql: ${TABLE}.event_id ;;
@@ -108,21 +87,6 @@ view: user_level_ga_uar {
   dimension: platform {
     type: string
     sql: ${TABLE}.platform ;;
-  }
-
-  dimension: country {
-    type: string
-    sql: ${TABLE}.country ;;
-  }
-
-  dimension: country_bucket {
-    type:  string
-    sql: ${TABLE}.country_bucket ;;
-  }
-
-  dimension: ip {
-    type: string
-    sql: ${TABLE}.ip ;;
   }
 
   dimension: ad_network {
@@ -151,33 +115,23 @@ view: user_level_ga_uar {
   }
 
   measure: playtime {
-    type: average
-    sql: ${TABLE}.playtime ;;
+    type: number
+    sql: mean(${TABLE}.playtime) ;;
   }
 
   measure: avg_session_length {
-    type: sum
-    sql: ${TABLE}.avg_session_length ;;
+    type: number
+    sql: mean(${TABLE}.avg_session_length) ;;
   }
 
   measure: session_count {
-    type: sum
-    sql: ${TABLE}.session_count ;;
+    type: number
+    sql: sum(${TABLE}.session_count) ;;
   }
 
   measure: revenue {
     type: number
     sql: sum(${TABLE}.revenue) ;;
-  }
-
-  measure: avg_arpdau {
-    type: average
-    sql: ${TABLE}.arpdau ;;
-  }
-
-  measure: avg_impressions {
-    type: average
-    sql: ${TABLE}.impressions ;;
   }
 
   measure: dau {
@@ -190,22 +144,11 @@ view: user_level_ga_uar {
       filtered_uid,
       created_date,
       bundle_id,
-      build,
       platform,
-      country,
-      country_bucket,
-      ip,
-      ad_network,
-      ad_unit,
-      ab_custom_01,
-      ab_custom_02,
-      ab_custom_03,
       playtime,
       avg_session_length,
       session_count,
-      revenue,
-      avg_impressions,
-      avg_arpdau
+      revenue
     ]
   }
 }
