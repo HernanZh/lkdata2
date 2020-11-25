@@ -67,15 +67,16 @@ view: user_level_ga_uar {
         user_ad_revenue.ad_network  AS ad_network,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.ad_unit  AS ad_unit,
-        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau,
-        COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
+        user_ad_revenue.revenue AS revenue,
+        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
+
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
       LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
       LEFT JOIN tenjin_BigQuery.campaigns  AS campaigns ON user_attributes.campaign_id = campaigns.id
       LEFT JOIN tenjin_BigQuery.apps  AS apps ON campaigns.app_id = apps.id
 
       WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY)))) AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
-      GROUP BY 1,2,3,4,5,6
+      GROUP BY 1,2,3,4,5,6,7
       ORDER BY 7 DESC,6
       )b
       on a.filtered_uid = b.advertising_id
@@ -182,8 +183,8 @@ view: user_level_ga_uar {
   }
 
   measure: revenue {
-    type: sum
-    sql: ${TABLE}.revenue ;;
+    type: number
+    sql: sum(${TABLE}.revenue) ;;
   }
 
   measure: avg_arpdau {
