@@ -6,7 +6,7 @@ view: user_level_ga_uar {
       a.bundle_id,
       days_since_install,
       build,
-      event_id,
+--      event_id,
       a.platform,
       country,
       country_bucket,
@@ -113,10 +113,10 @@ view: user_level_ga_uar {
     sql:  ${TABLE}.days_since_install;;
   }
 
-  dimension: event_id {
-    type: string
-    sql: ${TABLE}.event_id ;;
-  }
+  # dimension: event_id {
+  #   type: string
+  #   sql: ${TABLE}.event_id ;;
+  # }
 
   dimension: platform {
     type: string
