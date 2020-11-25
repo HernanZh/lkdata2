@@ -3,7 +3,7 @@ view: user_level_ga_uar {
     sql: select
       filtered_uid,
       created_date,
-      bundle_id,
+      a.bundle_id,
       days_since_install,
       build,
       event_id,
