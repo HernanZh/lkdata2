@@ -29,9 +29,9 @@ view: user_level_ga_uar {
           --game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.platform as platform,
-          game_analytics.custom_01  AS AB_custom_01,
-          game_analytics.custom_02  AS AB_custom_02,
-          game_analytics.custom_03  AS AB_custom_03,
+          --game_analytics.custom_01  AS AB_custom_01,
+          --game_analytics.custom_02  AS AB_custom_02,
+          --game_analytics.custom_03  AS AB_custom_03,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
           game_analytics.country_code as country,
@@ -53,25 +53,17 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-
-        --WHERE (((TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) >= ((TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY))) AND (TIMESTAMP_SECONDS(game_analytics.arrival_ts) ) < ((TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY)))))
-        GROUP BY 1,2,3,4,5,6,7,8,9
+        GROUP BY 1,2,3,4,5,6
       )a
       inner join (
       SELECT
         CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        --user_attributes.country  AS country,
         user_ad_revenue.advertising_id  AS advertising_id,
-        --user_ad_revenue.impressions  AS impressions,
-        --user_ad_revenue.ad_network  AS ad_network,
         user_ad_revenue.platform  AS platform,
-        --user_ad_revenue.ad_unit  AS ad_unit,
         user_ad_revenue.revenue AS revenue,
         user_ad_revenue.bundle_id as bundle_id,
         SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-
-      --WHERE (((user_ad_revenue.date_created ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY) AS TIMESTAMP), DAY)))) AND (user_ad_revenue.date_created ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -29 DAY), INTERVAL 30 DAY) AS TIMESTAMP), DAY))))))
       GROUP BY 1,2,3,4,5
       )b
       on a.filtered_uid = b.advertising_id
