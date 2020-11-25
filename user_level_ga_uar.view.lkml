@@ -51,7 +51,7 @@ view: user_level_ga_uar {
       GROUP BY 1,2,3,4,5
       )b
       on a.filtered_uid = b.advertising_id
-      and a.ts_date = b.created_date
+      --and a.ts_date = b.created_date
       and a.platform = b.platform
       and a.bundle_id = b.bundle_id
 
