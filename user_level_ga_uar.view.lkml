@@ -116,12 +116,12 @@ view: user_level_ga_uar {
 
   measure: playtime {
     type: number
-    sql: mean(${TABLE}.playtime) ;;
+    sql: sum(${TABLE}.playtime) ;;
   }
 
   measure: avg_session_length {
     type: number
-    sql: mean(${TABLE}.avg_session_length) ;;
+    sql: sum(${TABLE}.avg_session_length) ;;
   }
 
   measure: session_count {
