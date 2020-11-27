@@ -8,9 +8,9 @@ view: user_level_ga_uar {
       a.platform,
      -- country,
      -- country_bucket,
-     -- AB_custom_01,
-     -- AB_custom_02,
-     -- AB_custom_03,
+      AB_custom_01,
+      AB_custom_02,
+      AB_custom_03,
       playtime,
       avg_session_length,
       session_count,
@@ -24,9 +24,9 @@ view: user_level_ga_uar {
           --game_analytics.ios_idfa  AS idfa,
           REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           game_analytics.platform as platform,
-          --game_analytics.custom_01  AS AB_custom_01,
-          --game_analytics.custom_02  AS AB_custom_02,
-          --game_analytics.custom_03  AS AB_custom_03,
+          game_analytics.custom_01  AS AB_custom_01,
+          game_analytics.custom_02  AS AB_custom_02,
+          game_analytics.custom_03  AS AB_custom_03,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
@@ -37,7 +37,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4
+        GROUP BY 1,2,3,4,5,6,7
       )a
       inner join (
       SELECT
