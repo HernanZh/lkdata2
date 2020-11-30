@@ -28,6 +28,7 @@ view: user_level_ga_uar {
           game_analytics.custom_01  AS AB_custom_01,
           game_analytics.custom_02  AS AB_custom_02,
           game_analytics.custom_03  AS AB_custom_03,
+          game_analytics.idfa as idfa,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
@@ -38,12 +39,12 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7
+        GROUP BY 1,2,3,4,5,6,7,8
       )a
       inner join (
       SELECT
         CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_ad_revenue.idfv  AS advertising_id,
+        user_ad_revenue.advertising_id  AS advertising_id,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.revenue AS revenue,
         user_ad_revenue.ad_unit as ad_unit,
@@ -53,7 +54,7 @@ view: user_level_ga_uar {
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
       GROUP BY 1,2,3,4,5,6,7
       )b
-      on a.filtered_uid = b.advertising_id
+      on (a.filtered_uid = b.advertising_id or a.idfa = b.advertising_id)
       and a.ts_date = b.created_date
       and a.platform = b.platform
       and a.bundle_id = b.bundle_id
