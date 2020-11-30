@@ -2,6 +2,7 @@ view: user_level_ga_uar {
   derived_table: {
     sql: select
       filtered_uid,
+      ad_unit,
       created_date,
       a.bundle_id,
      -- days_since_install,
@@ -45,11 +46,12 @@ view: user_level_ga_uar {
         user_ad_revenue.advertising_id  AS advertising_id,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.revenue AS revenue,
+        user_ad_revenue.ad_unit as ad_unit,
         user_ad_revenue.bundle_id as bundle_id,
         user_ad_revenue.impressions AS impressions,
         SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6
+      GROUP BY 1,2,3,4,5,6,7
       )b
       on a.filtered_uid = b.advertising_id
       and a.ts_date = b.created_date
