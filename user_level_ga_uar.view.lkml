@@ -62,9 +62,7 @@ view: user_level_ga_uar {
       and idfa_a.platform = idfa_b.platform
       and idfa_a.bundle_id = idfa_b.bundle_id
       )idfa_table
-
       Union
-
       select * from
       (
           select
