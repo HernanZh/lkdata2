@@ -49,7 +49,7 @@ view: user_level_ga_uar {
         user_ad_revenue.impressions AS impressions,
         SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5
+      GROUP BY 1,2,3,4,5,6
       )b
       on a.filtered_uid = b.advertising_id
       and a.ts_date = b.created_date
