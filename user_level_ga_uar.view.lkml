@@ -136,7 +136,7 @@ view: user_level_ga_uar {
 
   measure: dau {
     type: sum
-    sql: ${TABLE}.dau ;;
+    sql: Count(distinct(${TABLE}.filtered_uid)) ;;
   }
 
   set: detail {
