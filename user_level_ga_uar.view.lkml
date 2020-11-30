@@ -8,6 +8,7 @@ view: user_level_ga_uar {
       idfa_a.bundle_id,
      -- days_since_install,
       idfa_a.platform,
+      idfa_b.advertising_id,
      -- country,
      -- country_bucket,
       AB_custom_01,
@@ -70,6 +71,7 @@ view: user_level_ga_uar {
       idfv_a.bundle_id,
      -- days_since_install,
       idfv_a.platform,
+      idfv_b.advertising_id,
      -- country,
      -- country_bucket,
       AB_custom_01,
@@ -131,9 +133,9 @@ view: user_level_ga_uar {
     drill_fields: [detail*]
   }
 
-  dimension: filtered_uid {
+  dimension: advertising_id {
     type: string
-    sql: ${TABLE}.filtered_uid ;;
+    sql: ${TABLE}.advertising_id ;;
   }
 
   dimension: created_date {
@@ -214,7 +216,6 @@ view: user_level_ga_uar {
 
   set: detail {
     fields: [
-      filtered_uid,
       created_date,
       bundle_id,
       platform,
