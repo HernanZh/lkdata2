@@ -1,14 +1,14 @@
 view: user_level_ga_uar {
   derived_table: {
     sql:
-
+    select * from(
     select
       filtered_uid,
       ad_unit,
       created_date,
-      a.bundle_id,
+      idfa_a.bundle_id,
      -- days_since_install,
-      a.platform,
+      idfa_a.platform,
      -- country,
      -- country_bucket,
       AB_custom_01,
@@ -43,34 +43,37 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8
-      )a
+      )idfa_a
       inner join (
-      SELECT
-        CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_ad_revenue.advertising_id  AS advertising_id,
-        user_ad_revenue.platform  AS platform,
-        user_ad_revenue.revenue AS revenue,
-        user_ad_revenue.ad_unit as ad_unit,
-        user_ad_revenue.bundle_id as bundle_id,
-        user_ad_revenue.impressions AS impressions,
-        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
-      FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6,7
-      )b
-      on a.idfa = b.advertising_id
-      and a.ts_date = b.created_date
-      and a.platform = b.platform
-      and a.bundle_id = b.bundle_id
+        SELECT
+          CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
+          user_ad_revenue.advertising_id  AS advertising_id,
+          user_ad_revenue.platform  AS platform,
+          user_ad_revenue.revenue AS revenue,
+          user_ad_revenue.ad_unit as ad_unit,
+          user_ad_revenue.bundle_id as bundle_id,
+          user_ad_revenue.impressions AS impressions,
+          SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
+        FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        GROUP BY 1,2,3,4,5,6,7
+      )idfa_b
+      on idfa_a.idfa = idfa_b.advertising_id
+      and idfa_a.ts_date = idfa_b.created_date
+      and idfa_a.platform = idfa_b.platform
+      and idfa_a.bundle_id = idfa_b.bundle_id
+      )idfa_table
 
       Union
+
+      select * from
       (
           select
       filtered_uid,
       ad_unit,
       created_date,
-      a.bundle_id,
+      idfv_a.bundle_id,
      -- days_since_install,
-      a.platform,
+      idfv_a.platform,
      -- country,
      -- country_bucket,
       AB_custom_01,
@@ -105,30 +108,25 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8
-      )a
+      )idfv_a
       inner join (
-      SELECT
-        CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_ad_revenue.advertising_id  AS advertising_id,
-        user_ad_revenue.platform  AS platform,
-        user_ad_revenue.revenue AS revenue,
-        user_ad_revenue.ad_unit as ad_unit,
-        user_ad_revenue.bundle_id as bundle_id,
-        user_ad_revenue.impressions AS impressions,
-        SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
-      FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4,5,6,7
-      )b
-      on a.idfa = b.advertising_id
-      and a.ts_date = b.created_date
-      and a.platform = b.platform
-      and a.bundle_id = b.bundle_id
-      )c
-      on a.idfv = b.advertising_id
-      and a.ts_date = b.created_date
-      and a.platform = b.platform
-      and a.bundle_id = b.bundle_id
-
+        SELECT
+          CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
+          user_ad_revenue.advertising_id  AS advertising_id,
+          user_ad_revenue.platform  AS platform,
+          user_ad_revenue.revenue AS revenue,
+          user_ad_revenue.ad_unit as ad_unit,
+          user_ad_revenue.bundle_id as bundle_id,
+          user_ad_revenue.impressions AS impressions,
+          SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
+        FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        GROUP BY 1,2,3,4,5,6,7
+      )idfv_b
+      on idfv_a.idfv = idfv_b.advertising_id
+      and idfv_a.ts_date = idfv_b.created_date
+      and idfv_a.platform = idfv_b.platform
+      and idfv_a.bundle_id = idfv_b.bundle_id
+      )idfv_table
        ;;
   }
 
