@@ -206,7 +206,7 @@ view: user_level_ga_uar {
 
   measure: dau {
     type: count_distinct
-    sql: ${TABLE}.filtered_uid ;;
+    sql: ${TABLE}.advertising_id ;;
   }
 
   measure: impressions {
