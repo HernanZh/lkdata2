@@ -43,7 +43,7 @@ view: user_level_ga_uar {
       inner join (
       SELECT
         CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
-        user_ad_revenue.advertising_id  AS advertising_id,
+        user_ad_revenue_idfv  AS advertising_id,
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.revenue AS revenue,
         user_ad_revenue.ad_unit as ad_unit,
