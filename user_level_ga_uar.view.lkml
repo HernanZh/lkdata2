@@ -15,7 +15,7 @@ view: user_level_ga_uar {
       avg_session_length,
       session_count,
       revenue,
-      --impressions,
+      impressions,
       arpdau,
       dau
       from(
@@ -46,6 +46,7 @@ view: user_level_ga_uar {
         user_ad_revenue.platform  AS platform,
         user_ad_revenue.revenue AS revenue,
         user_ad_revenue.bundle_id as bundle_id,
+        user_ad_revenue.impressions AS impressions,
         SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
       GROUP BY 1,2,3,4,5
@@ -137,6 +138,11 @@ view: user_level_ga_uar {
   measure: dau {
     type: count_distinct
     sql: ${TABLE}.filtered_uid ;;
+  }
+
+  measure: impressions {
+    type: number
+    sql:sum(${TABLE}.impressions) ;;
   }
 
   set: detail {
