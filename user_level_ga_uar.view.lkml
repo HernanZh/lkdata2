@@ -3,7 +3,6 @@ view: user_level_ga_uar {
     sql:
     select * from(
     select
-      filtered_uid,
       ad_unit,
       created_date,
       idfa_a.bundle_id,
@@ -66,7 +65,6 @@ view: user_level_ga_uar {
       select * from
       (
           select
-      filtered_uid,
       ad_unit,
       created_date,
       idfv_a.bundle_id,
