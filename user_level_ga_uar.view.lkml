@@ -28,7 +28,7 @@ view: user_level_ga_uar {
           game_analytics.custom_01  AS AB_custom_01,
           game_analytics.custom_02  AS AB_custom_02,
           game_analytics.custom_03  AS AB_custom_03,
-          game_analytics.idfa as idfa,
+          game_analytics.ios_idfa as idfa,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
