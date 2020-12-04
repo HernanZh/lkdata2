@@ -33,8 +33,8 @@ view: user_level_ga_uar {
           game_analytics.custom_02  AS AB_custom_02,
           game_analytics.custom_03  AS AB_custom_03,
           game_analytics.country_code as country,
-          SELECT(
-            CASE
+          (SELECT
+              CASE
           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
           WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
           WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
@@ -42,7 +42,7 @@ view: user_level_ga_uar {
           WHEN game_analytics.country_code IN ('US')  THEN 'US'
           WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
           ELSE 'Unknown'
-          END) AS country_bucket,
+          END )AS country_bucket,
           --game_analytics.event_id AS event_id,
           --game_analytics.build  AS build,
           game_analytics.bundle_id  AS bundle_id,
