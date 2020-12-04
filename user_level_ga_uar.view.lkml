@@ -63,7 +63,16 @@ view: user_level_ga_uar {
           user_ad_revenue.revenue AS revenue,
           user_ad_revenue.ad_unit as ad_unit,
           user_attributes.country as country,
-          user_attributes.country_bucket as country_bucket,
+          (SELECT
+              CASE
+          WHEN user_attributes.country IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+          WHEN user_attributes.country IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+          WHEN user_attributes.country IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+          WHEN user_attributes.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+          WHEN user_attributes.country IN ('US')  THEN 'US'
+          WHEN user_attributes.country IN ('CN')  THEN 'CN'
+          ELSE 'Unknown'
+          END) AS country_bucket,
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
@@ -143,7 +152,16 @@ view: user_level_ga_uar {
           user_ad_revenue.revenue AS revenue,
           user_ad_revenue.ad_unit as ad_unit,
           user_attributes.country as country,
-          user_attributes.country_bucket as country_bucket,
+          (SELECT
+              CASE
+          WHEN user_attributes.country IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+          WHEN user_attributes.country IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+          WHEN user_attributes.country IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+          WHEN user_attributes.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+          WHEN user_attributes.country IN ('US')  THEN 'US'
+          WHEN user_attributes.country IN ('CN')  THEN 'CN'
+          ELSE 'Unknown'
+          END) AS country_bucket,
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
