@@ -76,7 +76,7 @@ view: user_level_ga_uar {
      -- days_since_install,
       idfv_a.platform,
       idfv_b.advertising_id as advertising_id,
-      idv_a.country,
+      idfv_a.country,
      -- country_bucket,
       AB_custom_01,
       AB_custom_02,
