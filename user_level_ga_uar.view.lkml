@@ -52,11 +52,12 @@ view: user_level_ga_uar {
           user_ad_revenue.platform  AS platform,
           user_ad_revenue.revenue AS revenue,
           user_ad_revenue.ad_unit as ad_unit,
-          user_ad_revenue.country as country,
+          user_attributes.country as country,
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
         FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
         GROUP BY 1,2,3,4,5,6,7,8
       )idfa_b
       on idfa_a.idfa = idfa_b.advertising_id
@@ -118,11 +119,12 @@ view: user_level_ga_uar {
           user_ad_revenue.platform  AS platform,
           user_ad_revenue.revenue AS revenue,
           user_ad_revenue.ad_unit as ad_unit,
-          user_ad_revenue.country as country,
+          user_attributes.country as country,
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
         FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
         GROUP BY 1,2,3,4,5,6,7,8
       )idfv_b
       on idfv_a.idfv = idfv_b.advertising_id
