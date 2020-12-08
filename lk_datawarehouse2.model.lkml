@@ -45,6 +45,10 @@ explore: ad_networks {}
 
 explore: apps {}
 
+explore: auditlog_tenjin {}
+
+explore: auditlog_ga {}
+
 explore:  attribution_table{}
 
 explore: ga_uar_testing {}
