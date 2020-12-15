@@ -36,8 +36,6 @@ view: uar_cohort_test {
       on a.user_id=b.user_id
       and a.platform = b.platform
       and a.bundle_id = b.bundle_id)c
-      where c.bundle_id='com.gezellig.roadcrash'
-      and c.platform ='ios'
       group by 1,2,3,4
       order by 1 DESC
  ;;
