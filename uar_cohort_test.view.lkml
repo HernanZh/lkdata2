@@ -168,7 +168,8 @@ view: uar_cohort_test {
       revenue_d21,
       revenue_d30,
       revenue_d60,
-      revenue_d90
+      revenue_d90,
+      first_day_users
 
     ]
   }
