@@ -17,7 +17,7 @@ view: uar_cohort_test {
       sum(case when day_cohort<=29 then revenue else 0 end) as revenue_d30,
       sum(case when day_cohort<=59 then revenue else 0 end) as revenue_d60,
       sum(case when day_cohort<=99 then revenue else 0 end) as revenue_d90,
-      sum(case when day_cohort<=0 then unique_users else 0 end) as tracked_installs
+      sum(day_cohort<=0) as tracked_installs
 
       from
       (select a.*,b.first_date_created,
@@ -28,7 +28,6 @@ view: uar_cohort_test {
             user_ad_revenue.platform  AS platform,
             user_ad_revenue.bundle_id as bundle_id,
             CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS date_created,
-            count(DISTINCT user_ad_revenue.user_id) as unique_users,
             COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
       GROUP BY 1,2,3,4) as a
@@ -148,7 +147,7 @@ view: uar_cohort_test {
 
   measure: first_day_users {
     type: sum
-    sql: ${TABLE}.unique_users;;
+    sql: ${TABLE}.tracked_installs;;
   }
 
 
