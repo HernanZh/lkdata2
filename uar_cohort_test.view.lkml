@@ -28,9 +28,10 @@ view: uar_cohort_test {
             user_ad_revenue.platform  AS platform,
             user_ad_revenue.bundle_id as bundle_id,
             CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS date_created,
+            user_ad_revenue.unique_users as unique_users,
             COALESCE(SUM(user_ad_revenue.revenue ), 0) AS revenue
       FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
-      GROUP BY 1,2,3,4) as a
+      GROUP BY 1,2,3,4,5) as a
       left join
           (SELECT
             user_ad_revenue.user_id  AS user_id,
