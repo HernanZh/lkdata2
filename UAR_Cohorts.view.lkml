@@ -56,6 +56,12 @@ view: uar_cohorts {
     sql: ${TABLE}.date_created ;;
   }
 
+  measure: install_date {
+    type: date
+    sql: MIN(${date_created_raw}) ;;
+    convert_tz: no
+  }
+
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
