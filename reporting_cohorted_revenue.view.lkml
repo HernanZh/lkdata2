@@ -18,7 +18,7 @@ view: reporting_cohorted_revenue {
        SUM(CASE WHEN days_since_install <= 20 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d21,
        SUM(CASE WHEN days_since_install <= 29 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d30,
        SUM(CASE WHEN days_since_install <= 59 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d60,
-       SUM(CASE WHEN days_since_install <= 99 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d90,
+       SUM(CASE WHEN days_since_install <= 89 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d90,
        SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS d1_retained_users
 FROM reporting_cohort_metrics
   LEFT JOIN apps ON apps.id = reporting_cohort_metrics.app_id
