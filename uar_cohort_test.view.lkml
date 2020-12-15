@@ -17,7 +17,7 @@ view: uar_cohort_test {
       sum(case when day_cohort<=29 then revenue else 0 end) as revenue_d30,
       sum(case when day_cohort<=59 then revenue else 0 end) as revenue_d60,
       sum(case when day_cohort<=99 then revenue else 0 end) as revenue_d90,
-      sum(case when day_cohort<=0 then count(*) else 0 end) as tracked_installs
+      sum(case when day_cohort<=0 then unique_users else 0 end) as tracked_installs
 
       from
       (select a.*,b.first_date_created,
@@ -145,9 +145,9 @@ view: uar_cohort_test {
     value_format: "$#,##0.00"
   }
 
-  measure: tracked_installs {
+  measure: first_day_users {
     type: sum
-    sql: ${TABLE}.tracked_installs;;
+    sql: ${TABLE}.unique_users;;
   }
 
 
