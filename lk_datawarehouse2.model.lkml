@@ -572,6 +572,7 @@ explore: uar_cohorts {
 
 explore: user_level_ga_uar {}
 
+explore: uar_cohort_test {}
 
 explore: future_revenue_prediction_d3 {}
 
