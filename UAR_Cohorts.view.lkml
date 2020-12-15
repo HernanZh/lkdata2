@@ -58,7 +58,7 @@ view: uar_cohorts {
 
   measure: install_date {
     type: date
-    sql: MIN(${date_created_raw}) ;;
+    sql: MAX(${date_created_raw}) ;;
     convert_tz: no
   }
 
