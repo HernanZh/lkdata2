@@ -12,11 +12,11 @@ view: uar_cohort_test {
       sum(case when day_cohort<=4 then revenue else 0 end) as revenue_d5,
       sum(case when day_cohort<=5 then revenue else 0 end) as revenue_d6,
       sum(case when day_cohort<=6 then revenue else 0 end) as revenue_d7,
-      sum(case when day_cohort<=13 then revenue else 13 end) as revenue_d14,
-      sum(case when day_cohort<=20 then revenue else 20 end) as revenue_d21,
-      sum(case when day_cohort<=29 then revenue else 29 end) as revenue_d30,
-      sum(case when day_cohort<=59 then revenue else 59 end) as revenue_d60,
-      sum(case when day_cohort<=99 then revenue else 89 end) as revenue_d90,
+      sum(case when day_cohort<=13 then revenue else 0 end) as revenue_d14,
+      sum(case when day_cohort<=20 then revenue else 0 end) as revenue_d21,
+      sum(case when day_cohort<=29 then revenue else 0 end) as revenue_d30,
+      sum(case when day_cohort<=59 then revenue else 0 end) as revenue_d60,
+      sum(case when day_cohort<=99 then revenue else 0 end) as revenue_d90,
 
       from
       (select a.*,b.first_date_created,
