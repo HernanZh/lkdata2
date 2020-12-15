@@ -17,7 +17,7 @@ view: uar_cohort_test {
       sum(case when day_cohort<=29 then revenue else 0 end) as revenue_d30,
       sum(case when day_cohort<=59 then revenue else 0 end) as revenue_d60,
       sum(case when day_cohort<=99 then revenue else 0 end) as revenue_d90,
-      sum(when day_cohort<=0 THEN 1 END) as tracked_installs
+      sum(case when day_cohort<=0 THEN 1 END) as tracked_installs
 
       from
       (select a.*,b.first_date_created,
