@@ -81,6 +81,28 @@ view: user_ad_revenue {
     sql: ${TABLE}.segment ;;
   }
 
+  dimension: revenue_bucket{
+    case: {
+      when: {
+        sql: ${TABLE}.revenue <= 0.2;;
+        label: "< $0.2"
+      }
+      when: {
+        sql: ${TABLE}.revenue> 0.2 AND ${TABLE}.revenue <= 0.5;;
+        label: "Between $0.2 and $0.5"
+      }
+      when: {
+        sql: ${TABLE}.revenue > 0.5 AND ${TABLE}.revenue <= 1;;
+        label: "Between $0.5 and $1.0"
+      }
+      when: {
+        sql: ${TABLE}.revenue > 1;;
+        label: "> $1.0"
+      }
+      else:"Unknown"
+    }
+  }
+
   dimension: user_id {
     type: string
     sql: ${TABLE}.user_id ;;
