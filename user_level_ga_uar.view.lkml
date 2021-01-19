@@ -269,7 +269,7 @@ view: user_level_ga_uar {
 
   measure: playtime {
     type: number
-    sql: (${TABLE}.session_count*${TABLE}.avg_session_length)/${TABLE}.dau ;;
+    sql: ${session_count} * ${avg_session_length} / ${dau} ;;
   }
 
   #${session_count} * ${avg_session_length} / ${DAU}
