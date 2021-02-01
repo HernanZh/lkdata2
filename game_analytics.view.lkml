@@ -299,8 +299,8 @@ view: game_analytics {
     sql: ${TABLE}.platform ;;
   }
 
-  dimension: score {
-    type: number
+  measure: score {
+    type: sum
     sql: ${TABLE}.score ;;
   }
 
