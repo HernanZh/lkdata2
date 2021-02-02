@@ -1,7 +1,7 @@
 view: game_analytics {
   sql_table_name: game_analytics.data_export_new ;;
 
-  dimension: amount {
+  measure: amount {
     type: number
     sql: ${TABLE}.amount ;;
   }
