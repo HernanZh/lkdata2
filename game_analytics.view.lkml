@@ -2,7 +2,7 @@ view: game_analytics {
   sql_table_name: game_analytics.data_export_new ;;
 
   measure: amount {
-    type: number
+    type: sum
     sql: ${TABLE}.amount ;;
   }
 
