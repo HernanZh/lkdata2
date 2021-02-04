@@ -56,18 +56,9 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
-  dimension_group: updated {
-    type: time
-    timeframes: [time, date, week, month, raw]
-    sql: ${TABLE}.date_created ;;
+  dimension: install_date {
+    sql: MIN(date_created_raw} ;;
   }
-
-  measure: last_updated_date {
-    type: date
-    sql: MIN(${updated_raw}) ;;
-    convert_tz: no
-  }
-
 
 
 
