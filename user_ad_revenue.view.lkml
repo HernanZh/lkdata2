@@ -56,7 +56,7 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
-  dimension: install_date {
+  measure: install_date {
     sql: MIN(${date_created_raw}) ;;
   }
 
