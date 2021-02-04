@@ -56,6 +56,18 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
+  measure: install_date {
+    type: date
+    sql: min(${updated_raw}) ;;
+    convert_tz: no
+  }
+
+  dimension_group: updated {
+    type: time
+    timeframes: [time, date, week, month, raw]
+    sql: ${TABLE}.updated_at ;;
+  }
+
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
