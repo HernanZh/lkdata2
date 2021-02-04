@@ -56,30 +56,20 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
-  dimension_group: install {
+  dimension_group: updated {
     type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    timeframes: [time, date, week, month, raw]
+    sql: ${TABLE}.date_created ;;
+  }
+
+  measure: last_updated_date {
+    type: date
+    sql: MAX(${updated_raw}) ;;
     convert_tz: no
-    datatype: date
-    sql: ${TABLE}.install_date ;;
   }
 
-  dimension: days_since_install {
-    type: number
-    sql: ${TABLE}.days_since_install ;;
-  }
 
-  measure: days_installed {
-    type: number
-    sql: MAX(${TABLE}.days_since_install) + 1 ;;
-  }
+
 
   measure: impressions {
     type: sum
