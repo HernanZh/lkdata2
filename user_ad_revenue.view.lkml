@@ -62,6 +62,10 @@ view: user_ad_revenue {
     convert_tz: no
   }
 
+  measure: last_updated_datetime {
+    sql: MIN(${TABLE}.date_created) ;;
+  }
+
   # dimension_group: updated {
   #   type: time
   #   timeframes: [time, date, week, month, raw]
