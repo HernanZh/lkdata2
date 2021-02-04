@@ -63,7 +63,7 @@ view: user_ad_revenue {
   }
 
   measure: last_updated_datetime {
-    sql: MIN(${TABLE}.date_created_raw) ;;
+    sql: MIN(${date_created_raw}) ;;
   }
 
   # dimension_group: updated {
