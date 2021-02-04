@@ -64,7 +64,7 @@ view: user_ad_revenue {
 
   measure: last_updated_date {
     type: date
-    sql: MAX(${updated_raw}) ;;
+    sql: MIN(${updated_raw}) ;;
     convert_tz: no
   }
 
