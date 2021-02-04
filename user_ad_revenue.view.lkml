@@ -51,18 +51,20 @@ view: user_ad_revenue {
       quarter,
       year
     ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.date_created ;;
   }
 
   measure: install_date {
     type: date
-    sql: MIN(${date_created_raw}) ;;
+    sql: min(${date_created_raw}) ;;
     convert_tz: no
   }
 
-  # measure: last_updated_datetime {
-  #   sql: MIN(${TABLE}.date_created_raw) ;;
-  # }
+  measure: last_updated_datetime {
+    sql: MIN(${TABLE}.date_created) ;;
+  }
 
   # dimension_group: updated {
   #   type: time
