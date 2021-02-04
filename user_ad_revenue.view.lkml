@@ -60,9 +60,9 @@ view: user_ad_revenue {
     convert_tz: no
   }
 
-  measure: last_updated_datetime {
-    sql: MIN(${TABLE}.date_created_raw) ;;
-  }
+  # measure: last_updated_datetime {
+  #   sql: MIN(${TABLE}.date_created_raw) ;;
+  # }
 
   # dimension_group: updated {
   #   type: time
