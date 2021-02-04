@@ -56,6 +56,21 @@ view: user_ad_revenue {
     sql: ${TABLE}.date_created ;;
   }
 
+  dimension_group: install {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.install_date ;;
+  }
+
   dimension: days_since_install {
     type: number
     sql: ${TABLE}.days_since_install ;;
