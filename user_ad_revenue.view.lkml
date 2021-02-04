@@ -60,6 +60,21 @@ view: user_ad_revenue {
     sql: MIN(${date_created_raw}) ;;
   }
 
+  dimension_group: updated {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.date_created ;;
+  }
+
 
 
   measure: impressions {
