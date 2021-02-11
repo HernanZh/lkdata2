@@ -7,6 +7,7 @@ view: user_level_ga_uar {
       created_date,
       idfa_a.bundle_id,
       idfa_a.build,
+      idfa_a.install_campaign,
      -- days_since_install,
       idfa_a.platform,
       idfa_b.advertising_id as advertising_id,
