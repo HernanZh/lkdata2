@@ -6,6 +6,7 @@ view: user_level_ga_uar {
       ad_unit,
       created_date,
       idfa_a.bundle_id,
+      idfa_a.build,
      -- days_since_install,
       idfa_a.platform,
       idfa_b.advertising_id as advertising_id,
@@ -44,7 +45,8 @@ view: user_level_ga_uar {
           ELSE 'Unknown'
           END )AS country_bucket,
           --game_analytics.event_id AS event_id,
-          --game_analytics.build  AS build,
+          game_analytics.build  AS build,
+          game_analytics.install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           --game_analytics.ip  AS ip,
@@ -53,7 +55,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7,8,9,10
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
       )idfa_a
       inner join (
         SELECT
@@ -95,6 +97,8 @@ view: user_level_ga_uar {
       created_date,
       idfv_a.bundle_id,
      -- days_since_install,
+      idfv_a.build,
+      idfv_a.install_campaign,
       idfv_a.platform,
       idfv_b.advertising_id as advertising_id,
       idfv_a.country,
@@ -133,7 +137,8 @@ view: user_level_ga_uar {
           END) AS country_bucket,
           --game_analytics.country_bucket as country_bucket,
           --game_analytics.event_id AS event_id,
-          --game_analytics.build  AS build,
+          game_analytics.build  AS build,
+          game_analytics.install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           --game_analytics.ip  AS ip,
@@ -142,7 +147,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7,8,9,10
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
       )idfv_a
       inner join (
         SELECT
@@ -198,6 +203,16 @@ view: user_level_ga_uar {
   dimension: bundle_id {
     type: string
     sql: ${TABLE}.bundle_id ;;
+  }
+
+  dimension: build {
+    type: string
+    sql: ${TABLE}.build ;;
+  }
+
+  dimension: install_campaign {
+    type: string
+    sql: ${TABLE}.install_campaign ;;
   }
 
   dimension: country {
