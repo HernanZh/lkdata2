@@ -234,6 +234,12 @@ view: user_level_ga_uar {
     sql: ${TABLE}.country_bucket ;;
   }
 
+  dimension: install_date {
+    type: date
+    datatype: date
+    sql: ${TABLE}.install_date ;;
+  }
+
   dimension_group: days_since_install {
     type: duration
     intervals: [day]
