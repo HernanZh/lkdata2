@@ -5,7 +5,7 @@ view: user_level_ga_uar {
     select
       ad_unit,
       created_date,
-      idfa_a.install_date,
+      --idfa_a.install_date,
       idfa_a.bundle_id,
       idfa_a.build,
       idfa_a.install_campaign,
@@ -27,7 +27,7 @@ view: user_level_ga_uar {
       from(
         SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS DATE) AS ts_date,
-          CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
+          --CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
           --game_analytics.ios_idfa  AS idfa,
           --REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           REPLACE(LOWER(game_analytics.ios_idfa),'-','') as idfa,
@@ -61,7 +61,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfa_a
       inner join (
         SELECT
@@ -101,7 +101,7 @@ view: user_level_ga_uar {
           select
       ad_unit,
       created_date,
-      idfv_a.install_date,
+      --idfv_a.install_date,
       idfv_a.bundle_id,
       --idfv_a.days_since_install,
       idfv_a.build,
@@ -123,7 +123,7 @@ view: user_level_ga_uar {
       from(
         SELECT
           CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS DATE) AS ts_date,
-          CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
+          --CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
           --game_analytics.ios_idfa  AS idfa,
           --REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
           REPLACE(LOWER(game_analytics.ios_idfa),'-','') as idfa,
@@ -157,7 +157,7 @@ view: user_level_ga_uar {
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
         FROM game_analytics.data_export_new  AS game_analytics
-        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13
+        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfv_a
       inner join (
         SELECT
@@ -235,18 +235,18 @@ view: user_level_ga_uar {
     sql: ${TABLE}.country_bucket ;;
   }
 
-  dimension: install_date {
-    type: date
-    datatype: date
-    sql: ${TABLE}.install_date ;;
-  }
+  # dimension: install_date {
+  #   type: date
+  #   datatype: date
+  #   sql: ${TABLE}.install_date ;;
+  # }
 
-  dimension_group: days_since_install {
-    type: duration
-    intervals: [day]
-    sql_start: ${TABLE}.install_date ;;
-    sql_end:  ${TABLE}.created_date ;;
-  }
+  # dimension_group: days_since_install {
+  #   type: duration
+  #   intervals: [day]
+  #   sql_start: ${TABLE}.install_date ;;
+  #   sql_end:  ${TABLE}.created_date ;;
+  # }
 
   # dimension: event_id {
   #   type: string
