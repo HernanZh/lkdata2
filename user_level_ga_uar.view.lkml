@@ -237,7 +237,7 @@ view: user_level_ga_uar {
     type: duration
     intervals: [day]
     sql_start: ${TABLE}.install_date ;;
-    sql_end:  ${TABLE}.ts_date ;;
+    sql_end:  ${TABLE}.arrival_ts ;;
   }
 
   # dimension: event_id {
