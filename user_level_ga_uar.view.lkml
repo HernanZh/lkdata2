@@ -5,6 +5,7 @@ view: user_level_ga_uar {
     select
       ad_unit,
       created_date,
+      idfa.install_date,
       idfa_a.bundle_id,
       idfa_a.build,
       idfa_a.install_campaign,
@@ -237,7 +238,7 @@ view: user_level_ga_uar {
     type: duration
     intervals: [day]
     sql_start: ${TABLE}.install_date ;;
-    sql_end:  ${TABLE}.arrival_ts ;;
+    sql_end:  ${TABLE}.created_date ;;
   }
 
   # dimension: event_id {
