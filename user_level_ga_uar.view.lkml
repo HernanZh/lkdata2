@@ -46,7 +46,7 @@ view: user_level_ga_uar {
           ELSE 'Unknown'
           END )AS country_bucket,
           --game_analytics.event_id AS event_id,
-            CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
+            CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY)) AS days_since_install,
           game_analytics.build  AS build,
           game_analytics.install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
@@ -139,7 +139,7 @@ view: user_level_ga_uar {
           END) AS country_bucket,
           --game_analytics.country_bucket as country_bucket,
           --game_analytics.event_id AS event_id,
-          CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
+          CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY)) AS days_since_install,
           game_analytics.build  AS build,
           game_analytics.install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
