@@ -5,7 +5,7 @@ view: user_level_ga_uar {
     select
       ad_unit,
       created_date,
-      idfa.install_date,
+      idfa_a.install_date,
       idfa_a.bundle_id,
       idfa_a.build,
       idfa_a.install_campaign,
