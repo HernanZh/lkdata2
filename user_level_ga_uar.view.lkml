@@ -101,6 +101,7 @@ view: user_level_ga_uar {
           select
       ad_unit,
       created_date,
+      idfv_a.install_date,
       idfv_a.bundle_id,
       --idfv_a.days_since_install,
       idfv_a.build,
