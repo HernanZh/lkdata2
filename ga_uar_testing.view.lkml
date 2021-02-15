@@ -1,7 +1,7 @@
 view: ga_uar_testing {
   derived_table: {
     sql: select ts_date, uar.bundle_id, uar.platform, revenue from(
-             SELECT
+            SELECT
                     CAST(CAST(user_ad_revenue.date_created  AS TIMESTAMP) AS DATE) AS created_date,
                     user_ad_revenue.advertising_id  AS advertising_id,
                     user_ad_revenue.bundle_id as bundle_id,
@@ -41,7 +41,7 @@ view: ga_uar_testing {
   where uar.platform ='ios'
   and uar.bundle_id = 'com.gezellig.savethedate'
   group by 1,2,3,4
- ;;
+;;
   }
 
   measure: count {

@@ -80,7 +80,7 @@ view: attribution_table {
 -- GROUP BY 1,2,3,4,5,6,7,8
 -- ORDER BY 2 DESC
 -- LIMIT 500
- ;;
+;;
   }
 
   measure: count {

@@ -574,10 +574,10 @@ explore: user_level_ga_uar {}
 
 explore: uar_cohort_test {}
 
-# explore: future_revenue_prediction_d3 {}
+explore: future_revenue_prediction_d3 {}
 
-# explore: future_revenue_prediction_d7 {}
+explore: future_revenue_prediction_d7 {}
 
-# explore: future_revenue_prediction_d14{}
+explore: future_revenue_prediction_d14{}
 
-# explore: future_revenue_prediction_d30 {}
+explore: future_revenue_prediction_d30 {}
