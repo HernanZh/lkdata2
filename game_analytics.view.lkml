@@ -1,5 +1,6 @@
 view: game_analytics {
-  sql_table_name: game_analytics.data_export_new;;
+  sql_table_name: gameanalytics.games_details ;;
+  #sql_table_name: game_analytics.data_export_new;;
 
   measure: amount {
     type: sum
