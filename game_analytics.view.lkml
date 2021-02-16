@@ -1,6 +1,6 @@
 view: game_analytics {
-  sql_table_name: gameanalytics.games_details ;;
-  #sql_table_name: game_analytics.data_export_new;;
+  #sql_table_name: gameanalytics.games_details ;;
+  sql_table_name: game_analytics.data_export_new;;
 
   measure: amount {
     type: sum
@@ -347,7 +347,8 @@ view: game_analytics {
 
   dimension: bundle_id {
     type: string
-    sql: ${TABLE}.data_ios_bundle_id ;;
+    sql: ${TABLE}.bundle_id ;;
+    # sql: ${TABLE}.data_ios_bundle_id
   }
 
   measure: count {

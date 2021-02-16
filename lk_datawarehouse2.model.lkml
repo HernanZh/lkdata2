@@ -1,4 +1,5 @@
-connection: "lk-datawarehouse-2"
+connection: "lk-datawarehouse"
+#connection: "lk-datawarehouse-2"
 
 # include all the views
 include: "*.view"
