@@ -347,7 +347,7 @@ view: game_analytics {
 
   dimension: bundle_id {
     type: string
-    sql: ${TABLE}.bundle_id ;;
+    sql: ${TABLE}.data_ios_bundle_id ;;
   }
 
   measure: count {
