@@ -187,7 +187,7 @@ view: game_analytics {
   }
 
   dimension: inserted_at {
-    type: date
+    type: date_time
     sql: ${TABLE}.inserted_at ;;
   }
 
