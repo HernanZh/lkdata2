@@ -42,6 +42,21 @@ view: user_ad_revenue {
     sql: ${TABLE}.bundle_id ;;
   }
 
+  dimension_group: inserted_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    datatype: date
+    sql: ${TABLE}.inserted_at ;;
+  }
+
   dimension_group: date_created {
     type: time
     timeframes: [
