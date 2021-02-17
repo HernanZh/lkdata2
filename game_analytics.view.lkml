@@ -347,13 +347,11 @@ view: game_analytics {
 
   dimension: bundle_id {
     type: string
-    sql: CASE WHEN ${platform} = 'ios' THEN ios_bundle_id
-    WHEN ${platform} = 'android' then android_bundle_id
-    ELSE ios_bundle_id
-
-
-    --${TABLE}.bundle_id ;;
-    # sql: ${TABLE}.data_ios_bundle_id
+    sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
+    WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
+    ELSE ios_bundle_id ;;
+  # ${TABLE}.bundle_id ;;
+  # sql: ${TABLE}.data_ios_bundle_id
   }
 
   measure: count {
