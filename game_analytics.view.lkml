@@ -186,10 +186,20 @@ view: game_analytics {
     sql: ${TABLE}.googleplus_id ;;
   }
 
-  dimension: inserted_at {
-    type: date
+  dimension_group: inserted_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.inserted_at ;;
   }
+
 
   dimension: install_campaign {
     type: string
