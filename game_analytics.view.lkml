@@ -186,17 +186,8 @@ view: game_analytics {
     sql: ${TABLE}.googleplus_id ;;
   }
 
-  dimension_group: inserted_at {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: inserted_at {
+    type: date
     sql: ${TABLE}.inserted_at ;;
   }
 
