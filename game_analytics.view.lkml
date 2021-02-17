@@ -217,7 +217,7 @@ view: game_analytics {
       quarter,
       year
     ]
-    sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
   }
 
   dimension: ios_app_build {
