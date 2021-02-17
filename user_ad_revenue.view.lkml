@@ -1,5 +1,6 @@
 view: user_ad_revenue {
-  sql_table_name: tenjin_BigQuery.user_ad_revenue ;;
+  sql_table_name: ironsource.ironsource_revenue ;;
+  #sql_table_name: tenjin_BigQuery.user_ad_revenue ;;
 
   dimension: ab_testing {
     type: string
