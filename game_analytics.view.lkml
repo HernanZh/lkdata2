@@ -191,6 +191,20 @@ view: game_analytics {
     sql: ${TABLE}.inserted_at ;;
   }
 
+  dimension_group: inserted_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    datatype: date
+    sql: ${TABLE}.inserted_at ;;
+  }
 
   dimension: install_campaign {
     type: string
