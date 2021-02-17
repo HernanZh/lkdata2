@@ -1,7 +1,7 @@
 view: game_analytics {
-  sql_table_name: gameanalytics.GA_view ;;
+  #sql_table_name: gameanalytics.GA_view ;;
   #sql_table_name: gameanalytics.games_details_view ;;
-  #sql_table_name: game_analytics.data_export_new;;
+  sql_table_name: game_analytics.data_export_new;;
 
   measure: amount {
     type: sum
@@ -368,12 +368,17 @@ view: game_analytics {
 
   dimension: bundle_id {
     type: string
-    sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
-    WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
-    ELSE ios_bundle_id END;;
-  # ${TABLE}.bundle_id ;;
-  # sql: ${TABLE}.data_ios_bundle_id
+    sql: ${TABLE}.bundle_id ;;
   }
+
+  # dimension: bundle_id {
+  #   type: string
+  #   sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
+  #   WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
+  #   ELSE ios_bundle_id END;;
+  # # ${TABLE}.bundle_id ;;
+  # # sql: ${TABLE}.data_ios_bundle_id
+  # }
 
   measure: count {
     type: count
