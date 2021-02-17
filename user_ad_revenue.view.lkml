@@ -68,7 +68,7 @@ view: user_ad_revenue {
       year
     ]
     datatype: date
-    sql: ${TABLE}.inserted_at ;;
+    sql: ${TABLE}.dataset_date ;;
   }
 
   dimension_group: date_created {
