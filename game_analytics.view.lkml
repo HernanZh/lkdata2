@@ -186,6 +186,11 @@ view: game_analytics {
     sql: ${TABLE}.googleplus_id ;;
   }
 
+  dimension: inserted_at {
+    type: date
+    sql: ${TABLE}.inserted_at ;;
+  }
+
   dimension: install_campaign {
     type: string
     sql: ${TABLE}.install_campaign ;;
