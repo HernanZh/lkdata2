@@ -42,6 +42,11 @@ view: user_ad_revenue {
   #   sql: ${TABLE}.bundle_id ;;
   # }
 
+  dimension: platform {
+    type: string
+    sql: ${TABLE}.platform ;;
+  }
+
   dimension: bundle_id {
     type: string
     sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
@@ -110,11 +115,6 @@ view: user_ad_revenue {
   dimension: placement {
     type: string
     sql: ${TABLE}.placement ;;
-  }
-
-  dimension: platform {
-    type: string
-    sql: ${TABLE}.platform ;;
   }
 
   dimension: revenue_dim {
