@@ -37,24 +37,19 @@ view: user_ad_revenue {
     sql: ${TABLE}.idfv ;;
   }
 
-  # dimension: bundle_id {
-  #   type: string
-  #   sql: ${TABLE}.bundle_id ;;
-  # }
-
-  dimension: platform {
-    type: string
-    sql: ${TABLE}.platform ;;
-  }
-
   dimension: bundle_id {
     type: string
-    sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
-          WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
-          ELSE ios_bundle_id END;;
-        # ${TABLE}.bundle_id ;;
-        # sql: ${TABLE}.data_ios_bundle_id
-    }
+    sql: ${TABLE}.bundle_id ;;
+  }
+
+  # dimension: bundle_id {
+  #   type: string
+  #   sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
+  #         WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
+  #         ELSE ios_bundle_id END;;
+  #       # ${TABLE}.bundle_id ;;
+  #       # sql: ${TABLE}.data_ios_bundle_id
+  #   }
 
   dimension_group: inserted_at {
     type: time
@@ -115,6 +110,11 @@ view: user_ad_revenue {
   dimension: placement {
     type: string
     sql: ${TABLE}.placement ;;
+  }
+
+  dimension: platform {
+    type: string
+    sql: ${TABLE}.platform ;;
   }
 
   dimension: revenue_dim {
