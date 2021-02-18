@@ -107,6 +107,21 @@ view: reporting_cohort_metrics {
     sql: ${TABLE}.install_date ;;
   }
 
+# commented because not partitioned
+  dimension_group: loaded_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: TIMESTAMP_SECONDS(${TABLE}.loaded_at) ;;
+  }
+
   dimension: platform {
     type: string
     sql: ${TABLE}.platform ;;
