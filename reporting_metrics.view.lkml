@@ -100,6 +100,21 @@ view: reporting_metrics {
     sql: ${TABLE}.date ;;
   }
 
+  dimension_group: loaded_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.loaded_at ;;
+  }
+
+
   dimension: iap_revenue {
     type: number
     sql: ${TABLE}.iap_revenue ;;
