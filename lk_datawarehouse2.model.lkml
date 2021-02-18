@@ -463,21 +463,21 @@ explore: reporting_metrics {
 
 explore: user_ad_revenue_cohort {}
 
-explore: user_cohorts {
-  join: campaigns {
-    type: left_outer
-    sql_on: ${user_cohorts.campaign_id}= ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+# explore: user_cohorts {
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${user_cohorts.campaign_id}= ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: reporting_metrics {
-    type: left_outer
-    sql_on: ${user_cohorts.campaign_id}= ${reporting_metrics.campaign_id} ;;
-    relationship: many_to_many
+#   join: reporting_metrics {
+#     type: left_outer
+#     sql_on: ${user_cohorts.campaign_id}= ${reporting_metrics.campaign_id} ;;
+#     relationship: many_to_many
 
-  }
+#   }
 
-}
+# }
 
 
 explore: targeting_tags {}
@@ -485,31 +485,31 @@ explore: targeting_tags {}
 #explore: updated_at {}
 
 
-explore: user_attributes {
-  join: campaigns {
-    type: left_outer
-    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+# explore: user_attributes {
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaign_buckets {
-    type: left_outer
-    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    relationship: many_to_one
-  }
-}
+#   join: campaign_buckets {
+#     type: left_outer
+#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: user_ad_revenue {
   join: user_attributes {
@@ -538,41 +538,41 @@ explore: user_ad_revenue {
 
 }
 
-explore: uar_cohorts {
-  join: user_attributes {
-    type: left_outer
-    sql_on: ${user_attributes.id} = ${uar_cohorts.advertising_id} ;;
-    relationship: many_to_one
-  }
+# explore: uar_cohorts {
+#   join: user_attributes {
+#     type: left_outer
+#     sql_on: ${user_attributes.id} = ${uar_cohorts.advertising_id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaigns {
-    type: left_outer
-    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: reporting_cohort_metrics {
-    type: left_outer
-    sql_on: ${reporting_cohort_metrics.app_id}=${apps.id} ;;
-    relationship: many_to_one
-  }
-}
+#   join: reporting_cohort_metrics {
+#     type: left_outer
+#     sql_on: ${reporting_cohort_metrics.app_id}=${apps.id} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: user_level_ga_uar {}
 
-explore: uar_cohort_test {}
+# explore: uar_cohort_test {}
 
 # explore: future_revenue_prediction_d3 {}
 

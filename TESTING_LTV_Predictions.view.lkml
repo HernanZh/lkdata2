@@ -57,9 +57,9 @@ view: future_revenue_model {
 
 
 ######################## TRAINING INFORMATION #############################
-explore:  future_revenue_model_evaluation {}
-explore: future_revenue_model_training_info {}
-explore: roc_curve {}
+# explore:  future_revenue_model_evaluation {}
+# explore: future_revenue_model_training_info {}
+# explore: roc_curve {}
 
 # VIEWS:
 view: future_revenue_model_evaluation {
