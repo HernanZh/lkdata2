@@ -1,5 +1,6 @@
 view: publisher_apps {
-  sql_table_name: tenjin_BigQuery.publisher_apps ;;
+  #sql_table_name: tenjin_BigQuery.publisher_apps ;;
+  sql_table_name: tenjin_dv.publisher_apps ;;
 
   dimension: id {
     primary_key: yes

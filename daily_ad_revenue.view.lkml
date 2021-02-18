@@ -1,5 +1,6 @@
 view: daily_ad_revenue {
-  sql_table_name: tenjin_BigQuery.daily_ad_revenue ;;
+  #sql_table_name: tenjin_BigQuery.daily_ad_revenue ;;
+  sql_table_name: tenjin_dv.daily_ad_revenue ;;
 
   dimension: id {
     primary_key: yes

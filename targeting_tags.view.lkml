@@ -1,5 +1,6 @@
 view: targeting_tags {
-  sql_table_name: tenjin_BigQuery.targeting_tags ;;
+  #sql_table_name: tenjin_BigQuery.targeting_tags ;;
+  sql_table_name: tenjin_dv.targeting_tags ;;
 
   dimension: id {
     primary_key: yes

@@ -1,5 +1,6 @@
 view: events {
-  sql_table_name: tenjin_BigQuery.rs_events ;;
+  #sql_table_name: tenjin_BigQuery.rs_events ;;
+  sql_table_name: tenjin_dv.events ;;
 
   dimension_group: acquired {
     type: time

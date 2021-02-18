@@ -1,5 +1,6 @@
 view: countries {
-  sql_table_name: tenjin_BigQuery.countries ;;
+  sql_table_name: tenjin_dv.campaigns_targeting_tags ;;
+  #sql_table_name: tenjin_BigQuery.countries ;;
 
   dimension: code {
     type: string

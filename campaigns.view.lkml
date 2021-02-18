@@ -1,5 +1,7 @@
 view: campaigns {
-  sql_table_name: tenjin_BigQuery.campaigns ;;
+  #sql_table_name: tenjin_BigQuery.campaigns ;;
+  sql_table_name: tenjin_dv.campaigns;;
+
 
   dimension: id {
     primary_key: yes
