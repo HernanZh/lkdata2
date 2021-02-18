@@ -238,37 +238,37 @@ explore: daily_ad_revenue {
   }
 }
 
-explore: daily_behavior {
-  join: campaigns {
-    type: left_outer
-    sql_on: ${daily_behavior.campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+# explore: daily_behavior {
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${daily_behavior.campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaign_buckets {
-    type: left_outer
-    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    relationship: many_to_one
-  }
+#   join: campaign_buckets {
+#     type: left_outer
+#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: events {
-    type: left_outer
-    sql_on: ${campaigns.id} = ${events.source_campaign_id} ;;
-    relationship: many_to_one
-  }
-}
+#   join: events {
+#     type: left_outer
+#     sql_on: ${campaigns.id} = ${events.source_campaign_id} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: daily_country_spend {
   join: campaigns {
@@ -400,31 +400,31 @@ explore: reporting_cohort_metrics {
   }
 }
 
-explore: reporting_metrics_Trac_Ins {
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${reporting_metrics_Trac_Ins.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+# explore: reporting_metrics_Trac_Ins {
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${reporting_metrics_Trac_Ins.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${reporting_metrics_Trac_Ins.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${reporting_metrics_Trac_Ins.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaigns {
-    type: left_outer
-    sql_on: ${reporting_metrics_Trac_Ins.campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${reporting_metrics_Trac_Ins.campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaign_buckets {
-    type: left_outer
-    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    relationship: many_to_one
-  }
-}
+#   join: campaign_buckets {
+#     type: left_outer
+#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: reporting_metrics {
   join: ad_networks {
