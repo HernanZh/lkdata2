@@ -67,12 +67,12 @@ view: game_analytics {
 
   dimension: cohort_month {
     type: number
-    sql: ${TABLE}.cohort_month ;;
+    sql: ${TABLE}.user_meta_cohort_month ;;
   }
 
   dimension: cohort_week {
     type: number
-    sql: ${TABLE}.cohort_week ;;
+    sql: ${TABLE}.user_meta_cohort_week ;;
   }
 
   dimension: connection_type {
@@ -158,7 +158,7 @@ view: game_analytics {
 
   dimension: first_build {
     type: string
-    sql: ${TABLE}.first_build ;;
+    sql: ${TABLE}.user_meta_first_build ;;
   }
 
   dimension: first_in_batch {
@@ -208,22 +208,22 @@ view: game_analytics {
 
   dimension: install_campaign {
     type: string
-    sql: ${TABLE}.install_campaign ;;
+    sql: ${TABLE}.user_meta_install_campaign ;;
   }
 
   dimension: install_hour {
     type: number
-    sql: ${TABLE}.install_hour ;;
+    sql: ${TABLE}.user_meta_install_hour ;;
   }
 
   dimension: install_publisher {
     type: string
-    sql: ${TABLE}.install_publisher ;;
+    sql: ${TABLE}.user_meta_install_publisher ;;
   }
 
   dimension: install_site {
     type: string
-    sql: ${TABLE}.install_site ;;
+    sql: ${TABLE}.user_meta_install_site ;;
   }
 #Commented becasue not partitioned
   dimension_group: install_ts {
@@ -268,7 +268,7 @@ view: game_analytics {
 
   dimension: is_converting {
     type: string
-    sql: ${TABLE}.is_converting ;;
+    sql: ${TABLE}.user_meta_is_converting ;;
   }
 
   dimension: jailbroken {
@@ -308,7 +308,7 @@ view: game_analytics {
 
   dimension: origin {
     type: string
-    sql: ${TABLE}.origin ;;
+    sql: ${TABLE}.user_meta_origin ;;
   }
 
   dimension: os_version {
