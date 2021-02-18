@@ -46,9 +46,9 @@ explore: ad_networks {}
 
 explore: apps {}
 
-explore: auditlog_ga {}
+#explore: auditlog_ga {}
 
-explore:  attribution_table{}
+#explore:  attribution_table{}
 
 explore: ga_uar_testing {}
 
@@ -482,7 +482,7 @@ explore: user_cohorts {
 
 explore: targeting_tags {}
 
-explore: updated_at {}
+#explore: updated_at {}
 
 
 explore: user_attributes {
@@ -574,10 +574,10 @@ explore: user_level_ga_uar {}
 
 explore: uar_cohort_test {}
 
-explore: future_revenue_prediction_d3 {}
+# explore: future_revenue_prediction_d3 {}
 
-explore: future_revenue_prediction_d7 {}
+# explore: future_revenue_prediction_d7 {}
 
-explore: future_revenue_prediction_d14{}
+# explore: future_revenue_prediction_d14{}
 
-explore: future_revenue_prediction_d30 {}
+# explore: future_revenue_prediction_d30 {}
