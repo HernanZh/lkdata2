@@ -119,7 +119,7 @@ view: reporting_cohort_metrics {
       quarter,
       year
     ]
-    sql: TIMESTAMP_SECONDS(${TABLE}.loaded_at) ;;
+    sql: ${TABLE}.loaded_at ;;
   }
 
   dimension: platform {
