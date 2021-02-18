@@ -1,6 +1,6 @@
 view: game_analytics {
-  #sql_table_name: gameanalytics.GA_view ;;
-  sql_table_name: game_analytics.data_export_new;;
+  sql_table_name: gameanalytics.GA_view ;;
+  #sql_table_name: game_analytics.data_export_new;;
 
   measure: amount {
     type: sum
@@ -11,7 +11,7 @@ view: game_analytics {
     type: string
     sql: ${TABLE}.android_id ;;
   }
-
+# commented because not partitioned
   dimension_group: arrival_ts {
     type: time
     timeframes: [
@@ -50,7 +50,7 @@ view: game_analytics {
     type: string
     sql: ${TABLE}.category ;;
   }
-
+# Commented because not partitioned
   dimension_group: client_ts {
     type: time
     timeframes: [
@@ -186,10 +186,10 @@ view: game_analytics {
     sql: ${TABLE}.googleplus_id ;;
   }
 
-  dimension: inserted_at {
-    type: date_time
-    sql: ${TABLE}.inserted_at ;;
-  }
+  # dimension: inserted_at {
+  #   type: date_time
+  #   sql: ${TABLE}.inserted_at ;;
+  # }
 
   dimension_group: inserted_at {
     type: time
@@ -225,7 +225,7 @@ view: game_analytics {
     type: string
     sql: ${TABLE}.install_site ;;
   }
-
+#Commented becasue not partitioned
   dimension_group: install_ts {
     type: time
     timeframes: [
@@ -237,8 +237,8 @@ view: game_analytics {
       quarter,
       year
     ]
-    sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
-    #sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
+    # sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
   }
 
   dimension: ios_app_build {
