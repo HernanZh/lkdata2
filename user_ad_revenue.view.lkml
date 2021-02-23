@@ -115,7 +115,7 @@ view: user_ad_revenue {
 
   dimension: platform {
     type: string
-    sql: ${TABLE}.platform ;;
+    sql: lower(${TABLE}.platform) ;;
   }
 
   dimension: revenue_dim {
