@@ -11,7 +11,21 @@ view: game_analytics {
     type: string
     sql: ${TABLE}.android_id ;;
   }
-# commented because not partitioned
+# # commented because not partitioned
+#   dimension_group: arrival_ts {
+#     type: time
+#     timeframes: [
+#       raw,
+#       time,
+#       date,
+#       week,
+#       month,
+#       quarter,
+#       year
+#     ]
+#     sql: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+#   }
+
   dimension_group: arrival_ts {
     type: time
     timeframes: [
@@ -23,7 +37,7 @@ view: game_analytics {
       quarter,
       year
     ]
-    sql: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+    sql: ${TABLE}.inserted_at  ;;
   }
 
   dimension: attempt_num {
