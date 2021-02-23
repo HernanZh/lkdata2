@@ -79,7 +79,7 @@ view: user_ad_revenue {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}.date_created ;;
+    sql: ${TABLE}.dataset_date ;;
   }
 
   measure: install_date {
