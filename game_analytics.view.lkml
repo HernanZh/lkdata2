@@ -37,6 +37,7 @@ view: game_analytics {
       quarter,
       year
     ]
+    datatype: date
     sql: ${TABLE}.inserted_at  ;;
   }
 
