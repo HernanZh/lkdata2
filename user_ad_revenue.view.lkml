@@ -44,10 +44,11 @@ view: user_ad_revenue {
 
   dimension: bundle_id {
     type: string
-    sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
-          WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
-          ELSE ios_bundle_id END;;
-        # ${TABLE}.bundle_id ;;
+    sql:${TABLE}.bundleid ;;
+    # sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
+    #       WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
+    #       ELSE ios_bundle_id END;;
+    #     # ${TABLE}.bundle_id ;;
         # sql: ${TABLE}.data_ios_bundle_id
     }
 
