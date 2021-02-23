@@ -60,7 +60,7 @@ view: user_level_ga_uar {
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
-        FROM game_analytics.data_export_new  AS game_analytics
+        FROM gameanalytics.games_details  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfa_a
       inner join (
@@ -84,7 +84,7 @@ view: user_level_ga_uar {
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
-        FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        FROM ironsource.ironsource_revenue  AS user_ad_revenue
         LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
         GROUP BY 1,2,3,4,5,6,7,8,9
       )idfa_b
@@ -156,7 +156,7 @@ view: user_level_ga_uar {
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
-        FROM game_analytics.data_export_new  AS game_analytics
+        FROM gameanalytics.games_details  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfv_a
       inner join (
@@ -180,7 +180,7 @@ view: user_level_ga_uar {
           user_ad_revenue.bundle_id as bundle_id,
           user_ad_revenue.impressions AS impressions,
           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
-        FROM tenjin_BigQuery.user_ad_revenue  AS user_ad_revenue
+        FROM ironsource.ironsource_revenue  AS user_ad_revenue
         LEFT JOIN tenjin_BigQuery.rs_user_attributes  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
         GROUP BY 1,2,3,4,5,6,7,8,9
       )idfv_b
