@@ -150,8 +150,8 @@ view: reporting_metrics {
     sql: ${TABLE}.reported_spend ;;
   }
 
-  dimension: sessions {
-    type: number
+  measure: sessions {
+    type: sum
     sql: ${TABLE}.sessions ;;
   }
 
