@@ -1,5 +1,4 @@
 view: daily_ad_revenue {
-  #sql_table_name: tenjin_BigQuery.daily_ad_revenue ;;
   sql_table_name: tenjin_dv.daily_ad_revenue ;;
 
   dimension: id {
@@ -42,6 +41,37 @@ view: daily_ad_revenue {
     type: string
     map_layer_name: countries
     sql: ${TABLE}.country ;;
+  }
+
+  dimension: country_bucket {
+    type: string
+    case: {
+      when: {
+        sql: ${TABLE}.country IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
+        label: "T1"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('HK','JP','KR','TW') ;;
+        label: "T1_LOC"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('AT','BE','DK','FR','NL','SG','SE') ;;
+        label: "T2"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
+        label: "T3"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('US') ;;
+        label: "US"
+      }
+      when: {
+        sql: ${TABLE}.country IN ('CN') ;;
+        label: "CN"
+      }
+      else: "Unknown"
+    }
   }
 
   dimension_group: date {
@@ -191,6 +221,159 @@ view: daily_ad_revenue {
 
   measure: count {
     type: count
-    drill_fields: [id, publisher_apps.name, publisher_apps.id]
+    drill_fields: [id, publisher_apps.id, publisher_apps.name]
   }
+
+  measure: Banner_clicks {
+    type: sum
+    sql: ${TABLE}.banner_clicks ;;
+  }
+
+  measure: Banner_conversions {
+    type: sum
+    sql: ${TABLE}.banner_conversions ;;
+  }
+
+  measure: Banner_impressions {
+    type: sum
+    sql: ${TABLE}.banner_impressions ;;
+  }
+
+  measure: Banner_revenue {
+    type: sum
+    sql: ${TABLE}.banner_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Clicks {
+    type: sum
+    sql: ${TABLE}.clicks ;;
+  }
+
+  measure: Conversions {
+    type: sum
+    sql: ${TABLE}.conversions ;;
+  }
+
+  measure: Impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
+  }
+
+  measure: Interstitial_clicks {
+    type: sum
+    sql: ${TABLE}.interstitial_clicks ;;
+  }
+
+  measure: Interstitial_conversions {
+    type: sum
+    sql: ${TABLE}.interstitial_conversions ;;
+  }
+
+  measure: Interstitial_impressions {
+    type: sum
+    sql: ${TABLE}.interstitial_impressions ;;
+  }
+
+  measure: Interstitial_revenue {
+    type: sum
+    sql: ${TABLE}.interstitial_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Native_clicks {
+    type: sum
+    sql: ${TABLE}.native_clicks ;;
+  }
+
+  measure: Native_conversions {
+    type: sum
+    sql: ${TABLE}.native_conversions ;;
+  }
+
+  measure: Native_impressions {
+    type: sum
+    sql: ${TABLE}.native_impressions ;;
+  }
+
+  measure: Native_revenue {
+    type: sum
+    sql: ${TABLE}.native_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Offerwall_clicks {
+    type: sum
+    sql: ${TABLE}.offerwall_clicks ;;
+  }
+
+  measure: Offerwall_conversions {
+    type: sum
+    sql: ${TABLE}.offerwall_conversions ;;
+  }
+
+  measure: Offerwall_impressions {
+    type: sum
+    sql: ${TABLE}.offerwall_impressions ;;
+  }
+
+  measure: Offerwall_revenue {
+    type: sum
+    sql: ${TABLE}.offerwall_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Other_clicks {
+    type: sum
+    sql: ${TABLE}.other_clicks ;;
+  }
+
+  measure: Other_conversions {
+    type: sum
+    sql: ${TABLE}.other_conversions ;;
+  }
+
+  measure: Other_impressions {
+    type: sum
+    sql: ${TABLE}.other_impressions ;;
+  }
+
+  measure: Other_revenue {
+    type: sum
+    sql: ${TABLE}.other_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+  measure: Revenue {
+    type: sum
+    sql: ${TABLE}.revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Video_clicks {
+    type: sum
+    sql: ${TABLE}.video_clicks ;;
+  }
+
+  measure: Video_conversions {
+    type: sum
+    sql: ${TABLE}.video_conversions ;;
+  }
+
+  measure: Video_impressions {
+    type: sum
+    sql: ${TABLE}.video_impressions ;;
+  }
+
+  measure: Video_revenue {
+    type: sum
+    sql: ${TABLE}.video_revenue / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: Ad_Revenue {
+    type: sum
+    sql: cast(${TABLE}.revenue as float) / 100 ;;
+    value_format: "$#,##0.00"
+  }
+
 }
