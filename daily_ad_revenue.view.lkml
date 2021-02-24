@@ -56,7 +56,7 @@ view: daily_ad_revenue {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}.date ;;
+    sql: ${TABLE}.updated_at ;;
   }
 
   dimension: impressions {
