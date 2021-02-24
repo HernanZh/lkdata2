@@ -26,6 +26,22 @@ view: ad_networks {
     sql: ${TABLE}.updated_at ;;
   }
 
+  dimension_group: loaded_at {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    datatype: date
+    sql: ${TABLE}.loaded_at ;;
+  }
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
