@@ -512,15 +512,15 @@ explore: user_attributes {
 }
 
 explore: user_ad_revenue {
-  join: user_attributes {
+  join: events {
     type: left_outer
-    sql_on: ${user_attributes.id} = ${user_ad_revenue.advertising_id} ;;
+    sql_on: ${events.advertising_id} = ${user_ad_revenue.advertising_id} ;;
     relationship: many_to_one
   }
 
   join: campaigns {
     type: left_outer
-    sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
     relationship: many_to_one
   }
 
