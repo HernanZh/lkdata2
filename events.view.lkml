@@ -256,7 +256,7 @@ view: events {
 
   measure: iap_revenue {
     type:  sum
-    sql: case when ${purchase_state} = 3 then cast(${TABLE}.revenue as float) / 100 else 0 end;;
+    sql: case when ${purchase_state} = 3 then ${TABLE}.revenue / 100 else 0 end;;
   }
 
   measure: app_id_dis_count {
