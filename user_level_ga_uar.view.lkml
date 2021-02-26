@@ -1,3 +1,8 @@
+# SELECT COALESCE(parkalias, parkname) as ParkAlias,
+#             city,
+#             state
+# FROM   Parks
+
 view: user_level_ga_uar {
   derived_table: {
     sql:
