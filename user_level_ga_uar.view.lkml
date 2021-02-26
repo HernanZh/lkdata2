@@ -60,7 +60,7 @@ view: user_level_ga_uar {
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
-        FROM gameanalytics.games_details  AS game_analytics
+        FROM gameanalytics.GA_view  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfa_a
       inner join (
@@ -156,7 +156,7 @@ view: user_level_ga_uar {
           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
           COUNT(DISTINCT game_analytics.user_id ) AS dau
-        FROM gameanalytics.games_details  AS game_analytics
+        FROM gameanalytics.GA_view  AS game_analytics
         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
       )idfv_a
       inner join (
