@@ -52,7 +52,7 @@ view: user_level_ga_uar {
           --date_diff(Day, TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP)),  (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY))) AS days_since_install,
 
           game_analytics.build  AS build,
-          game_analytics.install_campaign as install_campaign,
+          game_analytics.user_meta_install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           --game_analytics.ip  AS ip,
@@ -148,7 +148,7 @@ view: user_level_ga_uar {
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY)) AS days_since_install,
           --date_diff(Day, TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP)),  (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY))) AS days_since_install,
           game_analytics.build  AS build,
-          game_analytics.install_campaign as install_campaign,
+          game_analytics.user_meta_install_campaign as install_campaign,
           game_analytics.bundle_id  AS bundle_id,
           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
           --game_analytics.ip  AS ip,
@@ -222,7 +222,7 @@ view: user_level_ga_uar {
 
   dimension: install_campaign {
     type: string
-    sql: ${TABLE}.install_campaign ;;
+    sql: ${TABLE}.user_meta_install_campaign ;;
   }
 
   dimension: country {
