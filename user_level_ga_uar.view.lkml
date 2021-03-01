@@ -355,3 +355,199 @@ view: user_level_ga_uar {
     ]
   }
 }
+
+
+# select * from(
+#     select
+#       ad_unit,
+#       created_date,
+#       --idfa_a.install_date,
+#       idfa_a.bundle_id,
+#       idfa_a.build,
+#       idfa_a.install_campaign,
+#       --idfa_a.days_since_install,
+#       idfa_a.platform,
+#       idfa_b.advertising_id as advertising_id,
+#       idfa_a.country,
+#       idfa_a.country_bucket,
+#       AB_custom_01,
+#       AB_custom_02,
+#       AB_custom_03,
+#       playtime,
+#       avg_session_length,
+#       session_count,
+#       revenue,
+#       impressions,
+#       arpdau,
+#       dau
+#       from(
+#         SELECT
+#           game_analytics.inserted_at AS ts_date,
+#           --CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
+#           --game_analytics.ios_idfa  AS idfa,
+#           --REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
+#           REPLACE(LOWER(game_analytics.ios_idfa),'-','') as idfa,
+#           REPLACE(LOWER(game_analytics.ios_idfv),'-','') as idfv,
+#           game_analytics.platform as platform,
+#           game_analytics.custom_01  AS AB_custom_01,
+#           game_analytics.custom_02  AS AB_custom_02,
+#           game_analytics.custom_03  AS AB_custom_03,
+#           game_analytics.country_code as country,
+#           (SELECT
+#               CASE
+#           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+#           WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+#           WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+#           WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+#           WHEN game_analytics.country_code IN ('US')  THEN 'US'
+#           WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
+#           ELSE 'Unknown'
+#           END )AS country_bucket,
+#           --game_analytics.event_id AS event_id,
+#           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY)) AS days_since_install,
+#           --date_diff(Day, TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP)),  (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY))) AS days_since_install,
+
+#           game_analytics.build  AS build,
+#           game_analytics.user_meta_install_campaign as install_campaign,
+#           -- game_analytics.bundle_id  AS bundle_id,
+#           COALESCE(game_analytics.ios_bundle_id, game_analytics.android_bundle_id) as bundle_id,
+#           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
+#           --game_analytics.ip  AS ip,
+#           AVG(game_analytics.length ) AS avg_session_length,
+#           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
+#           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
+#           COUNT(DISTINCT game_analytics.user_id ) AS dau
+#         FROM gameanalytics.GA_view  AS game_analytics
+#         WHERE
+#         (((game_analytics.inserted_at ) >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -6 DAY) AS TIMESTAMP), DAY)))) AND (game_analytics.inserted_at  ) < ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -6 DAY), INTERVAL 7 DAY) AS TIMESTAMP), DAY))))))
+#         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
+#       )idfa_a
+#       inner join (
+#         SELECT
+#           user_ad_revenue.dataset_date AS created_date,
+#           user_ad_revenue.advertising_id  AS advertising_id,
+#           user_ad_revenue.platform  AS platform,
+#           user_ad_revenue.revenue AS revenue,
+#           user_ad_revenue.ad_unit as ad_unit,
+#           user_attributes.country as country,
+#           (SELECT
+#               CASE
+#           WHEN user_attributes.country IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+#           WHEN user_attributes.country IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+#           WHEN user_attributes.country IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+#           WHEN user_attributes.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+#           WHEN user_attributes.country IN ('US')  THEN 'US'
+#           WHEN user_attributes.country IN ('CN')  THEN 'CN'
+#           ELSE 'Unknown'
+#           END) AS country_bucket,
+#           user_ad_revenue.bundleid as bundle_id,
+#           user_ad_revenue.impressions AS impressions,
+#           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
+#         FROM ironsource.ironsource_revenue  AS user_ad_revenue
+#         LEFT JOIN tenjin_dv.events  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
+#         GROUP BY 1,2,3,4,5,6,7,8,9
+#       )idfa_b
+#       on idfa_a.idfa = idfa_b.advertising_id
+#       and idfa_a.ts_date = idfa_b.created_date
+#       and idfa_a.platform = idfa_b.platform
+#       and idfa_a.bundle_id = idfa_b.bundle_id
+#       and idfa_a.country = idfa_b.country
+#       and idfa_a.country_bucket = idfa_b.country_bucket
+#       )idfa_table
+#       Union ALL
+#       select * from
+#       (
+#           select
+#       ad_unit,
+#       created_date,
+#       --idfv_a.install_date,
+#       idfv_a.bundle_id,
+#       --idfv_a.days_since_install,
+#       idfv_a.build,
+#       idfv_a.install_campaign,
+#       idfv_a.platform,
+#       idfv_b.advertising_id as advertising_id,
+#       idfv_a.country,
+#       idfv_a.country_bucket,
+#       AB_custom_01,
+#       AB_custom_02,
+#       AB_custom_03,
+#       playtime,
+#       avg_session_length,
+#       session_count,
+#       revenue,
+#       impressions,
+#       arpdau,
+#       dau
+#       from(
+#         SELECT
+#           game_analytics.inserted_at AS ts_date,
+#           --CAST(TIMESTAMP_SECONDS(game_analytics.install_ts) AS DATE) AS install_date,
+#           --game_analytics.ios_idfa  AS idfa,
+#           --REPLACE(LOWER(game_analytics.user_id), '-', '') as filtered_uid,
+#           REPLACE(LOWER(game_analytics.ios_idfa),'-','') as idfa,
+#           REPLACE(LOWER(game_analytics.ios_idfv),'-','') as idfv,
+#           game_analytics.platform as platform,
+#           game_analytics.custom_01  AS AB_custom_01,
+#           game_analytics.custom_02  AS AB_custom_02,
+#           game_analytics.custom_03  AS AB_custom_03,
+#           game_analytics.country_code as country,
+#           (SELECT
+#               CASE
+#           WHEN game_analytics.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+#           WHEN game_analytics.country_code IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+#           WHEN game_analytics.country_code IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+#           WHEN game_analytics.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+#           WHEN game_analytics.country_code IN ('US')  THEN 'US'
+#           WHEN game_analytics.country_code IN ('CN')  THEN 'CN'
+#           ELSE 'Unknown'
+#           END) AS country_bucket,
+#           --game_analytics.country_bucket as country_bucket,
+#           --game_analytics.event_id AS event_id,
+#           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY)) AS days_since_install,
+#           --date_diff(Day, TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP)),  (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY))) AS days_since_install,
+#           game_analytics.build  AS build,
+#           game_analytics.user_meta_install_campaign as install_campaign,
+#           COALESCE(game_analytics.ios_bundle_id, game_analytics.android_bundle_id) as bundle_id,
+#           -- game_analytics.bundle_id  AS bundle_id,
+#           --CAST(TIMESTAMP_DIFF((TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.arrival_ts)  AS TIMESTAMP), DAY)) , (TIMESTAMP_TRUNC(CAST(TIMESTAMP_SECONDS(game_analytics.install_ts)  AS TIMESTAMP), DAY)) , DAY) AS INT64) AS days_since_install,
+#           --game_analytics.ip  AS ip,
+#           AVG(game_analytics.length ) AS avg_session_length,
+#           (COUNT(DISTINCT game_analytics.session_id )) * (AVG(game_analytics.length )) / (COUNT(DISTINCT game_analytics.user_id ))  AS playtime,
+#           COUNT(DISTINCT game_analytics.session_id ) AS session_count,
+#           COUNT(DISTINCT game_analytics.user_id ) AS dau
+#         FROM gameanalytics.GA_view  AS game_analytics
+#         GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12--,13
+#       )idfv_a
+#       inner join (
+#         SELECT
+#           user_ad_revenue.dataset_date AS created_date,
+#           user_ad_revenue.advertising_id  AS advertising_id,
+#           user_ad_revenue.platform  AS platform,
+#           user_ad_revenue.revenue AS revenue,
+#           user_ad_revenue.ad_unit as ad_unit,
+#           user_attributes.country as country,
+#           (SELECT
+#               CASE
+#           WHEN user_attributes.country IN ('AU','CA','DE','NZ','NO','CH', 'GB')  THEN 'T1'
+#           WHEN user_attributes.country IN ('HK','JP','KR','TW')  THEN 'T1_LOC'
+#           WHEN user_attributes.country IN ('AT','BE','DK','FR','NL','SG','SE')  THEN 'T2'
+#           WHEN user_attributes.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN')  THEN 'T3'
+#           WHEN user_attributes.country IN ('US')  THEN 'US'
+#           WHEN user_attributes.country IN ('CN')  THEN 'CN'
+#           ELSE 'Unknown'
+#           END) AS country_bucket,
+#           user_ad_revenue.bundleid as bundle_id,
+#           user_ad_revenue.impressions AS impressions,
+#           SUM(user_ad_revenue.revenue) / COUNT(DISTINCT user_ad_revenue.user_id)  AS arpdau
+#         FROM ironsource.ironsource_revenue  AS user_ad_revenue
+#         LEFT JOIN tenjin_dv.events  AS user_attributes ON (COALESCE(user_attributes.advertising_id, user_attributes.developer_device_id)) = user_ad_revenue.advertising_id
+#         GROUP BY 1,2,3,4,5,6,7,8,9
+#       )idfv_b
+#       on idfv_a.idfv = idfv_b.advertising_id
+#       and idfv_a.ts_date = idfv_b.created_date
+#       and idfv_a.platform = idfv_b.platform
+#       and idfv_a.bundle_id = idfv_b.bundle_id
+#       and idfv_a.country = idfv_b.country
+#       and idfv_a.country_bucket = idfv_b.country_bucket
+#       )idfv_table
