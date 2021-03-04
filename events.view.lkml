@@ -191,8 +191,8 @@ view: events {
     sql: ${TABLE}.quantity ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
@@ -211,8 +211,8 @@ view: events {
     sql: ${TABLE}.source_uuid ;;
   }
 
-  dimension: total_revenue {
-    type: number
+  measure: total_revenue {
+    type: sum
     sql: ${TABLE}.total_revenue ;;
   }
 
