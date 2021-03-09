@@ -3,7 +3,7 @@
 #             state
 # FROM   Parks
 
-view: user_level_ga_uar {
+view: user_level_ga_uar_new {
   derived_table: {
     sql:
     select * from(

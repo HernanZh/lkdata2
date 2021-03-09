@@ -1,4 +1,4 @@
-view: user_level_ga_uar_old {
+view: user_level_ga_uar {
   derived_table: {
     sql:
     select * from(

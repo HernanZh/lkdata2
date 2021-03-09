@@ -570,8 +570,8 @@ explore: user_ad_revenue {
 #   }
 # }
 
-explore: user_level_ga_uar {}
-explore: user_level_ga_uar_old {}
+explore: user_level_ga_uar_new {}
+explore: user_level_ga_uar{}
 
 # explore: uar_cohort_test {}
 
