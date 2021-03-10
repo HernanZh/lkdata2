@@ -1,5 +1,5 @@
 view: impressions {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.impressions`
+  sql_table_name:gameanalytics.impressions
     ;;
   drill_fields: [id]
 
