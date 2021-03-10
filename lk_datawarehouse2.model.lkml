@@ -354,7 +354,13 @@ explore: publisher_apps {
   }
 }
 
-explore: impressions {}
+explore: impressions {
+  join: apps {
+    type: left_outer
+    sql_on: ${impressions.game_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+}
 
 
 explore: reporting_cohort_metrics {
