@@ -355,9 +355,9 @@ explore: publisher_apps {
 }
 
 explore: impressions {
-  join: apps {
+  join: games {
     type: left_outer
-    sql_on: ${impressions.game_id} = ${apps.id} ;;
+    sql_on: ${impressions.game_id} = ${games.id} ;;
     relationship: many_to_one
   }
 }
