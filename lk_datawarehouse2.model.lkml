@@ -354,6 +354,9 @@ explore: publisher_apps {
   }
 }
 
+explore: impressions {}
+
+
 explore: reporting_cohort_metrics {
   join: ad_networks {
     type: left_outer
