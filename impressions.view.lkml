@@ -120,8 +120,8 @@ view: impressions {
     sql: ${TABLE}.instanceName ;;
   }
 
-  dimension: lifetime_revenue {
-    type: number
+  measure: lifetime_revenue {
+    type: sum
     sql: ${TABLE}.lifetimeRevenue ;;
   }
 
@@ -150,13 +150,13 @@ view: impressions {
     sql: ${TABLE}.publisher_revenue ;;
   }
 
-  dimension: publisher_revenue_usd_cents {
-    type: number
+  measure: publisher_revenue_usd_cents {
+    type: sum
     sql: ${TABLE}.publisher_revenue_usd_cents ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
