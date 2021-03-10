@@ -81,7 +81,7 @@ view: impressions {
   }
 
   dimension: game_id {
-    type: string
+    type: number
     sql: ${TABLE}.game_id ;;
   }
 
