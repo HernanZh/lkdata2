@@ -72,6 +72,7 @@ view: reporting_cohort_metrics {
     sql: ${TABLE}.days_since_install ;;
   }
 
+
   dimension_group: event {
     type: time
     timeframes: [
