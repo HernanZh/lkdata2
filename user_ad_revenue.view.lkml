@@ -181,4 +181,19 @@ view: user_ad_revenue {
     sql: SUM(${TABLE}.revenue) / COUNT(DISTINCT ${TABLE}.user_id) ;;
     value_format: "$#,##0.0000"
   }
+
+  dimension_group: days_since_install {
+    type: duration
+    intervals: [day]
+    sql_start: MIN(${date_created_raw}) ;;
+    sql_end: ${updated_date::datetime} ;;
+  }
+
+  # dimension_group: days_since_install {
+  #   type: duration
+  #   intervals: [day]
+  #   sql_start: ${acquired_date::datetime} ;;
+  #   sql_end: ${created_date::datetime} ;;
+  # }
+
 }
