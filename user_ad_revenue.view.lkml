@@ -182,12 +182,13 @@ view: user_ad_revenue {
     value_format: "$#,##0.0000"
   }
 
-  dimension_group: days_since_install {
-    type: duration
-    intervals: [day]
-    sql_start: MIN(${date_created_raw}) ;;
-    sql_end: ${updated_date::datetime} ;;
-  }
+
+  # dimension_group: days_since_install {
+  #   type: duration
+  #   intervals: [day]
+  #   sql_start: MIN(${date_created_raw}) ;;
+  #   sql_end: ${updated_date::datetime} ;;
+  # }
 
   # dimension_group: days_since_install {
   #   type: duration
