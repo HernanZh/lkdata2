@@ -15,6 +15,33 @@ explore: d_conversionValue {}
 
 # explore: SKAdNetwork_Test {}
 
+explore: user_ad_revenue_old {
+  join: events {
+    type: left_outer
+    sql_on: ${events.advertising_id} = ${user_ad_revenue_old.advertising_id} ;;
+    relationship: many_to_one
+  }
+
+  join: campaigns {
+    type: left_outer
+    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+    relationship: many_to_one
+  }
+
+  join: apps {
+    type: left_outer
+    sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    relationship: many_to_one
+  }
+
+  join: ad_networks {
+    type: left_outer
+    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    relationship: many_to_one
+  }
+
+}
+
 
 explore: ad_engagements {
   join: apps {
