@@ -2,11 +2,6 @@ view: GA_business {
   sql_table_name: `lk-datawarehouse-2.gameanalytics.GA_business`
     ;;
 
-  dimension: ab_variant_id {
-    type: string
-    sql: ${TABLE}.ab_variant_id ;;
-  }
-
   dimension: amount {
     type: number
     sql: ${TABLE}.amount ;;
@@ -15,16 +10,6 @@ view: GA_business {
   measure: amount_usd {
     type: sum
     sql: ${TABLE}.amount_usd ;;
-  }
-
-  dimension: android_app_signature {
-    type: string
-    sql: ${TABLE}.android_app_signature ;;
-  }
-
-  dimension: android_app_version {
-    type: string
-    sql: ${TABLE}.android_app_version ;;
   }
 
   dimension: bundle_id {
