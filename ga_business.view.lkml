@@ -62,9 +62,33 @@ view: GA_business {
     sql: ${TABLE}.android_mac_sha1 ;;
   }
 
-  dimension: arrival_ts {
-    type: number
-    sql: ${TABLE}.arrival_ts ;;
+  dimension_group: arrival_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+  }
+
+  dimension_group: install_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    # sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
   }
 
   dimension: browser_version {
@@ -283,10 +307,14 @@ view: GA_business {
     sql: ${TABLE}.user_meta_install_site ;;
   }
 
-  dimension: user_meta_install_ts {
-    type: number
-    sql: ${TABLE}.user_meta_install_ts ;;
+  dimension_group: since_install {
+    type: duration
+    intervals: [day]
+    sql_start: ${install_ts_date::datetime} ;;
+    sql_end: ${arrival_ts_date::datetime} ;;
   }
+
+
 
   dimension: user_meta_is_converting {
     type: yesno
