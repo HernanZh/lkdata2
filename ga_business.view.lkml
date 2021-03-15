@@ -1,5 +1,5 @@
 view: GA_business {
-  sql_table_name: 'lk-datawarehouse-2.gameanalytics.GA_business'
+  sql_table_name: gameanalytics.GA_business
     ;;
 
   dimension: amount {
