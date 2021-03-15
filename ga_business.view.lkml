@@ -22,11 +22,6 @@ view: GA_business {
     sql: ${TABLE}.amount_usd ;;
   }
 
-  dimension: android_app_build {
-    type: string
-    sql: ${TABLE}.android_app_build ;;
-  }
-
   dimension: android_app_signature {
     type: string
     sql: ${TABLE}.android_app_signature ;;
@@ -71,11 +66,6 @@ view: GA_business {
     ]
     # sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
     sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
-  }
-
-  dimension: browser_version {
-    type: string
-    sql: ${TABLE}.browser_version ;;
   }
 
   dimension: build {
