@@ -73,6 +73,8 @@ explore: ad_networks {}
 
 explore: apps {}
 
+explore: GA_business {}
+
 #explore: auditlog_ga {}
 
 #explore:  attribution_table{}
