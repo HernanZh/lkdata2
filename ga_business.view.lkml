@@ -52,16 +52,6 @@ view: GA_business {
     sql: ${TABLE}.android_hdw_serial ;;
   }
 
-  dimension: android_id {
-    type: string
-    sql: ${TABLE}.android_id ;;
-  }
-
-  dimension: android_imei {
-    type: string
-    sql: ${TABLE}.android_imei ;;
-  }
-
   dimension: android_mac_md5 {
     type: string
     sql: ${TABLE}.android_mac_md5 ;;
@@ -75,11 +65,6 @@ view: GA_business {
   dimension: arrival_ts {
     type: number
     sql: ${TABLE}.arrival_ts ;;
-  }
-
-  dimension: attempt_num {
-    type: number
-    sql: ${TABLE}.attempt_num ;;
   }
 
   dimension: browser_version {
@@ -97,64 +82,9 @@ view: GA_business {
     sql: ${TABLE}.cart_type ;;
   }
 
-  dimension: category {
-    type: string
-    sql: ${TABLE}.category ;;
-  }
-
   dimension: client_ts {
     type: number
     sql: ${TABLE}.client_ts ;;
-  }
-
-  dimension: configuration_keys_0 {
-    type: string
-    sql: ${TABLE}.configuration_keys_0 ;;
-  }
-
-  dimension: configuration_keys_1 {
-    type: string
-    sql: ${TABLE}.configuration_keys_1 ;;
-  }
-
-  dimension: configuration_keys_2 {
-    type: string
-    sql: ${TABLE}.configuration_keys_2 ;;
-  }
-
-  dimension: configuration_keys_3 {
-    type: string
-    sql: ${TABLE}.configuration_keys_3 ;;
-  }
-
-  dimension: configuration_keys_4 {
-    type: string
-    sql: ${TABLE}.configuration_keys_4 ;;
-  }
-
-  dimension: configurations_0 {
-    type: string
-    sql: ${TABLE}.configurations_0 ;;
-  }
-
-  dimension: configurations_1 {
-    type: string
-    sql: ${TABLE}.configurations_1 ;;
-  }
-
-  dimension: configurations_2 {
-    type: string
-    sql: ${TABLE}.configurations_2 ;;
-  }
-
-  dimension: configurations_3 {
-    type: string
-    sql: ${TABLE}.configurations_3 ;;
-  }
-
-  dimension: configurations_4 {
-    type: string
-    sql: ${TABLE}.configurations_4 ;;
   }
 
   dimension: connection_type {
@@ -202,54 +132,14 @@ view: GA_business {
     sql: ${TABLE}.device ;;
   }
 
-  dimension: engine_version {
-    type: string
-    sql: ${TABLE}.engine_version ;;
-  }
-
-  dimension: error_action {
-    type: string
-    sql: ${TABLE}.error_action ;;
-  }
-
-  dimension: error_area {
-    type: string
-    sql: ${TABLE}.error_area ;;
-  }
-
-  dimension: error_category {
-    type: string
-    sql: ${TABLE}.error_category ;;
-  }
-
-  dimension: error_parameter {
-    type: string
-    sql: ${TABLE}.error_parameter ;;
-  }
-
   dimension: event_id {
     type: string
     sql: ${TABLE}.event_id ;;
   }
 
-  dimension: first_in_batch {
-    type: yesno
-    sql: ${TABLE}.first_in_batch ;;
-  }
-
   dimension: game_id {
     type: number
     sql: ${TABLE}.game_id ;;
-  }
-
-  dimension: google_aid {
-    type: string
-    sql: ${TABLE}.google_aid ;;
-  }
-
-  dimension: google_aid_src {
-    type: string
-    sql: ${TABLE}.google_aid_src ;;
   }
 
   dimension_group: inserted {
@@ -265,16 +155,6 @@ view: GA_business {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.inserted_at ;;
-  }
-
-  dimension: install {
-    type: yesno
-    sql: ${TABLE}.install ;;
-  }
-
-  dimension: ios_app_build {
-    type: string
-    sql: ${TABLE}.ios_app_build ;;
   }
 
   dimension: ios_app_version {
@@ -302,11 +182,6 @@ view: GA_business {
     sql: ${TABLE}.ip ;;
   }
 
-  dimension: jailbroken {
-    type: yesno
-    sql: ${TABLE}.jailbroken ;;
-  }
-
   dimension: length {
     type: number
     sql: ${TABLE}.length ;;
@@ -320,11 +195,6 @@ view: GA_business {
   dimension: manufacturer {
     type: string
     sql: ${TABLE}.manufacturer ;;
-  }
-
-  dimension: message {
-    type: string
-    sql: ${TABLE}.message ;;
   }
 
   dimension: multi_message {
@@ -342,41 +212,6 @@ view: GA_business {
     sql: ${TABLE}.platform ;;
   }
 
-  dimension: public_key {
-    type: string
-    sql: ${TABLE}.public_key ;;
-  }
-
-  dimension: reason {
-    type: string
-    sql: ${TABLE}.reason ;;
-  }
-
-  dimension: receipt_info_receipt {
-    type: string
-    sql: ${TABLE}.receipt_info_receipt ;;
-  }
-
-  dimension: receipt_info_receipt_id {
-    type: string
-    sql: ${TABLE}.receipt_info_receipt_id ;;
-  }
-
-  dimension: receipt_info_signature {
-    type: string
-    sql: ${TABLE}.receipt_info_signature ;;
-  }
-
-  dimension: receipt_info_store {
-    type: string
-    sql: ${TABLE}.receipt_info_store ;;
-  }
-
-  dimension: score {
-    type: number
-    sql: ${TABLE}.score ;;
-  }
-
   dimension: sdk_version {
     type: string
     sql: ${TABLE}.sdk_version ;;
@@ -392,10 +227,6 @@ view: GA_business {
     sql: ${TABLE}.session_num ;;
   }
 
-  dimension: severity {
-    type: string
-    sql: ${TABLE}.severity ;;
-  }
 
   dimension: transaction_num {
     type: number
@@ -477,25 +308,11 @@ view: GA_business {
     sql: ${TABLE}.user_meta_pay_ft ;;
   }
 
-  dimension: user_meta_receipt_status {
-    type: string
-    sql: ${TABLE}.user_meta_receipt_status ;;
-  }
-
   dimension: user_meta_revenue {
     type: string
     sql: ${TABLE}.user_meta_revenue ;;
   }
 
-  dimension: v {
-    type: number
-    sql: ${TABLE}.v ;;
-  }
-
-  dimension: value {
-    type: number
-    sql: ${TABLE}.value ;;
-  }
 
   measure: count {
     type: count
