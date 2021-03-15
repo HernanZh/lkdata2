@@ -17,8 +17,8 @@ view: GA_business {
     sql: ${TABLE}.amount ;;
   }
 
-  dimension: amount_usd {
-    type: number
+  measure: amount_usd {
+    type: sum
     sql: ${TABLE}.amount_usd ;;
   }
 
