@@ -1,5 +1,5 @@
-view: games_details_error {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.games_details_error`
+view: GA_error {
+  sql_table_name: 'gameanalytics.games_details_error'
     ;;
 
   dimension: arrival_ts {

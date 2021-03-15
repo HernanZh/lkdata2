@@ -1,5 +1,5 @@
-view: games_details_business {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.games_details_business`
+view: GA_business {
+  sql_table_name: 'gameanalytics.games_details_business'
     ;;
 
   dimension: arrival_ts {

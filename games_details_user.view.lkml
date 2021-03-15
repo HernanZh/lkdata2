@@ -1,5 +1,5 @@
-view: games_details_user {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.games_details_user`
+view: GA_user {
+  sql_table_name: 'gameanalytics.games_details_user'
     ;;
 
   dimension: arrival_ts {

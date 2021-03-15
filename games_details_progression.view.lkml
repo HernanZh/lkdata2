@@ -1,5 +1,5 @@
-view: games_details_progression {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.games_details_progression`
+view: GA_progression {
+  sql_table_name: 'gameanalytics.games_details_progression'
     ;;
 
   dimension: arrival_ts {

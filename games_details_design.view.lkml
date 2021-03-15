@@ -1,5 +1,5 @@
-view: games_details_design {
-  sql_table_name: `lk-datawarehouse-2.gameanalytics.games_details_design`
+view: GA_design {
+  sql_table_name: 'gameanalytics.games_details_design'
     ;;
 
   dimension: arrival_ts {
