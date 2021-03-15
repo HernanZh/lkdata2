@@ -37,30 +37,12 @@ view: GA_business {
     sql: ${TABLE}.android_app_version ;;
   }
 
-  dimension: android_bundle_id {
+  dimension: bundle_id {
     type: string
-    sql: ${TABLE}.android_bundle_id ;;
-  }
-
-  dimension: android_channel_id {
-    type: string
-    sql: ${TABLE}.android_channel_id ;;
-  }
-
-  dimension: android_hdw_serial {
-    type: string
-    sql: ${TABLE}.android_hdw_serial ;;
-  }
-
-  dimension: android_mac_md5 {
-    type: string
-    sql: ${TABLE}.android_mac_md5 ;;
-  }
-
-  dimension: android_mac_sha1 {
-    type: string
-    sql: ${TABLE}.android_mac_sha1 ;;
-  }
+    sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
+          WHEN ${TABLE}.platform = 'android' THEN android_bundle_id
+          ELSE ios_bundle_id END;;
+    }
 
   dimension_group: arrival_ts {
     type: time
@@ -184,11 +166,6 @@ view: GA_business {
   dimension: ios_app_version {
     type: string
     sql: ${TABLE}.ios_app_version ;;
-  }
-
-  dimension: ios_bundle_id {
-    type: string
-    sql: ${TABLE}.ios_bundle_id ;;
   }
 
   dimension: ios_idfa {
