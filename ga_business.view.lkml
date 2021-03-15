@@ -2,11 +2,6 @@ view: GA_business {
   sql_table_name: `lk-datawarehouse-2.gameanalytics.GA_business`
     ;;
 
-  dimension: ab_id {
-    type: string
-    sql: ${TABLE}.ab_id ;;
-  }
-
   dimension: ab_variant_id {
     type: string
     sql: ${TABLE}.ab_variant_id ;;
