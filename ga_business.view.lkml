@@ -9,7 +9,7 @@ view: GA_business {
 
   measure: amount_usd {
     type: sum
-    sql: ${TABLE}.amount_usd ;;
+    sql: ${TABLE}.amount_usd/100 ;;
   }
 
   dimension: bundle_id {
