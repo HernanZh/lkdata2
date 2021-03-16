@@ -284,9 +284,9 @@ view: GA_progression {
   }
 
   #Should be aggregated?
-  dimension: score {
-    type: number
-    sql: ${TABLE}.attempt_num ;;
+  measure: score {
+    type: sum
+    sql: ${TABLE}.score ;;
   }
 
   measure: DAU {
