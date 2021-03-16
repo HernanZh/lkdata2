@@ -84,7 +84,7 @@ explore: GA_business {
             ${GA_business.client_ts}=${GA_session_end.client_ts} AND
             ${GA_business.platform}=${GA_session_end.platform}
             ${GA_business.install_ts_date}=${GA_session_end.install_ts_date};;
-    fields: [GA_session_end.playtime,GA_session_end.avg_session_length]
+    # fields: [GA_session_end.playtime,GA_session_end.avg_session_length]
   }
 }
 explore: GA_design{}
