@@ -148,6 +148,7 @@ view: impressions {
   dimension: publisher_revenue {
     type: number
     sql: ${TABLE}.publisher_revenue ;;
+    value_format: "#.##"
   }
 
   measure: publisher_revenue_usd_cents {
@@ -158,6 +159,7 @@ view: impressions {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "#.##"
   }
 
   dimension: user_id {
