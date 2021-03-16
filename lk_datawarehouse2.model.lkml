@@ -75,7 +75,7 @@ explore: apps {}
 
 explore: GA_business {
   join: GA_session_end {
-    type: inner
+    type: left_outer
     relationship: many_to_one
     sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
             ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
