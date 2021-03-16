@@ -120,8 +120,8 @@ view: impressions {
     sql: ${TABLE}.instanceName ;;
   }
 
-  measure: lifetime_revenue {
-    type: sum
+  dimension: lifetime_revenue {
+    type: number
     sql: ${TABLE}.lifetimeRevenue ;;
   }
 
