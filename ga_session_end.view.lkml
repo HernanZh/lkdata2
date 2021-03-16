@@ -323,6 +323,11 @@ view: GA_session_end {
     sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
   }
 
+  measure: total_playtime {
+    type: sum
+    sql: (${playtime});;
+  }
+
 
   measure: count {
     type: count
