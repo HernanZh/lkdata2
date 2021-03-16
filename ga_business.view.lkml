@@ -289,6 +289,35 @@ view: GA_business {
     sql: ${TABLE}.user_meta_revenue ;;
   }
 
+  measure: DAU {
+    type: count_distinct
+    sql: ${user_id} ;;
+  }
+
+  measure: session_count {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+  }
+  measure: avg_session_length {
+    type: average
+    sql: ${TABLE}.length ;;
+  }
+
+  measure: avg_value {
+    type: average
+    sql: ${TABLE}.value ;;
+  }
+
+  measure: sum_value {
+    type: sum
+    sql: ${TABLE}.value ;;
+  }
+
+  measure: playtime {
+    type: number
+    sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
+  }
+
 
   measure: count {
     type: count
