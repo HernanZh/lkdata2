@@ -76,7 +76,6 @@ explore: apps {}
 explore: GA_business {
   join: GA_session_end {
     type: left_outer
-    relationship: many_to_one
     sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
             ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
             ${GA_business.user_id}=${GA_session_end.user_id} AND
@@ -86,6 +85,7 @@ explore: GA_business {
             ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
             ;;
     fields: [playtime,avg_session_length]
+    relationship: many_to_one
   }
 }
 explore: GA_design{}
