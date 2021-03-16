@@ -74,6 +74,7 @@ explore: ad_networks {}
 explore: apps {}
 
 explore: GA_business {}
+explore: GA_design{}
 
 #explore: auditlog_ga {}
 
