@@ -288,10 +288,10 @@ view: GA_impression {
     type: count_distinct
     sql: ${TABLE}.session_id ;;
   }
-  measure: avg_session_length {
-    type: average
-    sql: ${TABLE}.length ;;
-  }
+  # measure: avg_session_length {
+  #   type: average
+  #   sql: ${TABLE}.length ;;
+  # }
 
   measure: avg_value {
     type: average
@@ -303,10 +303,10 @@ view: GA_impression {
     sql: ${TABLE}.value ;;
   }
 
-  measure: playtime {
-    type: number
-    sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
-  }
+  # measure: playtime {
+  #   type: number
+  #   sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
+  # }
 
   measure: count {
     type: count
