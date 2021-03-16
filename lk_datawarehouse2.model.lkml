@@ -75,16 +75,16 @@ explore: apps {}
 
 explore: GA_business {
   join: GA_session_end {
-    type: left_outer
+    type: inner
     relationship: many_to_one
     sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
             ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
             ${GA_business.user_id}=${GA_session_end.user_id} AND
             ${GA_business.game_id}=${GA_session_end.game_id} AND
             ${GA_business.client_ts}=${GA_session_end.client_ts} AND
-            ${GA_business.platform}=${GA_session_end.platform}
+            ${GA_business.platform}=${GA_session_end.platform} AND
             ${GA_business.install_ts_date}=${GA_session_end.install_ts_date};;
-    # fields: [GA_session_end.playtime,GA_session_end.avg_session_length]
+    fields: [GA_session_end.playtime,GA_session_end.avg_session_length]
   }
 }
 explore: GA_design{}
