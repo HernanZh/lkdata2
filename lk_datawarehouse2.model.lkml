@@ -79,7 +79,8 @@ explore: GA_business {
     sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
             ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
             ${GA_business.user_id}=${GA_session_end.user_id} AND
-            ${GA_business.game_id}=${GA_session_end.game_id} AND
+            ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
+            ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
             ${GA_business.client_ts}=${GA_session_end.client_ts} AND
             ${GA_business.platform}=${GA_session_end.platform} AND
             ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}

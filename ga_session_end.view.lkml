@@ -9,6 +9,16 @@ view: GA_session_end {
           ELSE ios_bundle_id END;;
   }
 
+  dimension: ios_bundle_id {
+    type: string
+    sql: ${TABLE}.ios_bundle_id ;;
+  }
+
+  dimension: android_bundle_id {
+    type: string
+    sql: ${TABLE}.android_bundle_id ;;
+  }
+
   dimension_group: arrival_ts {
     type: time
     timeframes: [
