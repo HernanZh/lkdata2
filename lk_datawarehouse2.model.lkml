@@ -74,20 +74,20 @@ explore: ad_networks {}
 explore: apps {}
 
 explore: GA_business {
-  join: GA_session_end {
-    type: left_outer
-    sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
-            ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
-            ${GA_business.user_id}=${GA_session_end.user_id} AND
-            ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
-            ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
-            ${GA_business.client_ts}=${GA_session_end.client_ts} AND
-            ${GA_business.platform}=${GA_session_end.platform} AND
-            ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
-            ;;
-    fields: [game_id,length, playtime,avg_session_length]
-    relationship: many_to_one
-  }
+  # join: GA_session_end {
+  #   type: left_outer
+  #   sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
+  #           ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
+  #           ${GA_business.user_id}=${GA_session_end.user_id} AND
+  #           ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
+  #           ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
+  #           ${GA_business.client_ts}=${GA_session_end.client_ts} AND
+  #           ${GA_business.platform}=${GA_session_end.platform} AND
+  #           ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
+  #           ;;
+  #   fields: [game_id,length, playtime,avg_session_length]
+  #   relationship: many_to_one
+  # }
 }
 explore: GA_design{}
 explore: GA_error {}
