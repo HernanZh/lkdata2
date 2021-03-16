@@ -90,6 +90,11 @@ explore: GA_business {
   }
 }
 explore: GA_design{}
+explore: GA_error {}
+explore: GA_progression {}
+explore: GA_resource {}
+explore: GA_sdk_error {}
+explore: GA_session_end {}
 
 #explore: auditlog_ga {}
 
