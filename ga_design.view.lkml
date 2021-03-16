@@ -143,11 +143,6 @@ view: GA_design {
     sql: ${TABLE}.ip ;;
   }
 
-  dimension: length {
-    type: number
-    sql: ${TABLE}.length ;;
-  }
-
   dimension: limited_ad_tracking {
     type: yesno
     sql: ${TABLE}.limited_ad_tracking ;;

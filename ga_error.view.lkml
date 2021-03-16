@@ -307,10 +307,6 @@ view: ga_error {
     sql: ${TABLE}.jailbroken ;;
   }
 
-  dimension: length {
-    type: number
-    sql: ${TABLE}.length ;;
-  }
 
   dimension: limited_ad_tracking {
     type: yesno
