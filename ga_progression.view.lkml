@@ -335,6 +335,11 @@ view: GA_progression {
     sql: ${user_id} ;;
   }
 
+  measure: AVG_distinct_events {
+    type: count_distinct
+    sql: ${event_id} ;;
+  }
+
   measure: session_count {
     type: count_distinct
     sql: ${TABLE}.session_id ;;
