@@ -69,11 +69,19 @@ view: GA_business {
     sql: ${TABLE}.cart_type ;;
   }
 
-  dimension: client_ts {
-    type: number
-    sql: ${TABLE}.client_ts ;;
+  dimension_group: client_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: TIMESTAMP_SECONDS(${TABLE}.client_ts) ;;
   }
-
   dimension: connection_type {
     type: string
     sql: ${TABLE}.connection_type ;;

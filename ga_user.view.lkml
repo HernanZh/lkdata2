@@ -43,9 +43,18 @@ view: GA_user{
     sql: ${TABLE}.build ;;
   }
 
-  dimension: client_ts {
-    type: number
-    sql: ${TABLE}.client_ts ;;
+  dimension_group: client_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: TIMESTAMP_SECONDS(${TABLE}.client_ts) ;;
   }
 
   dimension: connection_type {
