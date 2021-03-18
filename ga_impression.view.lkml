@@ -72,6 +72,38 @@ view: GA_impression {
     sql: ${TABLE}.country_code ;;
   }
 
+  dimension: country_bucket {
+    type: string
+    case: {
+      when: {
+        sql: ${TABLE}.country_code IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
+        label: "T1"
+      }
+      when: {
+        sql: ${TABLE}.country_code IN ('HK','JP','KR','TW') ;;
+        label: "T1_LOC"
+      }
+      when: {
+        sql: ${TABLE}.country_code IN ('AT','BE','DK','FR','NL','SG','SE') ;;
+        label: "T2"
+      }
+      when: {
+        sql: ${TABLE}.country_code IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
+        label: "T3"
+      }
+      when: {
+        sql: ${TABLE}.country_code IN ('US') ;;
+        label: "US"
+      }
+      when: {
+        sql: ${TABLE}.country_code IN ('CN') ;;
+        label: "CN"
+      }
+      else: "Unknown"
+    }
+  }
+
+
   dimension: currency {
     type: string
     sql: ${TABLE}.currency ;;
