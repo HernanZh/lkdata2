@@ -2,6 +2,21 @@ view: GA_session_end {
   sql_table_name: gameanalytics.GA_session_end
     ;;
 
+  dimension_group: arrival {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.arrival_date ;;
+  }
+
   dimension: bundle_id {
     type: string
     sql: CASE WHEN ${TABLE}.platform = 'ios' THEN ios_bundle_id
