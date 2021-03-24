@@ -96,6 +96,7 @@ explore: GA_resource {}
 explore: GA_sdk_error {}
 explore: GA_session_end {}
 explore: GA_session_end_new {}
+explore: ga_session_end_raw {}
 explore: GA_user{}
 
 #explore: auditlog_ga {}
