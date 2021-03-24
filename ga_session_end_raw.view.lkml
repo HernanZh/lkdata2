@@ -517,6 +517,41 @@ view: ga_session_end_raw {
     sql: ${TABLE}.user_meta_revenue ;;
   }
 
+  #Should be aggregated?
+  dimension: score {
+    type: number
+    sql: ${TABLE}.data_attempt_num ;;
+  }
+
+  measure: DAU {
+    type: count_distinct
+    sql: ${data_user_id} ;;
+  }
+
+  measure: session_count {
+    type: count_distinct
+    sql: ${TABLE}.data_session_id ;;
+  }
+  measure: avg_session_length {
+    type: average
+    sql: ${TABLE}.data_length ;;
+  }
+
+  measure: avg_value {
+    type: average
+    sql: ${TABLE}.data_value ;;
+  }
+
+  measure: sum_value {
+    type: sum
+    sql: ${TABLE}.data_value ;;
+  }
+
+  measure: playtime {
+    type: number
+    sql: ${session_count} * ${avg_session_length} / ${DAU} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: []
