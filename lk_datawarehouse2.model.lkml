@@ -98,6 +98,7 @@ explore: GA_session_end {}
 explore: GA_session_end_new {}
 explore: ga_session_end_raw {}
 explore: GA_user{}
+explore: ga_minimalistic {}
 
 #explore: auditlog_ga {}
 
