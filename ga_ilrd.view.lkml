@@ -57,7 +57,7 @@ view: ga_ilrd {
 
         inner join (
                 select
-                  inserted_at,
+                  inserted_at, --REPLACE THIS WITH ARRIVAL_DATE ONCE IMPLEMENTED
                   UPPER(user_id) as user_id,
                   idfa,
                   idfv,
