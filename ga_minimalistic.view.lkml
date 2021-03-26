@@ -21,7 +21,7 @@ view: ga_minimalistic {
           AVG(length) as avg_session_length
 
           from gameanalytics.GA_session_end as ga
-          WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
+          --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
           group by 1,2,3,4,5,6,7,8,9
           ) ga_base
 
