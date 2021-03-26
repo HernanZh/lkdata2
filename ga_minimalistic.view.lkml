@@ -109,26 +109,26 @@ view: ga_minimalistic {
 
   measure: avg_session_length {
     type: average
-    sql: ${TABLE}.avg_session_length
-    value_format:'#.#';;
+    sql: ${TABLE}.avg_session_length;;
+    value_format:"#.#"
   }
 
   measure: playtime {
     type: sum
-    sql: ${TABLE}.playtime
-    value_format:'#.#';;
+    sql: ${TABLE}.playtime;;
+    value_format:"#.#"
   }
 
   measure: avg_playtime {
     type: average
-    sql: ${TABLE}.playtime
-    value_format:'#.#';;
+    sql: ${TABLE}.playtime;;
+    value_format:"#.#"
   }
 
   measure: avg_session_count {
     type: average
-    sql: ${TABLE}.session_count
-    value_format:'#.#';;
+    sql: ${TABLE}.session_count;;
+    value_format:"#.#"
   }
 
   set: detail {
