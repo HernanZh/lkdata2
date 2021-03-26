@@ -122,6 +122,11 @@ view: ga_minimalistic {
     sql: ${TABLE}.playtime ;;
   }
 
+  measure: avg_session_count {
+    type: average
+    sql: ${TABLE}.session_count ;;
+  }
+
   set: detail {
     fields: [
       bundle_id,
