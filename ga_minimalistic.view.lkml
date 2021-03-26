@@ -12,6 +12,9 @@ view: ga_minimalistic {
           UPPER(user_id) as user_id,
           ios_idfa,
           ios_idfv,
+          country_code as country,
+          user_meta_install_campaign as install_campaign,
+          limited_ad_tracking as LAT,
           platform,
           custom_01,
           custom_02,
@@ -22,7 +25,7 @@ view: ga_minimalistic {
 
           from gameanalytics.GA_session_end as ga
           --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-          group by 1,2,3,4,5,6,7,8,9
+          group by 1,2,3,4,5,6,7,8,9,10,11,12
           ) ga_base
 
       --Join in games table to get the bundle_id
@@ -44,6 +47,21 @@ view: ga_minimalistic {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
+  }
+
+  dimension: install_campaign {
+    type: string
+    sql: ${TABLE}.install_campaign ;;
+  }
+
+  dimension: LAT {
+    type: yesno
+    sql: ${TABLE}.LAT ;;
   }
 
   dimension: bundle_id {
