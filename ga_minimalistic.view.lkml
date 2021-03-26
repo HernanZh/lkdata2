@@ -97,23 +97,28 @@ view: ga_minimalistic {
     sql: ${TABLE}.custom_03 ;;
   }
 
-  dimension: dau {
-    type: number
+  measure: dau {
+    type: sum
     sql: ${TABLE}.DAU ;;
   }
 
-  dimension: session_count {
-    type: number
+  measure: session_count {
+    type: sum
     sql: ${TABLE}.session_count ;;
   }
 
-  dimension: avg_session_length {
-    type: number
+  measure: avg_session_length {
+    type: average
     sql: ${TABLE}.avg_session_length ;;
   }
 
-  dimension: playtime {
-    type: number
+  measure: playtime {
+    type: sum
+    sql: ${TABLE}.playtime ;;
+  }
+
+  measure: avg_playtime {
+    type: average
     sql: ${TABLE}.playtime ;;
   }
 
