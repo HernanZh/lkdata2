@@ -99,6 +99,7 @@ explore: GA_session_end_new {}
 explore: ga_session_end_raw {}
 explore: GA_user{}
 explore: ga_minimalistic {}
+explore: ga_ilrd {}
 
 #explore: auditlog_ga {}
 

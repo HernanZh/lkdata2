@@ -166,7 +166,7 @@ view: ga_ilrd {
 
   measure: avg_session_count {
     type: average
-    sql: ${TABLE}${session_count} ;;
+    sql: ${TABLE}.session_count ;;
     value_format: "#.#"
   }
 
@@ -184,7 +184,7 @@ view: ga_ilrd {
 
   measure: avg_playtime {
     type: average
-    sql: ${TABLE}${playtime} ;;
+    sql: ${TABLE}.playtime ;;
     value_format: "#.#"
   }
 
