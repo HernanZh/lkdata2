@@ -95,6 +95,21 @@ view: impressions {
     sql: ${TABLE}.idfv ;;
   }
 
+  dimension_group: arrival_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: timestamp
+    sql: ${TABLE}.arrival_date ;;
+  }
+
   dimension_group: inserted {
     type: time
     timeframes: [
