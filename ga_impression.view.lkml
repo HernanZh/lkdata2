@@ -9,6 +9,21 @@ view: GA_impression {
           ELSE ios_bundle_id END;;
   }
 
+  dimension_group: arrival {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.arrival_date ;;
+  }
+
   dimension_group: arrival_ts {
     type: time
     timeframes: [
