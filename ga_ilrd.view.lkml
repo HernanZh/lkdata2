@@ -73,7 +73,7 @@ view: ga_ilrd {
                   count(adUnit) as impressions,
                 --from gameanalytics.impressions_backup_20210328 AS impressions
                 from gameanalytics.impressions AS impressions
-                WHERE arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
+                --WHERE arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
                 group by 1,2,3,4,5,6,7,8,9,10,11
                 )impressions
           on impressions.user_id = ga_minimalistic.user_id
