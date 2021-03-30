@@ -106,7 +106,7 @@ view: impressions {
       year
     ]
     convert_tz: no
-    datatype: timestamp
+    datatype: date
     sql: ${TABLE}.arrival_date ;;
   }
 
