@@ -57,7 +57,7 @@ view: ga_ilrd {
 
         inner join (
                 select
-                  inserted_at, --REPLACE THIS WITH ARRIVAL_DATE ONCE IMPLEMENTED
+                  arrival_date, --REPLACE THIS WITH ARRIVAL_DATE ONCE IMPLEMENTED
                   UPPER(user_id) as user_id,
                   idfa,
                   idfv,
@@ -73,11 +73,11 @@ view: ga_ilrd {
                   count(adUnit) as impressions,
                 --from gameanalytics.impressions_backup_20210328 AS impressions
                 from gameanalytics.impressions AS impressions
-                WHERE inserted_at >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
+                WHERE arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
                 group by 1,2,3,4,5,6,7,8,9,10,11
                 )impressions
           on impressions.user_id = ga_minimalistic.user_id
-          and impressions.inserted_at = ga_minimalistic.arrival_date
+          and impressions.arrival_date = ga_minimalistic.arrival_date
           and impressions.game_id = ga_minimalistic.game_id
           and impressions.country = ga_minimalistic.country
       )
