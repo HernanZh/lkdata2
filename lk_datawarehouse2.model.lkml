@@ -6,7 +6,7 @@ include: "*.view"
 
 datagroup: lk_datawarehouse2_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
+  max_cache_age: "12 hours"
 }
 
 persist_with: lk_datawarehouse2_default_datagroup
