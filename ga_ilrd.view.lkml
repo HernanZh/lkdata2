@@ -22,9 +22,9 @@ view: ga_ilrd {
                   --COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
                   game_id,
                   UPPER(user_id) as user_id,
+                  day_since_install,
                   ios_idfa,
                   ios_idfv,
-                  day_since_install,
                   country_code as country,
                   user_meta_install_campaign as install_campaign,
                   limited_ad_tracking as LAT,
@@ -103,7 +103,7 @@ view: ga_ilrd {
   }
 
   dimension: day_since_install {
-    type: number
+    type: date
     sql: ${TABLE}.day_since_install ;;
   }
 
