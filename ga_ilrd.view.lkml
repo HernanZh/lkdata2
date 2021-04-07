@@ -20,9 +20,10 @@ view: ga_ilrd {
                   SELECT
                   arrival_date,
                   --COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
+                  install_ts_raw,
+                  arrival_ts_raw,
                   game_id,
                   UPPER(user_id) as user_id,
-                  day_since_install,
                   ios_idfa,
                   ios_idfv,
                   country_code as country,
@@ -38,7 +39,7 @@ view: ga_ilrd {
 
                   from gameanalytics.GA_session_end as ga
                   --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-                  group by 1,2,3,4,5,6,7,8,9,10,11,12,13
+                  group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
                   ) ga_base
 
               --Join in games table to get the bundle_id
@@ -102,9 +103,11 @@ view: ga_ilrd {
     sql: ${TABLE}.arrival_date ;;
   }
 
-  dimension: day_since_install {
-    type: date
-    sql: ${TABLE}.day_since_install ;;
+  dimension_group: since_install {
+    type: duration
+    intervals: [day]
+    sql_start: ${TABLE}.install_ts_raw ;;
+    sql_end: ${TABLE}.arrival_ts_raw} ;;
   }
 
   dimension: game_id {
