@@ -24,7 +24,7 @@ view: ga_ilrd {
                   UPPER(user_id) as user_id,
                   ios_idfa,
                   ios_idfv,
-                  since_install_day,
+                  since_install,
                   country_code as country,
                   user_meta_install_campaign as install_campaign,
                   limited_ad_tracking as LAT,
@@ -104,7 +104,7 @@ view: ga_ilrd {
 
   dimension: days_since_install {
     type: number
-    sql: ${TABLE}.since_install_day ;;
+    sql: ${TABLE}.since_install ;;
   }
 
   dimension: game_id {
