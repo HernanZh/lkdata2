@@ -24,6 +24,7 @@ view: ga_ilrd {
                   UPPER(user_id) as user_id,
                   ios_idfa,
                   ios_idfv,
+                  days_since_install,
                   country_code as country,
                   user_meta_install_campaign as install_campaign,
                   limited_ad_tracking as LAT,
@@ -37,7 +38,7 @@ view: ga_ilrd {
 
                   from gameanalytics.GA_session_end as ga
                   --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-                  group by 1,2,3,4,5,6,7,8,9,10,11,12
+                  group by 1,2,3,4,5,6,7,8,9,10,11,12,13
                   ) ga_base
 
               --Join in games table to get the bundle_id
@@ -99,6 +100,11 @@ view: ga_ilrd {
     type: date
     datatype: date
     sql: ${TABLE}.arrival_date ;;
+  }
+
+  dimension: days_since_install {
+    type: number
+    sql: ${TABLE}.days_since_install ;;
   }
 
   dimension: game_id {
