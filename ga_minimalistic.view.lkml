@@ -27,7 +27,7 @@ view: ga_minimalistic {
 
           from gameanalytics.GA_session_end as ga
           --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-          group by 1,2,3,4,5,6,7,8,9,10,11,12
+          group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
           ) ga_base
 
       --Join in games table to get the bundle_id
