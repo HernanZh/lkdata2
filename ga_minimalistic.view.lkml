@@ -155,8 +155,8 @@ view: ga_minimalistic {
   }
 
   measure: dau {
-    type: sum
-    sql: ${TABLE}.DAU ;;
+    type: count_distinct
+    sql: ${TABLE}.user_id ;;
   }
 
   measure: session_count {
