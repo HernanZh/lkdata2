@@ -8,6 +8,8 @@ view: ga_minimalistic {
           SELECT
           arrival_date,
           --COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
+          user_meta_install_ts,
+          arrival_ts,
           game_id,
           UPPER(user_id) as user_id,
           ios_idfa,
@@ -48,6 +50,43 @@ view: ga_minimalistic {
     type: count
     drill_fields: [detail*]
   }
+
+  dimension_group: since_install {
+    type: duration
+    intervals: [day]
+    sql_start: ${install_ts_date::datetime} ;;
+    sql_end: ${arrival_ts_date::datetime} ;;
+  }
+
+  dimension_group: arrival_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: TIMESTAMP_SECONDS(${TABLE}.arrival_ts) ;;
+  }
+
+  dimension_group: install_ts {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    # sql: TIMESTAMP_SECONDS(${TABLE}.install_ts) ;;
+    sql: TIMESTAMP_SECONDS(${TABLE}.user_meta_install_ts) ;;
+  }
+
 
   dimension: country {
     type: string
