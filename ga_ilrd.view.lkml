@@ -15,7 +15,7 @@ view: ga_ilrd {
         (select
               game_info.bundle_id,
               ga_base.*,
-              (session_count * avg_session_length)/DAU as playtime
+              (session_count * avg_session_length)/count(distinct user_id) as playtime
               From(
                   SELECT
                   arrival_date,
