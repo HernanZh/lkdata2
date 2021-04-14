@@ -30,7 +30,8 @@ view: ga_ilrd {
                   custom_01,
                   custom_02,
                   custom_03,
-                  COUNT(DISTINCT user_id) as DAU,
+                  --COUNT(DISTINCT user_id) as DAU,
+                  DAU,
                   COUNT(DISTINCT session_id) as session_count,
                   AVG(length) as avg_session_length
 
@@ -217,7 +218,7 @@ view: ga_ilrd {
     sql: ${TABLE}.custom_03 ;;
   }
 
-  measure: dau {
+  measure: DAU {
     type: count_distinct
     sql: ${TABLE}.user_id ;;
   }
@@ -306,7 +307,7 @@ view: ga_ilrd {
       custom_01,
       custom_02,
       custom_03,
-      dau,
+      DAU,
       session_count,
       avg_session_length,
       playtime,
