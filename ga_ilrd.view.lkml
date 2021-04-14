@@ -30,7 +30,7 @@ view: ga_ilrd {
                   custom_01,
                   custom_02,
                   custom_03,
-                  --COUNT(DISTINCT user_id) as DAU,
+                  COUNT(DISTINCT user_id) as DAU,
                   --DAU,
                   COUNT(DISTINCT session_id) as session_count,
                   AVG(length) as avg_session_length
