@@ -219,9 +219,9 @@ view: ga_ilrd {
   }
 #Sum all single distinct counts
   measure: DAU {
-    type:  sum_distinct
-    sql_distinct_key: ${TABLE}.user_id ;;
+    type:  count_distinct
     sql:  (${TABLE}.user_id);;
+    drill_fields: [detail*]
   }
 
   measure: session_count {
