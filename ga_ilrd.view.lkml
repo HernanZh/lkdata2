@@ -66,9 +66,9 @@ view: ga_ilrd {
                   placement,
                   precision,
                   country,
-                  publisher_revenue,
-                  revenue,
-                  impressions,
+                  sum(publisher_revenue) as publisher_revenue,
+                  sum(revenue) as revenue,
+                  count(adUnit) as impressions,
                 --from gameanalytics.impressions_backup_20210328 AS impressions
                 --from gameanalytics.impressions_backup_20210403 as impressions
                 from gameanalytics.impressions AS impressions
@@ -282,17 +282,17 @@ view: ga_ilrd {
   }
 
   measure: publisher_revenue {
-    type: sum
+    type: number
     sql: ${TABLE}.publisher_revenue ;;
   }
 
   measure: revenue {
-    type: sum
+    type: number
     sql: ${TABLE}.revenue ;;
   }
 
   measure: impressions {
-    type: sum
+    type: number
     sql: ${TABLE}.impressions ;;
   }
 
