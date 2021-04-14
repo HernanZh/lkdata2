@@ -220,8 +220,8 @@ view: ga_ilrd {
   }
 
   measure: DAU {
-    type: number
-    sql: count(DISTINCT ${TABLE}.user_id) ;;
+    type: count_distinct
+    sql: ${TABLE}.user_id;;
   }
 
   measure: session_count {
