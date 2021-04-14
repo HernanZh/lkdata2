@@ -24,8 +24,6 @@ view: ga_ilrd {
                   arrival_ts,
                   game_id,
                   UPPER(user_id) as user_id,
-                  ios_idfa,
-                  ios_idfv,
                   country_code as country,
                   user_meta_install_campaign as install_campaign,
                   limited_ad_tracking as LAT,
@@ -39,7 +37,7 @@ view: ga_ilrd {
 
                   from gameanalytics.GA_session_end as ga
                   --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-                  group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+                  group by 1,2,3,4,5,6,7,8,9,10,11,12
                   ) ga_base
 
               --Join in games table to get the bundle_id
@@ -61,8 +59,6 @@ view: ga_ilrd {
                 select
                   DATE(arrival_date) as arrival_date, --REPLACE THIS WITH ARRIVAL_DATE ONCE IMPLEMENTED
                   UPPER(user_id) as user_id,
-                  idfa,
-                  idfv,
                   game_id,
                   adNetwork as ad_network,
                   adunit_name as ad_unit_name,
@@ -77,7 +73,7 @@ view: ga_ilrd {
                 --from gameanalytics.impressions_backup_20210403 as impressions
                 from gameanalytics.impressions AS impressions
                 --WHERE arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-                group by 1,2,3,4,5,6,7,8,9,10,11
+                group by 1,2,3,4,5,6,7,8,9
                 )impressions
           on impressions.user_id = ga_minimalistic.user_id
           and impressions.arrival_date = ga_minimalistic.arrival_date
