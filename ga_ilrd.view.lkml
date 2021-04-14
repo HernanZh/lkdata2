@@ -10,6 +10,7 @@ view: ga_ilrd {
       impressions.publisher_revenue,
       impressions.revenue,
       impressions.impressions
+      impressions.DAU
       from
       (
         (select
@@ -67,9 +68,10 @@ view: ga_ilrd {
                   country,
                   publisher_revenue,
                   revenue,
+                  DAU,
                   count(adUnit) as impressions,
                 from gameanalytics.impressions AS impressions
-                group by 1,2,3,4,5,6,7,8,9,10,11
+                group by 1,2,3,4,5,6,7,8,9,10,11,12
                 )impressions
           on impressions.user_id = ga_minimalistic.user_id
           and impressions.arrival_date = ga_minimalistic.arrival_date
@@ -219,8 +221,8 @@ view: ga_ilrd {
   }
 #Sum all single distinct counts
   measure: DAU {
-    type:  count_distinct
-    sql:  (${TABLE}.user_id);;
+    type:  sum
+    sql:  (${TABLE}.DAU);;
     drill_fields: [detail*]
   }
 
