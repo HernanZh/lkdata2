@@ -31,12 +31,12 @@ view: ga_ilrd {
                   custom_02,
                   custom_03,
                   --COUNT(DISTINCT user_id) as DAU,
-                  DAU,
+                  --DAU,
                   COUNT(DISTINCT session_id) as session_count,
                   AVG(length) as avg_session_length
 
                   from gameanalytics.GA_session_end as ga
-                  group by 1,2,3,4,5,6,7,8,9,10--,11,12
+                  group by 1,2,3,4,5,6,7,8,9--,10--,11,12
                   ) ga_base
 
               --Join in games table to get the bundle_id
