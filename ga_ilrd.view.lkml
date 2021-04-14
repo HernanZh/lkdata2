@@ -221,7 +221,7 @@ view: ga_ilrd {
 
   measure: DAU {
     type: number
-    sql: count_distinct(${TABLE}.user_id) ;;
+    sql: count(DISTINCT ${TABLE}.user_id) ;;
   }
 
   measure: session_count {
