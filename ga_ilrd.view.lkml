@@ -218,9 +218,9 @@ view: ga_ilrd {
     type: string
     sql: ${TABLE}.custom_03 ;;
   }
-
+#Sum all single distinct counts
   measure: DAU {
-    type:  average
+    type:  sum
     sql:  ${TABLE}.DAU;;
   }
 
