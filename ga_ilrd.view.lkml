@@ -19,7 +19,6 @@ view: ga_ilrd {
               From(
                   SELECT
                   arrival_date,
-                  --COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
                   user_meta_install_ts,
                   arrival_ts,
                   game_id,
@@ -36,7 +35,6 @@ view: ga_ilrd {
                   AVG(length) as avg_session_length
 
                   from gameanalytics.GA_session_end as ga
-                  --WHERE ga.arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
                   group by 1,2,3,4,5,6,7,8,9,10,11,12
                   ) ga_base
 
@@ -66,14 +64,11 @@ view: ga_ilrd {
                   placement,
                   precision,
                   country,
-                  sum(publisher_revenue) as publisher_revenue,
-                  sum(revenue) as revenue,
+                  publisher_revenue,
+                  revenue,
                   count(adUnit) as impressions,
-                --from gameanalytics.impressions_backup_20210328 AS impressions
-                --from gameanalytics.impressions_backup_20210403 as impressions
                 from gameanalytics.impressions AS impressions
-                --WHERE arrival_date >= ((DATE(TIMESTAMP_TRUNC(CAST(TIMESTAMP_ADD(TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY), INTERVAL -7 DAY) AS TIMESTAMP), DAY))))
-                group by 1,2,3,4,5,6,7,8,9
+                group by 1,2,3,4,5,6,7,8,9,10,11
                 )impressions
           on impressions.user_id = ga_minimalistic.user_id
           and impressions.arrival_date = ga_minimalistic.arrival_date
@@ -282,18 +277,18 @@ view: ga_ilrd {
   }
 
   measure: publisher_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.publisher_revenue ;;
   }
 
   measure: revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
   measure: impressions {
     type: number
-    sql: ${TABLE}.impressions ;;
+    sql: count(${TABLE}.ad_unit) ;;
   }
 
   set: detail {
