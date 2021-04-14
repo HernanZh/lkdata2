@@ -182,6 +182,11 @@ view: impressions {
     sql: ${TABLE}.user_id ;;
   }
 
+  measure: DAU {
+    type: count_distinct
+    sql: ${TABLE}.user_id;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, instance_name, adunit_name, network_name, adgroup_name]
