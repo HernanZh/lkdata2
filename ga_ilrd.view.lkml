@@ -9,7 +9,7 @@ view: ga_ilrd {
       impressions.precision,
       impressions.publisher_revenue,
       impressions.revenue,
-      impressions.impressions
+      impressions.impressions,
       impressions.DAU
       from
       (
