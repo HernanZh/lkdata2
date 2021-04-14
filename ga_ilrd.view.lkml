@@ -221,7 +221,7 @@ view: ga_ilrd {
 #Sum all single distinct counts
   measure: DAU {
     type:  sum
-    sql:  ${TABLE}.DAU;;
+    sql:  MIN(${TABLE}.DAU);;
   }
 
   measure: session_count {
