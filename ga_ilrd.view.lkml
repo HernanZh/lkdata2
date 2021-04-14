@@ -220,7 +220,7 @@ view: ga_ilrd {
   }
 
   measure: DAU {
-    type: number
+    type: count_distinct
     sql: ${TABLE}.DAU;;
   }
 
