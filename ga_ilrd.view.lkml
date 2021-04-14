@@ -9,8 +9,7 @@ view: ga_ilrd {
       impressions.precision,
       impressions.publisher_revenue,
       impressions.revenue,
-      impressions.impressions,
-      count(distinct impressions.user_id) as DAU
+      impressions.impressions
       from
       (
         (select
@@ -20,8 +19,8 @@ view: ga_ilrd {
               From(
                   SELECT
                   arrival_date,
-                  user_meta_install_ts,
-                  arrival_ts,
+                  --user_meta_install_ts,
+                  --arrival_ts,
                   game_id,
                   UPPER(user_id) as user_id,
                   country_code as country,
@@ -36,7 +35,7 @@ view: ga_ilrd {
                   AVG(length) as avg_session_length
 
                   from gameanalytics.GA_session_end as ga
-                  group by 1,2,3,4,5,6,7,8,9,10,11,12
+                  group by 1,2,3,4,5,6,7,8,9,10--,11,12
                   ) ga_base
 
               --Join in games table to get the bundle_id
@@ -77,7 +76,6 @@ view: ga_ilrd {
           and impressions.game_id = ga_minimalistic.game_id
           and impressions.country = ga_minimalistic.country
       )
-       group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
        ;;
   }
 
