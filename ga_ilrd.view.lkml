@@ -49,7 +49,8 @@ view: ga_ilrd {
                       WHEN store_platform = 'other' then 'web'
                       ELSE NULL
                     END AS platform
-                    from gameanalytics.games) game_info
+                    from gameanalytics.games
+                    group by 1,2,3) game_info
               on game_info.id = ga_base.game_id
               and game_info.platform = ga_base.platform
         ) ga_minimalistic
