@@ -20,8 +20,8 @@ view: ga_ilrd {
               From(
                   SELECT
                   arrival_date,
-                  --user_meta_install_ts,
-                  --arrival_ts,
+                  user_meta_install_ts,
+                  arrival_ts,
                   game_id,
                   UPPER(user_id) as user_id,
                   country_code as country,
