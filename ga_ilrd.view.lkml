@@ -52,7 +52,7 @@ view: ga_ilrd {
                     from gameanalytics.games) game_info
               on game_info.id = ga_base.game_id
               and game_info.platform = ga_base.platform
-              group by 1,2,3,4,5,6,7,8,9,10,11,12,13
+              group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
         ) ga_minimalistic
 
         inner join (
