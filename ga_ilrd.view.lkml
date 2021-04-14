@@ -299,8 +299,6 @@ view: ga_ilrd {
       arrival_date,
       game_id,
       user_id,
-      ios_idfa,
-      ios_idfv,
       country,
       install_campaign,
       lat,
