@@ -30,7 +30,6 @@ view: ga_ilrd {
                   custom_01,
                   custom_02,
                   custom_03,
-                  COUNT(DISTINCT user_id) as DAU,
                   --DAU,
                   COUNT(DISTINCT session_id) as session_count,
                   AVG(length) as avg_session_length
@@ -52,7 +51,7 @@ view: ga_ilrd {
                     from gameanalytics.games) game_info
               on game_info.id = ga_base.game_id
               and game_info.platform = ga_base.platform
-              group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+              group by 1,2,3,4,5,6,7,8,9,10,11,12,13
         ) ga_minimalistic
 
         inner join (
@@ -220,8 +219,8 @@ view: ga_ilrd {
   }
 #Sum all single distinct counts
   measure: DAU {
-    type:  sum
-    sql:  MIN(${TABLE}.DAU);;
+    type:  count_distinct
+    sql:  (${TABLE}.user_id);;
   }
 
   measure: session_count {
