@@ -215,8 +215,8 @@ view: ga_ilrd {
   }
 
   measure: avg_playtime {
-    type: average
-    sql: ${TABLE}.playtime ;;
+    type: number
+    sql: AVG((${session_count} * ${avg_session_length})/${DAU}) ;;
     value_format: "#.#"
   }
 
