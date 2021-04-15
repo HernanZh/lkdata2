@@ -187,7 +187,7 @@ view: ga_ilrd {
 #Sum all single distinct counts
   measure: DAU {
     type:  count_distinct
-    sql:  (${TABLE}.user_id);;
+    sql:  (${TABLE}.user_id_imp);;
     drill_fields: [detail*]
   }
 
