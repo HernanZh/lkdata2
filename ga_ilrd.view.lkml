@@ -5,7 +5,7 @@ view: ga_ilrd {
                           DATE(arrival_date) as arrival_date_imp,
                           UPPER(user_id) as user_id_imp,
                           game_id,
-                          DISTINCT(auctionId) as impression_id,
+                          UNIQUE(auctionId) as impression_id,
                           adNetwork as ad_network,
                           adunit_name as ad_unit_name,
                           adUnit as ad_unit,
