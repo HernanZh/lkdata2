@@ -59,7 +59,7 @@ view: ga_ilrd {
   dimension: arrival_date {
     type: date
     datatype: date
-    sql: ${TABLE}.arrival_date_imp ;;
+    sql: ${TABLE}.arrival_date_ga ;;
   }
 
   dimension_group: since_install {
