@@ -11,7 +11,7 @@ view: ga_ilrd {
                           adUnit as ad_unit,
                           placement,
                           precision,
-                          country,
+                          country_imp,
                           publisher_revenue,
                           revenue
                         from gameanalytics.impressions AS impressions
@@ -25,7 +25,7 @@ view: ga_ilrd {
                           COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
                           game_id,
                           UPPER(user_id) as user_id_ga,
-                          country_code as country,
+                          country_code as country_ga,
                           user_meta_install_campaign as install_campaign,
                           limited_ad_tracking as LAT,
                           platform,
@@ -42,7 +42,7 @@ view: ga_ilrd {
           on impressions_base.game_id = ga_base.game_id
           and impressions_base.arrival_date_imp = ga_base.arrival_date_ga
           and impressions_base.user_id_imp = ga_base.user_id_ga
-          and impressions_base.country = ga_base.country
+          and impressions_base.country_imp = ga_base.country_ga
        ;;
   }
 
@@ -129,34 +129,34 @@ view: ga_ilrd {
 
   dimension: country {
     type: string
-    sql: ${TABLE}.country ;;
+    sql: ${TABLE}.country_imp ;;
   }
 
   dimension: country_bucket {
     type: string
     case: {
       when: {
-        sql: ${TABLE}.country IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
+        sql: ${TABLE}.country_imp IN ('AU','CA','DE','NZ','NO','CH', 'GB') ;;
         label: "T1"
       }
       when: {
-        sql: ${TABLE}.country IN ('HK','JP','KR','TW') ;;
+        sql: ${TABLE}.country_imp IN ('HK','JP','KR','TW') ;;
         label: "T1_LOC"
       }
       when: {
-        sql: ${TABLE}.country IN ('AT','BE','DK','FR','NL','SG','SE') ;;
+        sql: ${TABLE}.country_imp IN ('AT','BE','DK','FR','NL','SG','SE') ;;
         label: "T2"
       }
       when: {
-        sql: ${TABLE}.country IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
+        sql: ${TABLE}.country_imp IN ('BR','CL','CZ','FI','GR','IS','IN','ID','IE','IL','IT','KW','LU','MX','PH','PL','PT','QA','RU','ZA','ES','TH','TR','UA','AE','VN') ;;
         label: "T3"
       }
       when: {
-        sql: ${TABLE}.country IN ('US') ;;
+        sql: ${TABLE}.country_imp IN ('US') ;;
         label: "US"
       }
       when: {
-        sql: ${TABLE}.country IN ('CN') ;;
+        sql: ${TABLE}.country_imp IN ('CN') ;;
         label: "CN"
       }
       else: "Unknown"
