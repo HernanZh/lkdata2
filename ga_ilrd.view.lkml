@@ -208,15 +208,9 @@ view: ga_ilrd {
     value_format: "#.#"
   }
 
-  measure: playtime {
-    type: number
-    sql: (${session_count} * ${avg_session_length})/${DAU};;
-    value_format: "#.#"
-  }
-
   measure: avg_playtime {
     type: number
-    sql: AVG((${session_count} * ${avg_session_length})/${DAU}) ;;
+    sql: (${session_count} * ${avg_session_length})/${DAU};;
     value_format: "#.#"
   }
 
@@ -276,7 +270,7 @@ view: ga_ilrd {
       DAU,
       session_count,
       avg_session_length,
-      playtime,
+      avg_playtime,
       ad_network,
       ad_unit_name,
       ad_unit,
