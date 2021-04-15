@@ -13,7 +13,7 @@ view: ga_ilrd {
                           precision,
                           country,
                           publisher_revenue,
-                          revenue,
+                          revenue
                         from gameanalytics.impressions AS impressions
                         group by 1,2,3,4,5,6,7,8,9,10,11,12
                   )impressions_base
@@ -244,10 +244,15 @@ view: ga_ilrd {
     sql: ${TABLE}.publisher_revenue ;;
   }
 
-  measure: revenue {
-    type: sum_distinct
-    sql: ${TABLE}.revenue ;;
-    sql_distinct_key: ${TABLE}.impression_id ;;
+  # measure: revenue {
+  #   type: sum_distinct
+  #   sql: ${TABLE}.revenue ;;
+  #   sql_distinct_key: ${TABLE}.impression_id ;;
+  # }
+
+  measure: revenue{
+    type: number
+    sql: SUM(${TABLE}.revenue) ;;
   }
 
   measure: impressions {
