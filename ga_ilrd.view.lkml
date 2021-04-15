@@ -1,81 +1,48 @@
 view: ga_ilrd {
   derived_table: {
-    sql: select
-      ga_minimalistic.*,
-      impressions.ad_network,
-      impressions.ad_unit_name,
-      impressions.ad_unit,
-      impressions.placement,
-      impressions.precision,
-      impressions.publisher_revenue,
-      impressions.revenue,
-      impressions.impressions
-      from
-      (
-        (select
-              game_info.bundle_id,
-              ga_base.*,
-              (session_count * avg_session_length)/count(distinct user_id) as playtime
-              From(
-                  SELECT
-                  arrival_date,
-                  --user_meta_install_ts,
-                  --arrival_ts,
-                  game_id,
-                  UPPER(user_id) as user_id,
-                  country_code as country,
-                  user_meta_install_campaign as install_campaign,
-                  limited_ad_tracking as LAT,
-                  platform,
-                  custom_01,
-                  custom_02,
-                  custom_03,
-                  --DAU,
-                  COUNT(DISTINCT session_id) as session_count,
-                  AVG(length) as avg_session_length
+    sql:    select * from(
+                        select
+                          DATE(arrival_date) as arrival_date_imp,
+                          UPPER(user_id) as user_id_imp,
+                          game_id,
+                          adNetwork as ad_network,
+                          adunit_name as ad_unit_name,
+                          adUnit as ad_unit,
+                          placement,
+                          precision,
+                          country,
+                          publisher_revenue,
+                          revenue,
+                          count(adUnit) as impressions,
+                        from gameanalytics.impressions AS impressions
+                        group by 1,2,3,4,5,6,7,8,9,10,11
+                  )impressions_base
+                inner join(
+                 SELECT
+                          arrival_date as arrival_date_ga,
+                          user_meta_install_ts,
+                          arrival_ts,
+                          COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
+                          game_id,
+                          UPPER(user_id) as user_id_ga,
+                          country_code as country,
+                          user_meta_install_campaign as install_campaign,
+                          limited_ad_tracking as LAT,
+                          platform,
+                          custom_01,
+                          custom_02,
+                          custom_03,
+                          --DAU,
+                          COUNT(DISTINCT session_id) as session_count,
+                          AVG(length) as avg_session_length
 
-                  from gameanalytics.GA_session_end as ga
-                  group by 1,2,3,4,5,6,7,8,9,10--,11,12
-                  ) ga_base
-
-              --Join in games table to get the bundle_id
-              join (select
-                    id,
-                    bundle_id,
-                    CASE
-                      WHEN store_platform = 'apple_ios' then 'ios'
-                      WHEN store_platform = 'google_play' then 'android'
-                      WHEN store_platform = 'other' then 'web'
-                      ELSE NULL
-                    END AS platform
-                    from gameanalytics.games) game_info
-              on game_info.id = ga_base.game_id
-              and game_info.platform = ga_base.platform
-              group by 1,2,3,4,5,6,7,8,9,10,11,12,13
-        ) ga_minimalistic
-
-        inner join (
-                select
-                  DATE(arrival_date) as arrival_date, --REPLACE THIS WITH ARRIVAL_DATE ONCE IMPLEMENTED
-                  UPPER(user_id) as user_id,
-                  game_id,
-                  adNetwork as ad_network,
-                  adunit_name as ad_unit_name,
-                  adUnit as ad_unit,
-                  placement,
-                  precision,
-                  country,
-                  publisher_revenue,
-                  revenue,
-                  count(adUnit) as impressions,
-                from gameanalytics.impressions AS impressions
-                group by 1,2,3,4,5,6,7,8,9,10,11
-                )impressions
-          on impressions.user_id = ga_minimalistic.user_id
-          and impressions.arrival_date = ga_minimalistic.arrival_date
-          and impressions.game_id = ga_minimalistic.game_id
-          and impressions.country = ga_minimalistic.country
-      )
+                          from gameanalytics.GA_session_end as ga
+                          group by 1,2,3,4,5,6,7,8,9,10,11,12,13
+                          ) ga_base
+          on impressions_base.game_id = ga_base.game_id
+          and impressions_base.arrival_date_imp = ga_base.arrival_date_ga
+          and impressions_base.user_id_imp = ga_base.user_id_ga
+          and impressions_base.country = ga_base.country
        ;;
   }
 
@@ -92,7 +59,7 @@ view: ga_ilrd {
   dimension: arrival_date {
     type: date
     datatype: date
-    sql: ${TABLE}.arrival_date ;;
+    sql: ${TABLE}.arrival_date_imp ;;
   }
 
   dimension_group: since_install {
@@ -139,7 +106,7 @@ view: ga_ilrd {
 
   dimension: user_id {
     type: string
-    sql: ${TABLE}.user_id ;;
+    sql: ${TABLE}.user_id_imp ;;
   }
 
   dimension: ios_idfa {
