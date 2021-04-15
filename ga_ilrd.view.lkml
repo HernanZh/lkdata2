@@ -13,7 +13,7 @@ view: ga_ilrd {
                           country,
                           publisher_revenue,
                           revenue,
-                          count(adUnit) as impressions,
+                          --count(adUnit) as impressions,
                         from gameanalytics.impressions AS impressions
                         group by 1,2,3,4,5,6,7,8,9,10,11
                   )impressions_base
