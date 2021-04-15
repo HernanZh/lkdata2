@@ -246,8 +246,9 @@ view: ga_ilrd {
   }
 
   measure: revenue {
-    type: sum
+    type: sum_distinct
     sql: ${TABLE}.revenue ;;
+    sql_distinct_key: ${TABLE}.user_id_imp ;;
   }
 
   measure: impressions {
