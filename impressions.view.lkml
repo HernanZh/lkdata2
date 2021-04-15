@@ -187,6 +187,11 @@ view: impressions {
     sql: ${TABLE}.user_id;;
   }
 
+  measure: impressions {
+    type: count_distinct
+    sql: ${TABLE}.auctionId ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, instance_name, adunit_name, network_name, adgroup_name]
