@@ -24,6 +24,7 @@ view: ga_ilrd {
                           arrival_ts,
                           COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
                           game_id,
+                          build,
                           UPPER(user_id) as user_id_ga,
                           country_code as country_ga,
                           user_meta_install_campaign as install_campaign,
@@ -37,7 +38,7 @@ view: ga_ilrd {
                           AVG(length) as avg_session_length
 
                           from gameanalytics.GA_session_end as ga
-                          group by 1,2,3,4,5,6,7,8,9,10,11,12,13
+                          group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
                           ) ga_base
           on impressions_base.game_id = ga_base.game_id
           and impressions_base.arrival_date_imp = ga_base.arrival_date_ga
@@ -54,6 +55,11 @@ view: ga_ilrd {
   dimension: bundle_id {
     type: string
     sql: ${TABLE}.bundle_id ;;
+  }
+
+  dimension: build {
+    type: string
+    sql: ${TABLE}.build ;;
   }
 
   dimension: arrival_date {
