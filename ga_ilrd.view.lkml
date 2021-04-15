@@ -61,6 +61,14 @@ view: ga_ilrd {
     datatype: date
     sql: ${TABLE}.arrival_date_imp ;;
   }
+  #Added ga arrival_date for reducing query size
+  dimension: arrival_date_ga {
+    type: date
+    datatype: date
+    sql: ${TABLE}.arrival_date_ga ;;
+  }
+
+
 
   dimension_group: since_install {
     type: duration
