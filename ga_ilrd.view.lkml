@@ -186,7 +186,7 @@ view: ga_ilrd {
     sql: ${TABLE}.custom_03 ;;
   }
 #Sum all single distinct counts
-  measure: DAU {
+  measure: dau {
     type:  count_distinct
     sql:  (${TABLE}.user_id_imp);;
     drill_fields: [detail*]
@@ -211,7 +211,7 @@ view: ga_ilrd {
 
   measure: avg_playtime {
     type: number
-    sql: (${session_count} * ${avg_session_length})/${DAU};;
+    sql: (${session_count} * ${avg_session_length})/${dau};;
     value_format: "#.#"
   }
 
@@ -268,7 +268,7 @@ view: ga_ilrd {
       custom_01,
       custom_02,
       custom_03,
-      DAU,
+      dau,
       session_count,
       avg_session_length,
       avg_playtime,
