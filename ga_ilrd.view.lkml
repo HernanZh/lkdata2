@@ -252,7 +252,7 @@ view: ga_ilrd {
 
   measure: impressions {
     type: count_distinct
-    sql: ${TABLE}.impression_id) ;;
+    sql: ${TABLE}.impression_id ;;
   }
 
   set: detail {
