@@ -5,6 +5,7 @@ view: ga_ilrd {
                           DATE(arrival_date) as arrival_date_imp,
                           UPPER(user_id) as user_id_imp,
                           game_id,
+                          auctionId as impression_id,
                           adNetwork as ad_network,
                           adunit_name as ad_unit_name,
                           adUnit as ad_unit,
@@ -15,7 +16,7 @@ view: ga_ilrd {
                           revenue,
                           --count(adUnit) as impressions,
                         from gameanalytics.impressions AS impressions
-                        group by 1,2,3,4,5,6,7,8,9,10,11
+                        group by 1,2,3,4,5,6,7,8,9,10,11,12
                   )impressions_base
                 inner join(
                  SELECT
@@ -250,8 +251,8 @@ view: ga_ilrd {
   }
 
   measure: impressions {
-    type: number
-    sql: count(${TABLE}.ad_unit) ;;
+    type: count_distinct
+    sql: ${TABLE}.impression_id) ;;
   }
 
   set: detail {
