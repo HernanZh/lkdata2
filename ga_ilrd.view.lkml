@@ -11,7 +11,7 @@ view: ga_ilrd {
                           adUnit as ad_unit,
                           placement,
                           precision,
-                          country_imp,
+                          country as country_imp,
                           publisher_revenue,
                           revenue
                         from gameanalytics.impressions AS impressions
