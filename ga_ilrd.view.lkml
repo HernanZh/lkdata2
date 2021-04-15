@@ -244,16 +244,16 @@ view: ga_ilrd {
     sql: ${TABLE}.publisher_revenue ;;
   }
 
-  # measure: revenue {
-  #   type: sum_distinct
-  #   sql: ${TABLE}.revenue ;;
-  #   sql_distinct_key: ${TABLE}.impression_id ;;
-  # }
-
-  measure: revenue{
-    type: number
-    sql: SUM(${TABLE}.revenue) ;;
+  measure: revenue {
+    type: sum_distinct
+    sql: ${TABLE}.revenue ;;
+    sql_distinct_key: ${TABLE}.impression_id ;;
   }
+
+  # measure: revenue{
+  #   type: number
+  #   sql: SUM(${TABLE}.revenue) ;;
+  # }
 
   measure: impressions {
     type: count_distinct
