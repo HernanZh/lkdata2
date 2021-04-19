@@ -1,5 +1,5 @@
 view: impressions {
-  sql_table_name:gameanalytics.impressions
+  sql_table_name:gameanalytics.impressions_dedup
     ;;
   drill_fields: [id]
 
