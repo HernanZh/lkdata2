@@ -14,7 +14,7 @@ view: ga_ilrd {
                           country as country_imp,
                           publisher_revenue,
                           revenue
-                        from gameanalytics.impressions AS impressions_dedup
+                        from gameanalytics.impressions AS impressions_dedup2
                         group by 1,2,3,4,5,6,7,8,9,10,11,12
                   )impressions_base
                 inner join(
@@ -259,9 +259,9 @@ view: ga_ilrd {
   }
 
   measure: revenue {
-    type: sum_distinct
+    type: sum
     sql: ${TABLE}.revenue ;;
-    sql_distinct_key: ${TABLE}.impression_id ;;
+    #sql_distinct_key: ${TABLE}.impression_id ;;
   }
 
   # measure: revenue{
