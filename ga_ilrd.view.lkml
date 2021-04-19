@@ -259,9 +259,9 @@ view: ga_ilrd {
   }
 
   measure: revenue {
-    type: sum_distinct
+    type: sum
     sql: ${TABLE}.revenue ;;
-    sql_distinct_key: ${TABLE}.impression_id ;;
+    #sql_distinct_key: ${TABLE}.impression_id ;;
   }
 
   # measure: revenue{
