@@ -14,7 +14,7 @@ view: ga_ilrd {
                           country as country_imp,
                           publisher_revenue,
                           revenue
-                        from gameanalytics.impressions AS impressions_dedup2
+                        from gameanalytics.impressions AS impressions_dedup
                         group by 1,2,3,4,5,6,7,8,9,10,11,12
                   )impressions_base
                 inner join(
