@@ -100,6 +100,7 @@ explore: ga_session_end_raw {}
 explore: GA_user{}
 explore: ga_minimalistic {}
 explore: ga_ilrd {}
+explore: ga_ilrd_cohorts {}
 
 #explore: auditlog_ga {}
 
