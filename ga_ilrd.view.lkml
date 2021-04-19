@@ -20,8 +20,8 @@ view: ga_ilrd {
                 inner join(
                  SELECT
                           arrival_date as arrival_date_ga,
-                          user_meta_install_ts,
-                          arrival_ts,
+                          --user_meta_install_ts,
+                          --arrival_ts,
                           COALESCE(ios_bundle_id,android_bundle_id) as bundle_id,
                           game_id,
                           build,
@@ -38,7 +38,7 @@ view: ga_ilrd {
                           AVG(length) as avg_session_length
 
                           from gameanalytics.GA_session_end as ga
-                          group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+                          group by 1,2,3,4,5,6,7,8,9,10,11,12--,13,14
                           ) ga_base
           on impressions_base.game_id = ga_base.game_id
           and impressions_base.arrival_date_imp = ga_base.arrival_date_ga
