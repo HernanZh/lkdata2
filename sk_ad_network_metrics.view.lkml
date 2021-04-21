@@ -77,6 +77,7 @@
 
   measure: D1_revenue {
     type: sum
+    value_format: "$#.##"
     sql: CASE WHEN conversion_value= 0 THEN 0.0*${conversion_value_count}
               WHEN conversion_value= 1 THEN 0.001097131904040271*${conversion_value_count}
               WHEN conversion_value= 2 THEN 0.0026448641442398976*${conversion_value_count}
