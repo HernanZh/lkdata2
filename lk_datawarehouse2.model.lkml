@@ -639,9 +639,9 @@ explore: user_level_ga_uar_new {}
 explore: user_level_ga_uar{}
 explore: sk_ad_network_metrics {
   join: apps {
-    type: left_outer
+    type: inner
     sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
-    relationship: many_to_many
+    relationship: one_to_one
   }
 }
 explore: sk_ad_networks {}
