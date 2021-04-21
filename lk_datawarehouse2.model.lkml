@@ -637,7 +637,14 @@ explore: user_ad_revenue {
 
 explore: user_level_ga_uar_new {}
 explore: user_level_ga_uar{}
-
+explore: sk_ad_network_metrics {
+  join: apps {
+    type: left_outer
+    sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
+    relationship: many_to_many
+  }
+}
+explore: sk_ad_networks {}
 # explore: uar_cohort_test {}
 
 # explore: future_revenue_prediction_d3 {}
