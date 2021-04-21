@@ -141,6 +141,6 @@
               WHEN events.value= 61 THEN 10.01189616022148
               WHEN events.value= 62 THEN 11.684597440147655
               WHEN events.value = 63 THEN 13.486641942909877
-            ELSE NULL END) ;;
+            ELSE NULL END ;;
   }
 }
