@@ -8,6 +8,7 @@
 
    dimension: app_id{
     type: string
+    primary_key: yes
     sql: ${TABLE}.app_id;;
    }
 
@@ -57,7 +58,6 @@
 
    dimension: sk_app_id{
     type: number
-    primary_key: yes
     sql: ${TABLE}.sk_app_id;;
    }
 
