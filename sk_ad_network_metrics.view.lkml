@@ -8,12 +8,12 @@
 
    dimension: app_id{
     type: string
-    primary_key: yes
     sql: ${TABLE}.app_id;;
    }
 
    dimension: conversion_value{
     type: number
+    primary_key: yes
     sql: ${TABLE}.conversion_value;;
     }
 
