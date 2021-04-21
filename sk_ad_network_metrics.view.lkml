@@ -75,6 +75,11 @@
     drill_fields: [sk_ad_networks.id]
    }
 
+  measure: SK_DAU {
+    type: sum
+    sql: ${TABLE}.conversion_value_count ;;
+  }
+
   measure: D1_revenue {
     type: sum
     value_format: "$#.##"
