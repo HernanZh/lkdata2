@@ -1,5 +1,3 @@
-#X# Conversion failed: failed to parse YAML.  Check for pipes on newlines
-
  view: sk_ad_network_metrics{
   sql_table_name: tenjin_dv.sk_ad_network_metrics;;
 
@@ -59,6 +57,7 @@
 
    dimension: sk_app_id{
     type: number
+    primary_key: yes
     sql: ${TABLE}.sk_app_id;;
    }
 
