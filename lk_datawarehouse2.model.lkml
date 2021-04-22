@@ -643,6 +643,11 @@ explore: sk_ad_network_metrics {
     sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
     relationship: one_to_one
   }
+  join: ad_networks{
+    type: inner
+    sql_on: ${ad_networks.id}=${sk_ad_network_metrics.ad_network_id} ;;
+    relationship: one_to_one
+  }
 }
 explore: sk_ad_networks {}
 # explore: uar_cohort_test {}
