@@ -464,15 +464,21 @@ explore: reporting_cohort_metrics {
     relationship: many_to_one
   }
 
-  # join: sk_ad_network_metrics {
-  #   type: inner
-  #   sql_on: ${reporting_cohort_metrics.app_id}=${sk_ad_network_metrics.app_id} AND
-  #   ${reporting_cohort_metrics.install_date}=${sk_ad_network_metrics.date_date} AND
-  #   ${reporting_cohort_metrics.ad_network_id}=${sk_ad_network_metrics.ad_network_id}
-  #   ;;
-  #   relationship: one_to_one
+  join: sk_ad_network_metrics {
+    type: inner
+    sql_on: ${reporting_cohort_metrics.app_id}=${sk_ad_network_metrics.app_id} AND
+    ${reporting_cohort_metrics.install_date}=${sk_ad_network_metrics.date_date} AND
+    ${reporting_cohort_metrics.ad_network_id}=${sk_ad_network_metrics.ad_network_id}
+    ;;
+    relationship: one_to_one
 
-  # }
+  }
+
+  join: sk_ad_networks {
+    type: inner
+    sql_on: ${sk_ad_networks.id}=${sk_ad_network_metrics.sk_ad_network_id} ;;
+    relationship: one_to_one
+  }
 
 }
 
