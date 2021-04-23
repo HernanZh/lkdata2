@@ -465,10 +465,11 @@ explore: reporting_cohort_metrics {
   }
 
   join: sk_ad_network_metrics {
-    type: left_outer
+    type: inner
     sql_on: ${reporting_cohort_metrics.app_id}=${sk_ad_network_metrics.app_id} AND
     ${reporting_cohort_metrics.install_date}=${sk_ad_network_metrics.date_date} AND
-     ${reporting_cohort_metrics.ad_network_id}=${sk_ad_network_metrics.ad_network_id};;
+     ${reporting_cohort_metrics.ad_network_id}=${sk_ad_network_metrics.ad_network_id} AND
+    ;;
     relationship: one_to_one
 
   }
