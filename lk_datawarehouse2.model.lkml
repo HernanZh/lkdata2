@@ -469,7 +469,7 @@ explore: reporting_cohort_metrics {
     sql_on: ${reporting_cohort_metrics.app_id}=${sk_ad_network_metrics.app_id} AND
     ${reporting_cohort_metrics.install_date}=${sk_ad_network_metrics.date_date} AND
      ${reporting_cohort_metrics.ad_network_id}=${sk_ad_network_metrics.ad_network_id};;
-    relationship: many_to_one
+    relationship: one_to_one
 
   }
 
