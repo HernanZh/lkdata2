@@ -75,7 +75,7 @@
     drill_fields: [sk_ad_networks.id]
    }
 
-  measure: SK_DAU {
+  measure: SK_installs {
     type: sum
     sql: ${TABLE}.conversion_value_count ;;
   }
