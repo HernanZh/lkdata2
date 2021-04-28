@@ -1,5 +1,7 @@
 view: bucket_campaign_info {
-  sql_table_name: tenjin_dv.bucket_campaign_info ;;
+  sql_table_name: tenjin_dv.bucket_campaign_info
+    ;;
+  drill_fields: [id]
 
   dimension: id {
     primary_key: yes
@@ -7,20 +9,48 @@ view: bucket_campaign_info {
     sql: ${TABLE}.id ;;
   }
 
+  dimension_group: _partitiondate {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}._PARTITIONDATE ;;
+  }
+
+  dimension_group: _partitiontime {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}._PARTITIONTIME ;;
+  }
+
   dimension: ad_network_id {
     type: number
-    # hidden: yes
     sql: ${TABLE}.ad_network_id ;;
   }
 
   dimension: app_id {
     type: string
-    # hidden: yes
     sql: ${TABLE}.app_id ;;
   }
 
   dimension: is_bucket {
-    type: number
+    type: yesno
     sql: ${TABLE}.is_bucket ;;
   }
 
@@ -31,18 +61,6 @@ view: bucket_campaign_info {
 
   measure: count {
     type: count
-    drill_fields: [detail*]
-  }
-
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      id,
-      name,
-      apps.name,
-      apps.id,
-      ad_networks.name,
-      ad_networks.id
-    ]
+    drill_fields: [id, name]
   }
 }
