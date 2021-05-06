@@ -175,7 +175,7 @@ view: ga_ilrd {
   }
 
   dimension: lat {
-    type: string
+    type: yesno
     sql: ${TABLE}.LAT ;;
   }
 
