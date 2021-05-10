@@ -30,6 +30,7 @@ view: ga_ilrd {
                           user_meta_install_campaign as install_campaign,
                           limited_ad_tracking as LAT,
                           platform,
+                          configurations_1,
                           custom_01,
                           custom_02,
                           custom_03,
@@ -38,7 +39,7 @@ view: ga_ilrd {
                           AVG(length) as avg_session_length
 
                           from gameanalytics.GA_session_end as ga
-                          group by 1,2,3,4,5,6,7,8,9,10,11,12--,13,14
+                          group by 1,2,3,4,5,6,7,8,9,10,11,12,13--,13,14
                           ) ga_base
           on impressions_base.game_id = ga_base.game_id
           and impressions_base.arrival_date_imp = ga_base.arrival_date_ga
@@ -197,6 +198,11 @@ view: ga_ilrd {
   dimension: custom_03 {
     type: string
     sql: ${TABLE}.custom_03 ;;
+  }
+
+  dimension: configurations_1 {
+    type: string
+    sql: ${TABLE}.configurations_1 ;;
   }
 #Sum all single distinct counts
   measure: dau {
