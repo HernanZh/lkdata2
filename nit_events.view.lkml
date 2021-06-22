@@ -2,7 +2,7 @@
 # include: "nit_events_generated*"
 
 view: nit_events {
-  sql_table_name: nailed_it.events  ;;
+  sql_table_name: lk-datawarehouse-2.nailed_it.events  ;;
 
   # extends: [nit_events_generated,user_properties_generated]
 
