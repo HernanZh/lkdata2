@@ -57,7 +57,7 @@ explore: d_conversionValue {}
 
     join: events {
       type: left_outer
-      sql_on: ${nit_events.advertising_id}=${events.advertising_id} ;;
+      sql_on: lower(replace(${nit_events.advertising_id},'-',""))=${events.advertising_id} ;;
       relationship: one_to_one
     }
 
