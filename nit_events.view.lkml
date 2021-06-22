@@ -174,7 +174,7 @@ view: nit_events {
   dimension_group: event {
     type: time
     timeframes: [date, week, day_of_week, month, year]
-    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'\d\d\d\d\d\d\d\d'))) ;;
+    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(${TABLE}.suffix,r'\d\d\d\d\d\d\d\d'))) ;;
   }
 
   dimension_group: _event {
