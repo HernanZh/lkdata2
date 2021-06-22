@@ -2,7 +2,7 @@
 # include: "nit_events_generated*"
 
 view: nit_events {
-  sql_table_name: `nit_events_*`  ;;
+  sql_table_name: `nit_events`  ;;
 
   # extends: [nit_events_generated,user_properties_generated]
 
