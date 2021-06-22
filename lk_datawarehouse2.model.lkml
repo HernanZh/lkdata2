@@ -54,6 +54,62 @@ explore: d_conversionValue {}
           AND ${nit_events._event_raw} <= ${nit_sessions.session_end_raw} ;;
       relationship: many_to_one
     }
+
+    join: user_attributes {
+      type: left_outer
+      sql_on: ${nit_events.advertising_id}=${user_attributes.advertising_id} ;;
+      relationship: one_to_one
+    }
+
+    join: campaigns {
+      type: left_outer
+      sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+      relationship: many_to_one
+      }
+
+      join: ad_networks {
+        type: left_outer
+        sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+        relationship: many_to_one
+      }
+
+      join: apps {
+        type: left_outer
+        sql_on: ${campaigns.app_id} = ${apps.id} ;;
+        relationship: many_to_one
+      }
+
+      join: campaign_buckets {
+        type: left_outer
+        sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+        relationship: many_to_one
+      }
+
+    # explore: user_attributes {
+    #   join: campaigns {
+    #     type: left_outer
+    #     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+    #     relationship: many_to_one
+    #   }
+
+    #   join: ad_networks {
+    #     type: left_outer
+    #     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+    #     relationship: many_to_one
+    #   }
+
+    #   join: apps {
+    #     type: left_outer
+    #     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+    #     relationship: many_to_one
+    #   }
+
+    #   join: campaign_buckets {
+    #     type: left_outer
+    #     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+    #     relationship: many_to_one
+    #   }
+    # }
     }
 
 
