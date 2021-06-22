@@ -13,7 +13,28 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: d_conversionValue {}
 
-# explore: SKAdNetwork_Test {}
+explore: nit_events {
+  hidden: no
+
+  join: nit_events__items {
+    view_label: "Events: Items"
+    sql: LEFT JOIN UNNEST(${nit_events.items}) as events__items ;;
+    relationship: one_to_many
+  }
+
+  join: nit_events__event_params {
+    view_label: "Events: Event Params"
+    sql: LEFT JOIN UNNEST(${nit_events.event_params}) as events__event_params ;;
+    relationship: one_to_many
+  }
+
+  join: nit_events__user_properties {
+    view_label: "Events: User Properties"
+    sql: LEFT JOIN UNNEST(${nit_events.user_properties}) as events__user_properties ;;
+    relationship: one_to_many
+  }
+}
+
 
 explore: user_ad_revenue_old {
   join: events {

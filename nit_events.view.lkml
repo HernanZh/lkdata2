@@ -1,27 +1,5 @@
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
-explore: events {
-  hidden: no
-
-  join: events__items {
-    view_label: "Events: Items"
-    sql: LEFT JOIN UNNEST(${events.items}) as events__items ;;
-    relationship: one_to_many
-  }
-
-  join: events__event_params {
-    view_label: "Events: Event Params"
-    sql: LEFT JOIN UNNEST(${events.event_params}) as events__event_params ;;
-    relationship: one_to_many
-  }
-
-  join: events__user_properties {
-    view_label: "Events: User Properties"
-    sql: LEFT JOIN UNNEST(${events.user_properties}) as events__user_properties ;;
-    relationship: one_to_many
-  }
-}
-
-view: events {
+view: nit_events {
   sql_table_name: `lk-datawarehouse-2.nailed_it.events`
     ;;
 
@@ -439,7 +417,7 @@ view: events {
   }
 }
 
-view: events__items {
+view: nit_events__items {
   dimension: affiliation {
     type: string
     sql: ${TABLE}.affiliation ;;
@@ -571,7 +549,7 @@ view: events__items {
   }
 }
 
-view: events__event_params {
+view: nit_events__event_params {
   dimension: key {
     type: string
     sql: ${TABLE}.key ;;
@@ -606,7 +584,7 @@ view: events__event_params {
   }
 }
 
-view: events__user_properties {
+view: nit_events__user_properties {
   dimension: key {
     type: string
     sql: ${TABLE}.key ;;
