@@ -1,5 +1,5 @@
 view: user_attributes {
-  sql_table_name: tenjin_BigQuery.rs_user_attributes ;;
+  sql_table_name: tenjin.user_attributes;;
 
   dimension_group: acquired {
     type: time
