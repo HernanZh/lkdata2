@@ -1,254 +1,192 @@
-# Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
+# include: "user_properties_generated*"
+# include: "nit_events_generated*"
+
 view: nit_events {
-  sql_table_name: `lk-datawarehouse-2.nailed_it.events`
-    ;;
+  sql_table_name: `nit_events_*`  ;;
 
-  dimension: app_info__firebase_app_id {
-    type: string
-    sql: ${TABLE}.app_info.firebase_app_id ;;
+  # extends: [nit_events_generated,user_properties_generated]
+
+### app info
+  dimension: app_info {
+    hidden: yes
+    sql: ${TABLE}.app_info ;;
+  }
+
+  dimension: id {
     group_label: "App Info"
-    group_item_label: "Firebase App ID"
+    description: "The package name or bundle ID of the app."
+    type: string
+    sql: ${app_info}.id ;;
   }
 
-  dimension: app_info__id {
-    type: string
-    sql: ${TABLE}.app_info.id ;;
+  dimension: firebase_app_id {
     group_label: "App Info"
-    group_item_label: "ID"
+    description: "The Firebase App ID associated with the app"
+    type: string
+    sql: ${app_info}.firebase_app_id ;;
   }
 
-  dimension: app_info__install_source {
-    type: string
-    sql: ${TABLE}.app_info.install_source ;;
+  dimension: install_source {
     group_label: "App Info"
-    group_item_label: "Install Source"
+    description: "The store that installed the app."
+    type: string
+    sql: ${app_info}.install_source ;;
   }
 
-  dimension: app_info__install_store {
-    type: string
-    sql: ${TABLE}.app_info.install_store ;;
+  dimension: version {
     group_label: "App Info"
-    group_item_label: "Install Store"
-  }
-
-  dimension: app_info__version {
+    description: "The app's versionName (Android) or short bundle version."
     type: string
-    sql: ${TABLE}.app_info.version ;;
-    group_label: "App Info"
-    group_item_label: "Version"
+    sql: ${app_info}.version ;;
   }
 
-  dimension: device__advertising_id {
-    type: string
-    sql: ${TABLE}.device.advertising_id ;;
-    group_label: "Device"
-    group_item_label: "Advertising ID"
-  }
+### end app info
 
-  dimension: device__browser {
-    type: string
-    sql: ${TABLE}.device.browser ;;
-    group_label: "Device"
-    group_item_label: "Browser"
-  }
-
-  dimension: device__browser_version {
-    type: string
-    sql: ${TABLE}.device.browser_version ;;
-    group_label: "Device"
-    group_item_label: "Browser Version"
-  }
-
-  dimension: device__category {
-    type: string
-    sql: ${TABLE}.device.category ;;
-    group_label: "Device"
-    group_item_label: "Category"
-  }
-
-  dimension: device__is_limited_ad_tracking {
-    type: string
-    sql: ${TABLE}.device.is_limited_ad_tracking ;;
-    group_label: "Device"
-    group_item_label: "Is Limited Ad Tracking"
-  }
-
-  dimension: device__language {
-    type: string
-    sql: ${TABLE}.device.language ;;
-    group_label: "Device"
-    group_item_label: "Language"
-  }
-
-  dimension: device__mobile_brand_name {
-    type: string
-    sql: ${TABLE}.device.mobile_brand_name ;;
-    group_label: "Device"
-    group_item_label: "Mobile Brand Name"
-  }
-
-  dimension: device__mobile_marketing_name {
-    type: string
-    sql: ${TABLE}.device.mobile_marketing_name ;;
-    group_label: "Device"
-    group_item_label: "Mobile Marketing Name"
-  }
-
-  dimension: device__mobile_model_name {
-    type: string
-    sql: ${TABLE}.device.mobile_model_name ;;
-    group_label: "Device"
-    group_item_label: "Mobile Model Name"
-  }
-
-  dimension: device__mobile_os_hardware_model {
-    type: string
-    sql: ${TABLE}.device.mobile_os_hardware_model ;;
-    group_label: "Device"
-    group_item_label: "Mobile OS Hardware Model"
-  }
-
-  dimension: device__operating_system {
-    type: string
-    sql: ${TABLE}.device.operating_system ;;
-    group_label: "Device"
-    group_item_label: "Operating System"
-  }
-
-  dimension: device__operating_system_version {
-    type: string
-    sql: ${TABLE}.device.operating_system_version ;;
-    group_label: "Device"
-    group_item_label: "Operating System Version"
-  }
-
-  dimension: device__time_zone_offset_seconds {
+  dimension: ad_impression_revenue {
     type: number
-    sql: ${TABLE}.device.time_zone_offset_seconds ;;
+    sql:(select value.double_value from UNNEST(${TABLE}.event_params) where value.double_value IS NOT NULL) ;;
+  }
+
+  measure: sum_revenue {
+    type: sum
+    sql: ${ad_impression_revenue} ;;
+  }
+
+### device dimensions
+
+  dimension: device {
+    hidden: yes
+    sql: ${TABLE}.device ;;
+  }
+
+  dimension: advertising_id {
     group_label: "Device"
-    group_item_label: "Time Zone Offset Seconds"
+    description: "Advertising ID/IDFA."
+    type: string
+    sql: ${device}.advertising_id ;;
   }
 
-  dimension: device__vendor_id {
-    type: string
-    sql: ${TABLE}.device.vendor_id ;;
+  dimension: browser {
     group_label: "Device"
-    group_item_label: "Vendor ID"
-  }
-
-  dimension: device__web_info__browser {
     type: string
-    sql: ${TABLE}.device.web_info.browser ;;
-    group_label: "Device Web Info"
-    group_item_label: "Browser"
+    sql: ${device}.browser ;;
   }
 
-  dimension: device__web_info__browser_version {
+  dimension: browser_version {
+    group_label: "Device"
     type: string
-    sql: ${TABLE}.device.web_info.browser_version ;;
-    group_label: "Device Web Info"
-    group_item_label: "Browser Version"
+    sql: ${device}.browser_version ;;
   }
 
-  dimension: device__web_info__hostname {
+  dimension: category {
+    description: "The device category (mobile, tablet, desktop)."
+    group_label: "Device"
     type: string
-    sql: ${TABLE}.device.web_info.hostname ;;
-    group_label: "Device Web Info"
-    group_item_label: "Hostname"
+    sql: ${device}.category ;;
   }
 
-  dimension: ecommerce__purchase_revenue {
-    type: number
-    sql: ${TABLE}.ecommerce.purchase_revenue ;;
-    group_label: "Ecommerce"
-    group_item_label: "Purchase Revenue"
-  }
-
-  dimension: ecommerce__purchase_revenue_in_usd {
-    type: number
-    sql: ${TABLE}.ecommerce.purchase_revenue_in_usd ;;
-    group_label: "Ecommerce"
-    group_item_label: "Purchase Revenue In USD"
-  }
-
-  dimension: ecommerce__refund_value {
-    type: number
-    sql: ${TABLE}.ecommerce.refund_value ;;
-    group_label: "Ecommerce"
-    group_item_label: "Refund Value"
-  }
-
-  dimension: ecommerce__refund_value_in_usd {
-    type: number
-    sql: ${TABLE}.ecommerce.refund_value_in_usd ;;
-    group_label: "Ecommerce"
-    group_item_label: "Refund Value In USD"
-  }
-
-  dimension: ecommerce__shipping_value {
-    type: number
-    sql: ${TABLE}.ecommerce.shipping_value ;;
-    group_label: "Ecommerce"
-    group_item_label: "Shipping Value"
-  }
-
-  dimension: ecommerce__shipping_value_in_usd {
-    type: number
-    sql: ${TABLE}.ecommerce.shipping_value_in_usd ;;
-    group_label: "Ecommerce"
-    group_item_label: "Shipping Value In USD"
-  }
-
-  dimension: ecommerce__tax_value {
-    type: number
-    sql: ${TABLE}.ecommerce.tax_value ;;
-    group_label: "Ecommerce"
-    group_item_label: "Tax Value"
-  }
-
-  dimension: ecommerce__tax_value_in_usd {
-    type: number
-    sql: ${TABLE}.ecommerce.tax_value_in_usd ;;
-    group_label: "Ecommerce"
-    group_item_label: "Tax Value In USD"
-  }
-
-  dimension: ecommerce__total_item_quantity {
-    type: number
-    sql: ${TABLE}.ecommerce.total_item_quantity ;;
-    group_label: "Ecommerce"
-    group_item_label: "Total Item Quantity"
-  }
-
-  dimension: ecommerce__transaction_id {
+  dimension: is_limited_ad_tracking {
+    group_label: "Device"
+    description: "The device's Limit Ad Tracking setting."
     type: string
-    sql: ${TABLE}.ecommerce.transaction_id ;;
-    group_label: "Ecommerce"
-    group_item_label: "Transaction ID"
+    sql: ${device}.is_limited_ad_tracking ;;
   }
 
-  dimension: ecommerce__unique_items {
-    type: number
-    sql: ${TABLE}.ecommerce.unique_items ;;
-    group_label: "Ecommerce"
-    group_item_label: "Unique Items"
+  dimension: language {
+    group_label: "Device"
+    description: "The OS language."
+    type: string
+    sql: ${device}.language ;;
   }
+
+  dimension: language_filtered{
+    group_label: "Device"
+    description: "The language-only filter"
+    type: string
+    sql: SPLIT(${device}.language,"-")[ORDINAL(1)];;
+  }
+
+  dimension: mobile_brand_name {
+    group_label: "Device"
+    description: "The device brand name."
+    type: string
+    sql: ${device}.mobile_brand_name ;;
+  }
+
+  dimension: mobile_marketing_name {
+    group_label: "Device"
+    description: "The device marketing name."
+    type: string
+    sql: ${device}.mobile_marketing_name ;;
+  }
+
+  dimension: mobile_model_name {
+    group_label: "Device"
+    description: "The device model name."
+    type: string
+    sql: ${device}.mobile_model_name ;;
+  }
+
+  dimension: mobile_os_hardware_model {
+    group_label: "Device"
+    description: "The device model information retrieved directly from the operating system."
+    type: string
+    sql: ${device}.mobile_os_hardware_model ;;
+  }
+
+  dimension: operating_system {
+    group_label: "Device"
+    description: "The operating system of the device."
+    type: string
+    sql: ${device}.operating_system ;;
+  }
+
+  dimension: operating_system_version {
+    group_label: "Device"
+    description: "The OS version."
+    type: string
+    sql: ${device}.operating_system_version ;;
+  }
+
+  dimension: time_zone_offset_seconds {
+    group_label: "Device"
+    description: "The offset from GMT in seconds."
+    type: number
+    sql: ${device}.time_zone_offset_seconds ;;
+  }
+
+  dimension: vendor_id {
+    group_label: "Device"
+    description: "IDFV (present only if IDFA is not collected)."
+    type: string
+    sql: ${device}.vendor_id ;;
+  }
+
+  #### end device
 
   dimension: event_bundle_sequence_id {
+    description: "The sequential ID of the bundle in which these events were uploaded."
+    hidden: yes
     type: number
     sql: ${TABLE}.event_bundle_sequence_id ;;
   }
 
-  dimension: event_date {
-    type: string
-    sql: ${TABLE}.event_date ;;
+  dimension_group: event {
+    type: time
+    timeframes: [date, week, day_of_week, month, year]
+    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'\d\d\d\d\d\d\d\d'))) ;;
   }
 
-  dimension: event_dimensions__hostname {
-    type: string
-    sql: ${TABLE}.event_dimensions.hostname ;;
-    group_label: "Event Dimensions"
-    group_item_label: "Hostname"
+  dimension_group: _event {
+    label: "Event"
+    timeframes: [raw,time,hour,minute]
+    type: time
+    sql: TIMESTAMP_MICROS(${TABLE}.event_timestamp) ;;
+  }
+
+  dimension: event_dimensions {
+    hidden: yes
+    sql: ${TABLE}.event_dimensions ;;
   }
 
   dimension: event_name {
@@ -262,18 +200,15 @@ view: nit_events {
   }
 
   dimension: event_previous_timestamp {
+    hidden: yes
     type: number
     sql: ${TABLE}.event_previous_timestamp ;;
   }
 
   dimension: event_server_timestamp_offset {
+    hidden: yes
     type: number
     sql: ${TABLE}.event_server_timestamp_offset ;;
-  }
-
-  dimension: event_timestamp {
-    type: number
-    sql: ${TABLE}.event_timestamp ;;
   }
 
   dimension: event_value_in_usd {
@@ -281,52 +216,158 @@ view: nit_events {
     sql: ${TABLE}.event_value_in_usd ;;
   }
 
-  dimension: geo__city {
-    type: string
-    sql: ${TABLE}.geo.city ;;
-    group_label: "Geo"
-    group_item_label: "City"
-  }
+  ### geo dimensions
 
-  dimension: geo__continent {
-    type: string
-    sql: ${TABLE}.geo.continent ;;
-    group_label: "Geo"
-    group_item_label: "Continent"
-  }
-
-  dimension: geo__country {
-    type: string
-    sql: ${TABLE}.geo.country ;;
-    group_label: "Geo"
-    group_item_label: "Country"
-  }
-
-  dimension: geo__metro {
-    type: string
-    sql: ${TABLE}.geo.metro ;;
-    group_label: "Geo"
-    group_item_label: "Metro"
-  }
-
-  dimension: geo__region {
-    type: string
-    sql: ${TABLE}.geo.region ;;
-    group_label: "Geo"
-    group_item_label: "Region"
-  }
-
-  dimension: geo__sub_continent {
-    type: string
-    sql: ${TABLE}.geo.sub_continent ;;
-    group_label: "Geo"
-    group_item_label: "Sub Continent"
-  }
-
-  dimension: items {
+  dimension: geo {
     hidden: yes
-    sql: ${TABLE}.items ;;
+    sql: ${TABLE}.geo ;;
   }
+
+  dimension: city {
+    group_label: "User Location"
+    description: "The city from which events were reported, based on IP address."
+    type: string
+    sql: ${geo}.city ;;
+  }
+
+  dimension: continent {
+    group_label: "User Location"
+    description: "The continent from which events were reported, based on IP address."
+    type: string
+    sql: ${geo}.continent ;;
+    drill_fields: [sub_continent,country]
+  }
+
+  dimension: country {
+    group_label: "User Location"
+    description: "The country from which events were reported, based on IP address."
+    type: string
+    map_layer_name: countries
+    sql: ${geo}.country ;;
+  }
+
+  dimension: country_tier_android {
+    type: string
+    case: {
+      when: {
+        sql: ${geo}.country IN ('Australia','Canada') ;;
+        label: "T1A"
+      }
+      when: {
+        sql: ${geo}.country IN ('Germany','New Zealand','Norway','Switzerland', 'United Kingdom') ;;
+        label: "T1B"
+      }
+      when: {
+        sql: ${geo}.country IN ('Austria','Belgium','Denmark','Finland','Netherlands','Singapore','Sweden') ;;
+        label: "T2"
+      }
+      when: {
+        sql: ${geo}.country IN ('Japan') ;;
+        label: "JP"
+      }
+      when: {
+        sql: ${geo}.country IN ('South Korea') ;;
+        label: "KR"
+      }
+      when: {
+        sql: ${geo}.country IN ('Taiwan') ;;
+        label: "TW"
+      }
+      when: {
+        sql: ${geo}.country IN ('Hong Kong') ;;
+        label: "HK"
+      }
+      # when: {
+      #   sql: ${geo}.country IN ('Brazil','Chile','Czechia','Finland','Greece','Iceland','India','Indonesia','Ireland','Israel','Italy','Kuwait','Luxemburg','North Macedonia','Philippines','Poland','Portugal','Qatar','Russia','South Africa','Spain','Thailand','Turkey','Ukraine','United Arab Emirates','Vietnam') ;;
+      #   label: "T3"
+      # }
+      when: {
+        sql: ${geo}.country IN ('United States') ;;
+        label: "US"
+      }
+      # when: {
+      #   sql: ${geo}.country NOT IN ('Australia','Canada','Germany','New Zealand','Norway','Switzerland', 'United Kingdom'
+      #             ,'Austria','Belgium','Denmark','Finland','Netherlands','Singapore','Sweden','Japan','South Korea','Taiwan','Hong Kong','United States'
+      #             ) ;;
+      #   label: "World Wide minus above"
+      # }
+      else: "World Wide minus above"
+    }
+  }
+
+  dimension: country_tier_ios {
+    type: string
+    case: {
+      when: {
+        sql: ${geo}.country IN ('Switzerland','Canada','Germany') ;;
+        label: "T1A"
+      }
+      when: {
+        sql: ${geo}.country IN ('Australia','New Zealand','Norway', 'United Kingdom') ;;
+        label: "T1B"
+      }
+      when: {
+        sql: ${geo}.country IN ('Austria','Sweden') ;;
+        label: "T2A"
+      }
+      when: {
+        sql: ${geo}.country IN('Belgium','Denmark','France','Netherlands','Singapore') ;;
+        label: "T2B"
+      }
+      when: {
+        sql: ${geo}.country IN ('Japan') ;;
+        label: "JP"
+      }
+      when: {
+        sql: ${geo}.country IN ('South Korea') ;;
+        label: "KR"
+      }
+      when: {
+        sql: ${geo}.country IN ('Taiwan') ;;
+        label: "TW"
+      }
+      when: {
+        sql: ${geo}.country IN ('Hong Kong') ;;
+        label: "HK"
+      }
+      when: {
+        sql: ${geo}.country IN ('United States') ;;
+        label: "US"
+      }
+      # when: {
+      #   sql: ${geo}.country NOT IN ('United States','Switzerland'
+      #   ,'Canada','Germany','Australia','New Zealand','Norway', 'United Kingdom'
+      #   ,'Austria','Sweden','Belgium','Denmark','France','Netherlands','Singapore'
+      #   ,'Japan','South Korea','Taiwan','Hong Kong','United States'
+      #   ) ;;
+      #   label: "World Wide minus above"
+      # }
+      else: "World Wide minus above"
+    }
+  }
+
+  dimension: metro {
+    group_label: "User Location"
+    description: "The metro from which events were reported, based on IP address."
+    type: string
+    sql: ${geo}.metro ;;
+  }
+
+  dimension: region {
+    group_label: "User Location"
+    description: "The region from which events were reported, based on IP address."
+    type: string
+    sql: ${geo}.region ;;
+  }
+
+  dimension: sub_continent {
+    group_label: "User Location"
+    description: "The subcontinent from which events were reported, based on IP address."
+    type: string
+    sql: ${geo}.sub_continent ;;
+  }
+
+  ### end geo dimensions
 
   dimension: platform {
     type: string
@@ -334,58 +375,27 @@ view: nit_events {
   }
 
   dimension: stream_id {
+    hidden: yes
     type: string
     sql: ${TABLE}.stream_id ;;
   }
 
-  dimension: suffix {
-    type: string
-    sql: ${TABLE}.suffix ;;
+  dimension: traffic_source {
+    hidden: yes
+    sql: ${TABLE}.traffic_source ;;
   }
 
-  dimension: traffic_source__medium {
-    type: string
-    sql: ${TABLE}.traffic_source.medium ;;
-    group_label: "Traffic Source"
-    group_item_label: "Medium"
-  }
-
-  dimension: traffic_source__name {
-    type: string
-    sql: ${TABLE}.traffic_source.name ;;
-    group_label: "Traffic Source"
-    group_item_label: "Name"
-  }
-
-  dimension: traffic_source__source {
-    type: string
-    sql: ${TABLE}.traffic_source.source ;;
-    group_label: "Traffic Source"
-    group_item_label: "Source"
-  }
-
-  dimension: user_first_touch_timestamp {
-    type: number
-    sql: ${TABLE}.user_first_touch_timestamp ;;
+  dimension_group: user_first_touch {
+    description: "The time at which the user first opened the app."
+    timeframes: [raw,time,hour,minute,date, week, day_of_week, month, year]
+    type: time
+    sql: TIMESTAMP_MICROS(${TABLE}.user_first_touch_timestamp) ;;
   }
 
   dimension: user_id {
+    description: "The user ID set via the setUserId API."
     type: string
     sql: ${TABLE}.user_id ;;
-  }
-
-  dimension: user_ltv__currency {
-    type: string
-    sql: ${TABLE}.user_ltv.currency ;;
-    group_label: "User Ltv"
-    group_item_label: "Currency"
-  }
-
-  dimension: user_ltv__revenue {
-    type: number
-    sql: ${TABLE}.user_ltv.revenue ;;
-    group_label: "User Ltv"
-    group_item_label: "Revenue"
   }
 
   dimension: user_properties {
@@ -393,194 +403,285 @@ view: nit_events {
     sql: ${TABLE}.user_properties ;;
   }
 
+  ### user ltv dimensions
+
+  dimension: user_ltv {
+    hidden: yes
+    sql: ${TABLE}.user_ltv ;;
+  }
+
+  dimension: currency {
+    group_label: "User LTV"
+    description: "The Lifetime Value (currency) of the user. This field is not populated in intraday tables."
+    type: string
+    sql: ${user_ltv}.currency ;;
+  }
+
+  dimension: revenue {
+    group_label: "User LTV"
+    description: "The Lifetime Value (revenue) of the user. This field is not populated in intraday tables."
+    type: number
+    sql: ${user_ltv}.revenue ;;
+  }
+
+  ### end user ltv dimensions
+
+
   dimension: user_pseudo_id {
+    description: "The pseudonymous id (e.g., app instance ID) for the user."
     type: string
     sql: ${TABLE}.user_pseudo_id ;;
   }
 
-  measure: count {
+  dimension: firebase_user_id {
+    description: "either user_id or user_pseudo_id"
+    sql: COALESCE(${user_pseudo_id},${user_id}) ;;
+  }
+
+  measure: number_of_users {
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+  }
+
+  measure: number_of_events {
     type: count
-    drill_fields: [detail*]
+    drill_fields: [event_name]
   }
 
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-      event_name,
-      traffic_source__name,
-      device__mobile_model_name,
-      device__mobile_brand_name,
-      device__web_info__hostname,
-      event_dimensions__hostname,
-      device__mobile_marketing_name
-    ]
+# Retention
+
+  dimension_group: current {
+    description: "the time right now"
+    type: time
+    sql: CURRENT_TIMESTAMP() ;;
   }
+
+  dimension: days_since_user_signup {
+    type: number
+    description: "Days since first seen (from today)"
+    sql:  DATE_DIFF(${current_date}, ${user_first_touch_date}, DAY);;
+  }
+
+  dimension: retention_day {
+    group_label: "Retention"
+    description: "Days since first seen (from event date)"
+    type:  number
+    sql:  DATE_DIFF(${event_date}, ${user_first_touch_date}, DAY);;
+  }
+
+  #D0
+  measure: d0_retained_users {
+    group_label: "Retention"
+    description: "Number of players that came back to play on day 0[incl 0]"
+    type: count_distinct sql: ${firebase_user_id} ;;
+    filters: {
+      field: retention_day
+      value: "0"
+    }
+    drill_fields: [country,d0_retained_users]
+  }
+
+  measure: d0_eligible_users {
+    hidden: yes
+    group_label: "Retention"
+    description: "Number of players older than 0 days"
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+    filters: {
+      field: days_since_user_signup
+      value: ">=0"
+    }
+  }
+
+  measure: d0_retention_rate {
+    group_label: "Retention"
+    description: "% of players (that are older than 0 days) that came back to play on day 1"
+    value_format_name: percent_2
+    type: number
+    sql: 1.0 * ${d0_retained_users}/${d0_eligible_users};;
+    drill_fields: [country,d0_retention_rate]
+  }
+
+  # D1
+
+  measure: d1_retained_users {
+    group_label: "Retention"
+    description: "Number of players that came back to play on day 1"
+    type: count_distinct sql: ${firebase_user_id} ;;
+    filters: {
+      field: retention_day
+      value: "1"
+    }
+    drill_fields: [country,d1_retained_users]
+  }
+
+  measure: d1_eligible_users {
+    # hidden: yes
+    group_label: "Retention"
+    description: "Number of players older than 0 days"
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+    filters: {
+      field: days_since_user_signup
+      value: ">0"
+    }
+  }
+
+  measure: d1_retention_rate {
+    group_label: "Retention"
+    description: "% of players (that are older than 0 days) that came back to play on day 1"
+    value_format_name: percent_2
+    type: number
+    sql: 1.0 * ${d1_retained_users}/ NULLIF(${d1_eligible_users},0);;
+    drill_fields: [country,d1_retention_rate]
+  }
+
+  # D7
+
+  measure: d7_retained_users {
+    group_label: "Retention"
+    description: "Number of players that came back to play on day 7"
+    type: count_distinct sql: ${firebase_user_id} ;;
+    filters: {
+      field: retention_day
+      value: "7"
+    }
+    drill_fields: [country,d7_retained_users]
+  }
+
+  measure: d7_eligible_users {
+    hidden: yes
+    group_label: "Retention"
+    description: "Number of players older than 7 days"
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+    filters: {
+      field: days_since_user_signup
+      value: ">7"
+    }
+    drill_fields: [country,d7_eligible_users]
+  }
+
+  measure: d7_retention_rate {
+    group_label: "Retention"
+    description: "% of players (that are older than 7 days) that came back to play on day 7"
+    value_format_name: percent_2
+    type: number
+    sql: 1.0 * ${d7_retained_users}/ NULLIF(${d7_eligible_users},0);;
+    drill_fields: [country,d7_retention_rate]
+  }
+
+  # D14
+
+  measure: d14_retained_users {
+    group_label: "Retention"
+    description: "Number of players that came back to play on day 14"
+    type: count_distinct sql: ${firebase_user_id} ;;
+    filters: {
+      field: retention_day
+      value: "14"
+    }
+    drill_fields: [country,d14_retained_users]
+  }
+
+  measure: d14_eligible_users {
+    hidden: yes
+    group_label: "Retention"
+    description: "Number of players older than 14 days"
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+    filters: {
+      field: days_since_user_signup
+      value: ">14"
+    }
+    drill_fields: [country,d14_eligible_users]
+  }
+
+  measure: d14_retention_rate {
+    group_label: "Retention"
+    description: "% of players (that are older than 14 days) that came back to play on day 14"
+    value_format_name: percent_2
+    type: number
+    sql: 1.0 * ${d14_retained_users}/ NULLIF(${d14_eligible_users},0);;
+    drill_fields: [country,d14_retention_rate]
+  }
+
+  # D30
+
+  measure: d30_retained_users {
+    group_label: "Retention"
+    description: "Number of players that came back to play on day 30"
+    type: count_distinct sql: ${firebase_user_id} ;;
+    filters: {
+      field: retention_day
+      value: "30"
+    }
+    drill_fields: [country,d30_retained_users]
+  }
+
+  measure: d30_eligible_users {
+    hidden: yes
+    group_label: "Retention"
+    description: "Number of players older than 30 days"
+    type: count_distinct
+    sql: ${firebase_user_id} ;;
+    filters: {
+      field: days_since_user_signup
+      value: ">30"
+    }
+    drill_fields: [country,d30_eligible_users]
+  }
+
+  measure: d30_retention_rate {
+    group_label: "Retention"
+    description: "% of players (that are older than 30 days) that came back to play on day 30"
+    value_format_name: percent_2
+    type: number
+    sql: 1.0 * ${d30_retained_users}/ NULLIF(${d30_eligible_users},0);;
+    drill_fields: [country,d30_retention_rate]
+  }
+
 }
 
-view: nit_events__items {
-  dimension: affiliation {
-    type: string
-    sql: ${TABLE}.affiliation ;;
-  }
+view: nit_events__user_properties__value {
 
-  dimension: coupon {
-    type: string
-    sql: ${TABLE}.coupon ;;
-  }
-
-  dimension: creative_name {
-    type: string
-    sql: ${TABLE}.creative_name ;;
-  }
-
-  dimension: creative_slot {
-    type: string
-    sql: ${TABLE}.creative_slot ;;
-  }
-
-  dimension: item_brand {
-    type: string
-    sql: ${TABLE}.item_brand ;;
-  }
-
-  dimension: item_category {
-    type: string
-    sql: ${TABLE}.item_category ;;
-  }
-
-  dimension: item_category2 {
-    type: string
-    sql: ${TABLE}.item_category2 ;;
-  }
-
-  dimension: item_category3 {
-    type: string
-    sql: ${TABLE}.item_category3 ;;
-  }
-
-  dimension: item_category4 {
-    type: string
-    sql: ${TABLE}.item_category4 ;;
-  }
-
-  dimension: item_category5 {
-    type: string
-    sql: ${TABLE}.item_category5 ;;
-  }
-
-  dimension: item_id {
-    type: string
-    sql: ${TABLE}.item_id ;;
-  }
-
-  dimension: item_list_id {
-    type: string
-    sql: ${TABLE}.item_list_id ;;
-  }
-
-  dimension: item_list_index {
-    type: string
-    sql: ${TABLE}.item_list_index ;;
-  }
-
-  dimension: item_list_name {
-    type: string
-    sql: ${TABLE}.item_list_name ;;
-  }
-
-  dimension: item_name {
-    type: string
-    sql: ${TABLE}.item_name ;;
-  }
-
-  dimension: item_refund {
+  dimension: double_value {
+    required_fields: [nit_events__user_properties.key]
     type: number
-    sql: ${TABLE}.item_refund ;;
+    sql: ${TABLE}.double_value ;;
   }
 
-  dimension: item_refund_in_usd {
+  dimension: float_value {
+    required_fields: [nit_events__user_properties.key]
     type: number
-    sql: ${TABLE}.item_refund_in_usd ;;
+    sql: ${TABLE}.float_value ;;
   }
 
-  dimension: item_revenue {
+  dimension: int_value {
+    required_fields: [nit_events__user_properties.key]
     type: number
-    sql: ${TABLE}.item_revenue ;;
+    sql: ${TABLE}.int_value ;;
   }
 
-  dimension: item_revenue_in_usd {
+  dimension: set_timestamp_micros {
+    required_fields: [nit_events__user_properties.key]
     type: number
-    sql: ${TABLE}.item_revenue_in_usd ;;
+    sql: ${TABLE}.set_timestamp_micros ;;
   }
 
-  dimension: item_variant {
+  dimension: string_value {
+    required_fields: [nit_events__user_properties.key]
     type: string
-    sql: ${TABLE}.item_variant ;;
+    sql: ${TABLE}.string_value ;;
   }
 
-  dimension: location_id {
-    type: string
-    sql: ${TABLE}.location_id ;;
-  }
-
-  dimension: price {
-    type: number
-    sql: ${TABLE}.price ;;
-  }
-
-  dimension: price_in_usd {
-    type: number
-    sql: ${TABLE}.price_in_usd ;;
-  }
-
-  dimension: promotion_id {
-    type: string
-    sql: ${TABLE}.promotion_id ;;
-  }
-
-  dimension: promotion_name {
-    type: string
-    sql: ${TABLE}.promotion_name ;;
-  }
-
-  dimension: quantity {
-    type: number
-    sql: ${TABLE}.quantity ;;
-  }
-}
-
-view: nit_events__event_params {
-  dimension: key {
-    type: string
-    sql: ${TABLE}.key ;;
-  }
-
-  dimension: value__double_value {
-    type: number
-    sql: ${TABLE}.value.double_value ;;
-    group_label: "Value"
-    group_item_label: "Double Value"
-  }
-
-  dimension: value__float_value {
-    type: number
-    sql: ${TABLE}.value.float_value ;;
-    group_label: "Value"
-    group_item_label: "Float Value"
-  }
-
-  dimension: value__int_value {
-    type: number
-    sql: ${TABLE}.value.int_value ;;
-    group_label: "Value"
-    group_item_label: "Int Value"
-  }
-
-  dimension: value__string_value {
-    type: string
-    sql: ${TABLE}.value.string_value ;;
-    group_label: "Value"
-    group_item_label: "String Value"
+  dimension: type{
+    required_fields: [nit_events__user_properties.key]
+    sql: CASE
+        WHEN ${string_value} is not null then 'string'
+        WHEN COALESCE(${int_value},${float_value},${double_value}) is not null then 'number'
+        ELSE 'string'
+        END;;
   }
 }
 
@@ -590,38 +691,113 @@ view: nit_events__user_properties {
     sql: ${TABLE}.key ;;
   }
 
-  dimension: value__double_value {
-    type: number
-    sql: ${TABLE}.value.double_value ;;
-    group_label: "Value"
-    group_item_label: "Double Value"
+  dimension: value {
+    hidden: yes
+    sql: ${TABLE}.value ;;
   }
+}
 
-  dimension: value__float_value {
-    type: number
-    sql: ${TABLE}.value.float_value ;;
-    group_label: "Value"
-    group_item_label: "Float Value"
-  }
-
-  dimension: value__int_value {
-    type: number
-    sql: ${TABLE}.value.int_value ;;
-    group_label: "Value"
-    group_item_label: "Int Value"
-  }
-
-  dimension: value__set_timestamp_micros {
-    type: number
-    sql: ${TABLE}.value.set_timestamp_micros ;;
-    group_label: "Value"
-    group_item_label: "Set Timestamp Micros"
-  }
-
-  dimension: value__string_value {
+view: nit_events__traffic_source {
+  dimension: medium {
+    description: "Name of the medium (paid search, organic search, email, etc.) that first acquired the user. This field is not populated in intraday tables."
     type: string
-    sql: ${TABLE}.value.string_value ;;
-    group_label: "Value"
-    group_item_label: "String Value"
+    sql: ${TABLE}.medium ;;
+  }
+
+  dimension: name {
+    description: "Name of the marketing campaign that first acquired the user. This field is not populated in intraday tables."
+    type: string
+    sql: ${TABLE}.name ;;
+  }
+
+  dimension: source {
+    description: "Name of the network that first acquired the user. This field is not populated in intraday tables."
+    type: string
+    sql: ${TABLE}.source ;;
+  }
+}
+
+view: nit_events__event_params__value {
+
+  dimension: double_value {
+    required_fields: [nit_events__event_params.key]
+    type: number
+    sql: ${TABLE}.double_value ;;
+  }
+
+  dimension: float_value {
+    required_fields: [nit_events__event_params.key]
+    type: number
+    sql: ${TABLE}.float_value ;;
+  }
+
+  dimension: int_value {
+    required_fields: [nit_events__event_params.key]
+    type: number
+    sql: ${TABLE}.int_value ;;
+  }
+
+  dimension: string_value {
+    required_fields: [nit_events__event_params.key]
+    type: string
+    sql: ${TABLE}.string_value ;;
+  }
+
+  dimension: type{
+    required_fields: [nit_events__event_params.key]
+    sql: CASE
+        WHEN ${string_value} is not null then 'string'
+        WHEN COALESCE(${int_value},${float_value},${double_value}) is not null then 'number'
+        ELSE 'string'
+        END;;
+  }
+}
+
+
+# dimension:total_revenue{
+#   type: number
+#   sql:${TABLE}.value.double_value;;
+# }
+
+# dimension: double_value2 {
+#   required_fields: [nit_events__event_params.key]
+#   type: number
+#   sql: ${nit_events__event_params__value}.double_value ;;
+# }
+
+view: nit_events__event_params {
+  dimension: key {
+    type: string
+    sql: ${TABLE}.key ;;
+  }
+
+  dimension: value {
+    hidden: yes
+    sql: ${TABLE}.value ;;
+  }
+}
+
+
+view: nit_events__event_dimensions {
+  dimension: hostname {
+    type: string
+    sql: ${TABLE}.hostname ;;
+  }
+}
+
+view: nit_events__device__web_info {
+  dimension: browser {
+    type: string
+    sql: ${TABLE}.browser ;;
+  }
+
+  dimension: browser_version {
+    type: string
+    sql: ${TABLE}.browser_version ;;
+  }
+
+  dimension: hostname {
+    type: string
+    sql: ${TABLE}.hostname ;;
   }
 }

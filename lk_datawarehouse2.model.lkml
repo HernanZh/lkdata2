@@ -13,27 +13,48 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: d_conversionValue {}
 
-explore: nit_events {
-  hidden: no
+  explore: nit_events {
+    label: "nit events"
 
-  join: nit_events__items {
-    view_label: "Events: Items"
-    sql: LEFT JOIN UNNEST(${nit_events.items}) as events__items ;;
-    relationship: one_to_many
-  }
+## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
+    always_filter: {
+      filters: {
+        field: event_date
+        value: "last 7 days"
+      }
+    }
 
-  join: nit_events__event_params {
-    view_label: "Events: Event Params"
-    sql: LEFT JOIN UNNEST(${nit_events.event_params}) as events__event_params ;;
-    relationship: one_to_many
-  }
+    join: nit_events__event_params {
+      view_label: "Event Properties"
+      sql: LEFT JOIN UNNEST(nit_events.event_params) as nit_events__event_params ;;
+      relationship: one_to_many
+    }
 
-  join: nit_events__user_properties {
-    view_label: "Events: User Properties"
-    sql: LEFT JOIN UNNEST(${nit_events.user_properties}) as events__user_properties ;;
-    relationship: one_to_many
-  }
-}
+    join: nit_events__event_params__value{
+      view_label: "Event Properties"
+      sql: LEFT JOIN UNNEST([nit_events__event_params.value]) as nit_events__event_params__value ;;
+      relationship: one_to_many
+    }
+
+    join: nit_events__user_properties {
+      sql: LEFT JOIN UNNEST(nit_events.user_properties) as nit_events__user_properties ;;
+      view_label: "User Properties"
+      relationship: one_to_many
+    }
+
+    join: nit_events__user_properties__value {
+      view_label: "User Properties"
+      sql: LEFT JOIN UNNEST([nit_events__user_properties.value]) as nit_events__user_properties__value ;;
+      relationship: one_to_many
+    }
+
+    join: nit_sessions {
+      sql_on: ${nit_events.user_pseudo_id} = ${nit_sessions.user_pseudo_id}
+          AND ${nit_events._event_raw} >= ${nit_sessions.session_start_raw}
+          AND ${nit_events._event_raw} <= ${nit_sessions.session_end_raw} ;;
+      relationship: many_to_one
+    }
+    }
 
 
 explore: user_ad_revenue_old {
