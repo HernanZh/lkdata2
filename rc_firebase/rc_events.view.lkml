@@ -1,10 +1,10 @@
 # include: "user_properties_generated*"
-# include: "events_generated*"
+# include: "rc_events_generated*"
 
 view: rc_events {
   sql_table_name: `lk-datawarehouse-2.rc_firebase.rc_events`  ;;
 
-  # extends: [events_generated,user_properties_generated]
+  # extends: [rc_events_generated,user_properties_generated]
 
 ### app info
   dimension: app_info {
@@ -638,40 +638,40 @@ view: rc_events {
 
 }
 
-view: events__user_properties__value {
+view: rc_events__user_properties__value {
 
   dimension: double_value {
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     type: number
     sql: ${TABLE}.double_value ;;
   }
 
   dimension: float_value {
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     type: number
     sql: ${TABLE}.float_value ;;
   }
 
   dimension: int_value {
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     type: number
     sql: ${TABLE}.int_value ;;
   }
 
   dimension: set_timestamp_micros {
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     type: number
     sql: ${TABLE}.set_timestamp_micros ;;
   }
 
   dimension: string_value {
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     type: string
     sql: ${TABLE}.string_value ;;
   }
 
   dimension: type{
-    required_fields: [events__user_properties.key]
+    required_fields: [rc_events__user_properties.key]
     sql: CASE
         WHEN ${string_value} is not null then 'string'
         WHEN COALESCE(${int_value},${float_value},${double_value}) is not null then 'number'
@@ -680,7 +680,7 @@ view: events__user_properties__value {
   }
 }
 
-view: events__user_properties {
+view: rc_events__user_properties {
   dimension: key {
     type: string
     sql: ${TABLE}.key ;;
@@ -692,7 +692,7 @@ view: events__user_properties {
   }
 }
 
-view: events__traffic_source {
+view: rc_events__traffic_source {
   dimension: medium {
     description: "Name of the medium (paid search, organic search, email, etc.) that first acquired the user. This field is not populated in intraday tables."
     type: string
@@ -712,34 +712,34 @@ view: events__traffic_source {
   }
 }
 
-view: events__event_params__value {
+view: rc_events__event_params__value {
 
   dimension: double_value {
-    required_fields: [events__event_params.key]
+    required_fields: [rc_events__event_params.key]
     type: number
     sql: ${TABLE}.double_value ;;
   }
 
   dimension: float_value {
-    required_fields: [events__event_params.key]
+    required_fields: [rc_events__event_params.key]
     type: number
     sql: ${TABLE}.float_value ;;
   }
 
   dimension: int_value {
-    required_fields: [events__event_params.key]
+    required_fields: [rc_events__event_params.key]
     type: number
     sql: ${TABLE}.int_value ;;
   }
 
   dimension: string_value {
-    required_fields: [events__event_params.key]
+    required_fields: [rc_events__event_params.key]
     type: string
     sql: ${TABLE}.string_value ;;
   }
 
   dimension: type{
-    required_fields: [events__event_params.key]
+    required_fields: [rc_events__event_params.key]
     sql: CASE
         WHEN ${string_value} is not null then 'string'
         WHEN COALESCE(${int_value},${float_value},${double_value}) is not null then 'number'
@@ -755,12 +755,12 @@ view: events__event_params__value {
 # }
 
 # dimension: double_value2 {
-#   required_fields: [events__event_params.key]
+#   required_fields: [rc_events__event_params.key]
 #   type: number
-#   sql: ${events__event_params__value}.double_value ;;
+#   sql: ${rc_events__event_params__value}.double_value ;;
 # }
 
-view: events__event_params {
+view: rc_events__event_params {
   dimension: key {
     type: string
     sql: ${TABLE}.key ;;
@@ -773,14 +773,14 @@ view: events__event_params {
 }
 
 
-view: events__event_dimensions {
+view: rc_events__event_dimensions {
   dimension: hostname {
     type: string
     sql: ${TABLE}.hostname ;;
   }
 }
 
-view: events__device__web_info {
+view: rc_events__device__web_info {
   dimension: browser {
     type: string
     sql: ${TABLE}.browser ;;
