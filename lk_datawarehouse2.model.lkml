@@ -787,3 +787,102 @@ explore: sk_ad_networks {}
 # explore: future_revenue_prediction_d14{}
 
 # explore: future_revenue_prediction_d30 {}
+
+# explore: rc_events {
+#   label: "nit events"
+
+# ## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
+#   always_filter: {
+#     filters: {
+#       field: event_date
+#       value: "last 7 days"
+#     }
+#   }
+
+#   join: nit_events__event_params {
+#     view_label: "Event Properties"
+#     sql: LEFT JOIN UNNEST(nit_events.event_params) as nit_events__event_params ;;
+#     relationship: one_to_many
+#   }
+
+#   join: nit_events__event_params__value{
+#     view_label: "Event Properties"
+#     sql: LEFT JOIN UNNEST([nit_events__event_params.value]) as nit_events__event_params__value ;;
+#     relationship: one_to_many
+#   }
+
+#   join: nit_events__user_properties {
+#     sql: LEFT JOIN UNNEST(nit_events.user_properties) as nit_events__user_properties ;;
+#     view_label: "User Properties"
+#     relationship: one_to_many
+#   }
+
+#   join: nit_events__user_properties__value {
+#     view_label: "User Properties"
+#     sql: LEFT JOIN UNNEST([nit_events__user_properties.value]) as nit_events__user_properties__value ;;
+#     relationship: one_to_many
+#   }
+
+#   join: nit_sessions {
+#     sql_on: ${nit_events.user_pseudo_id} = ${nit_sessions.user_pseudo_id}
+#           AND ${nit_events._event_raw} >= ${nit_sessions.session_start_raw}
+#           AND ${nit_events._event_raw} <= ${nit_sessions.session_end_raw} ;;
+#     relationship: many_to_one
+#   }
+
+#   join: events {
+#     type: left_outer
+#     sql_on: lower(replace(${nit_events.advertising_id},'-',""))=${events.advertising_id} ;;
+#     relationship: one_to_one
+#   }
+
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
+
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
+
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
+
+#   join: campaign_buckets {
+#     type: left_outer
+#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     relationship: many_to_one
+#   }
+
+#   # explore: user_attributes {
+#   #   join: campaigns {
+#   #     type: left_outer
+#   #     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+#   #     relationship: many_to_one
+#   #   }
+
+#   #   join: ad_networks {
+#   #     type: left_outer
+#   #     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#   #     relationship: many_to_one
+#   #   }
+
+#   #   join: apps {
+#   #     type: left_outer
+#   #     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#   #     relationship: many_to_one
+#   #   }
+
+#   #   join: campaign_buckets {
+#   #     type: left_outer
+#   #     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#   #     relationship: many_to_one
+#   #   }
+#   # }
+# }
