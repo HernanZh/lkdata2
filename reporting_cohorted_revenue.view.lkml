@@ -25,7 +25,7 @@ FROM reporting_cohort_metrics
   -- LEFT JOIN bucket_campaign_info ON bucket_campaign_info.id = reporting_cohort_metrics.campaign_id
   -- LEFT JOIN ad_networks ON ad_networks.id = bucket_campaign_info.ad_network_id
      LEFT JOIN ad_networks ON ad_networks.id = reporting_cohort_metrics.ad_network_id
-GROUP BY DATE,
+GROUP BY reporting_cohort_metrics.install_date,
          reporting_cohort_metrics.ad_network_id,
          reporting_cohort_metrics.app_id,
          reporting_cohort_metrics.campaign_id,

@@ -11,7 +11,7 @@ datagroup: lk_datawarehouse2_default_datagroup {
 
 persist_with: lk_datawarehouse2_default_datagroup
 
-explore: d_conversionValue {}
+# explore: d_conversionValue {}
 
   explore: nit_events {
     label: "nit events"
@@ -113,32 +113,32 @@ explore: d_conversionValue {}
     }
 
 
-explore: user_ad_revenue_old {
-  join: events {
-    type: left_outer
-    sql_on: ${events.advertising_id} = ${user_ad_revenue_old.advertising_id} ;;
-    relationship: many_to_one
-  }
+# explore: user_ad_revenue_old {
+#   join: events {
+#     type: left_outer
+#     sql_on: ${events.advertising_id} = ${user_ad_revenue_old.advertising_id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaigns {
-    type: left_outer
-    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-}
+# }
 
 
 explore: ad_engagements {
@@ -171,40 +171,40 @@ explore: ad_networks {}
 
 explore: apps {}
 
-explore: GA_business {
-  # join: GA_session_end {
-  #   type: left_outer
-  #   sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
-  #           ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
-  #           ${GA_business.user_id}=${GA_session_end.user_id} AND
-  #           ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
-  #           ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
-  #           ${GA_business.client_ts}=${GA_session_end.client_ts} AND
-  #           ${GA_business.platform}=${GA_session_end.platform} AND
-  #           ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
-  #           ;;
-  #   fields: [game_id,length, playtime,avg_session_length]
-  #   relationship: many_to_one
-  # }
-}
-explore: GA_design{}
-explore: GA_error {}
-explore: GA_progression {}
-explore: GA_resource {}
-explore: GA_sdk_error {}
-explore: GA_session_end {}
-explore: GA_session_end_new {}
-explore: ga_session_end_raw {}
-explore: GA_user{}
-explore: ga_minimalistic {}
-explore: ga_ilrd {}
-explore: ga_ilrd_cohorts {}
+# explore: GA_business {
+#   # join: GA_session_end {
+#   #   type: left_outer
+#   #   sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
+#   #           ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
+#   #           ${GA_business.user_id}=${GA_session_end.user_id} AND
+#   #           ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
+#   #           ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
+#   #           ${GA_business.client_ts}=${GA_session_end.client_ts} AND
+#   #           ${GA_business.platform}=${GA_session_end.platform} AND
+#   #           ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
+#   #           ;;
+#   #   fields: [game_id,length, playtime,avg_session_length]
+#   #   relationship: many_to_one
+#   # }
+# }
+# explore: GA_design{}
+# explore: GA_error {}
+# explore: GA_progression {}
+# explore: GA_resource {}
+# explore: GA_sdk_error {}
+# explore: GA_session_end {}
+# explore: GA_session_end_new {}
+# explore: ga_session_end_raw {}
+# explore: GA_user{}
+# explore: ga_minimalistic {}
+# explore: ga_ilrd {}
+# explore: ga_ilrd_cohorts {}
 
 #explore: auditlog_ga {}
 
 #explore:  attribution_table{}
 
-explore: ga_uar_testing {}
+# explore: ga_uar_testing {}
 
 explore: reporting_cohorted_revenue {
   join: ad_networks {
@@ -245,7 +245,7 @@ explore: reporting_cohorted_revenue {
           ${reporting_cohorted_revenue.campaign_id} = ${reporting_metrics.campaign_id} AND
           ${reporting_cohorted_revenue.site_id} = ${reporting_metrics.site_id} AND
           ${reporting_cohorted_revenue.country} = ${reporting_metrics.country} AND
-          ${reporting_cohorted_revenue.date} = ${reporting_metrics.date_date} AND
+          ${reporting_cohorted_revenue.install_date} = ${reporting_metrics.date_date} AND
           ${reporting_cohorted_revenue.platform} = ${reporting_metrics.platform}
           ;;
     relationship: many_to_one
@@ -497,9 +497,9 @@ explore: events {
 
 }
 
-explore: game_analytics {
-  label: "Game Analytics"
-}
+# explore: game_analytics {
+#   label: "Game Analytics"
+# }
 
 explore: publisher_apps {
   join: apps {
@@ -515,13 +515,13 @@ explore: publisher_apps {
   }
 }
 
-explore: impressions {
-  # join: games {
-  #   type: left_outer
-  #   sql_on: ${impressions.game_id} = ${games.id} ;;
-  #   relationship: many_to_one
-  # }
-}
+# explore: impressions {
+#   # join: games {
+#   #   type: left_outer
+#   #   sql_on: ${impressions.game_id} = ${games.id} ;;
+#   #   relationship: many_to_one
+#   # }
+# }
 
 
 explore: reporting_cohort_metrics {
@@ -642,7 +642,7 @@ explore: reporting_metrics {
 
 
 
-explore: user_ad_revenue_cohort {}
+# explore: user_ad_revenue_cohort {}
 
 # explore: user_cohorts {
 #   join: campaigns {
@@ -692,32 +692,32 @@ explore: user_attributes {
   }
 }
 
-explore: user_ad_revenue {
-  join: events {
-    type: left_outer
-    sql_on: ${events.advertising_id} = ${user_ad_revenue.advertising_id} ;;
-    relationship: many_to_one
-  }
+# explore: user_ad_revenue {
+#   join: events {
+#     type: left_outer
+#     sql_on: ${events.advertising_id} = ${user_ad_revenue.advertising_id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: campaigns {
-    type: left_outer
-    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
-  }
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: many_to_one
+#   }
 
-}
+# }
 
 # explore: uar_cohorts {
 #   join: user_attributes {
@@ -751,33 +751,33 @@ explore: user_ad_revenue {
 #   }
 # }
 
-explore: user_level_ga_uar_new {}
-explore: user_level_ga_uar{}
-explore: sk_ad_network_metrics_new {
-  join: apps {
-    type: inner
-    sql_on: ${apps.id}=${sk_ad_network_metrics_new.app_id} ;;
-    relationship: one_to_one
-  }
-  join: ad_networks{
-    type: inner
-    sql_on: ${ad_networks.id}=${sk_ad_network_metrics_new.ad_network_id} ;;
-    relationship: one_to_one
-  }
-}
-explore: sk_ad_network_metrics {
-  join: apps {
-    type: inner
-    sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
-    relationship: one_to_one
-  }
-  join: ad_networks{
-    type: inner
-    sql_on: ${ad_networks.id}=${sk_ad_network_metrics.ad_network_id} ;;
-    relationship: one_to_one
-  }
-}
-explore: sk_ad_networks {}
+# explore: user_level_ga_uar_new {}
+# explore: user_level_ga_uar{}
+# explore: sk_ad_network_metrics_new {
+#   join: apps {
+#     type: inner
+#     sql_on: ${apps.id}=${sk_ad_network_metrics_new.app_id} ;;
+#     relationship: one_to_one
+#   }
+#   join: ad_networks{
+#     type: inner
+#     sql_on: ${ad_networks.id}=${sk_ad_network_metrics_new.ad_network_id} ;;
+#     relationship: one_to_one
+#   }
+# }
+# explore: sk_ad_network_metrics {
+#   join: apps {
+#     type: inner
+#     sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
+#     relationship: one_to_one
+#   }
+#   join: ad_networks{
+#     type: inner
+#     sql_on: ${ad_networks.id}=${sk_ad_network_metrics.ad_network_id} ;;
+#     relationship: one_to_one
+#   }
+# }
+# explore: sk_ad_networks {}
 # explore: uar_cohort_test {}
 
 # explore: future_revenue_prediction_d3 {}
@@ -790,6 +790,11 @@ explore: sk_ad_networks {}
 
 include: "/rc_firebase/rc_events.view"
 include: "/rc_firebase/rc_sessions.view"
+include: "/rc_firebase/rc_attribution.view"
+
+explore: rc_attribution {
+  label: "rc attribution"
+}
 
 explore: rc_events {
   label: "rc events"
@@ -834,33 +839,35 @@ explore: rc_events {
   }
 
   join: events {
-    type: left_outer
-    sql_on: lower(replace(${rc_events.advertising_id},'-',""))=${events.advertising_id} ;;
+    type: inner
+    sql_on: lower(replace(${rc_events.advertising_id},'-',""))=COALESCE(${events.advertising_id},${events.developer_device_id})
+    and lower(${rc_events.platform}) = ${events.platform} ;;
+    #and ${rc_events.event_date} = ${events.created_date};;
     relationship: one_to_one
   }
 
   join: campaigns {
     type: left_outer
     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   join: ad_networks {
     type: left_outer
     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   join: apps {
     type: left_outer
     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   join: campaign_buckets {
     type: left_outer
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
   }
 
   # explore: user_attributes {

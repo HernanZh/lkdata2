@@ -2,7 +2,7 @@
 # include: "rc_events_generated*"
 
 view: rc_events {
-  sql_table_name: `lk-datawarehouse-2.rc_firebase.rc_events`  ;;
+  sql_table_name: lk-datawarehouse-2.rc_firebase.rc_events  ;;
 
   # extends: [rc_events_generated,user_properties_generated]
 
@@ -169,7 +169,7 @@ view: rc_events {
   dimension_group: event {
     type: time
     timeframes: [date, week, day_of_week, month, year]
-    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'\d\d\d\d\d\d\d\d'))) ;;
+    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(${TABLE}.suffix,r'\d\d\d\d\d\d\d\d'))) ;;
   }
 
   dimension_group: _event {
