@@ -1,4 +1,4 @@
-view: rc_attribution {
+view: mz_attribution {
   derived_table: {
     sql: -- SELECT date,ROUND(SUM(banner_revenue)+SUM(interstitial_revenue)+SUM(rewarded_revenue),2) as sum_revenue
       -- FROM(
@@ -31,11 +31,11 @@ view: rc_attribution {
         COALESCE(SUM(( (select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210820' AND '20210914')AND event_name='ad_revenue_interstitial')  ) ), 0) AS interstitial_revenue,
         COALESCE(SUM(( (select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210820' AND '20210914')AND event_name='ad_revenue_rewarded')  ) ), 0) AS rewarded_revenue,
         COALESCE(SUM(( (select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210820' AND '20210914'))  ) ), 0) AS events_sum_revenue,
-        FROM `lk-datawarehouse-2.rc_firebase.rc_events` events
+        FROM `lk-datawarehouse-2.mz_firebase.mz_events` events
         -- UNNEST(user_properties) as userProperty
         WHERE (suffix BETWEEN '20210820' and '20210914')
         -- AND events.platform = "ANDROID"
-        AND event_name in("user_engagement","ad_revenue_banner","ad_revenue_interstitial","ad_revenue_rewarded")
+        --AND event_name in("user_engagement","ad_revenue_banner","ad_revenue_interstitial","ad_revenue_rewarded")
         group by 1,2,3,4,5,6)firebase
 
       left join (
@@ -48,7 +48,7 @@ view: rc_attribution {
       FROM `lk-datawarehouse-2.tenjin_dv.events` events
       WHERE events.created_at >= (TIMESTAMP('2021-08-20 00:00:00'))
       AND events.created_at < (TIMESTAMP('2021-09-14 00:00:00'))
-      AND events.bundle_id  = 'com.gezellig.roadcrash'
+      AND events.bundle_id  = 'com.luckykat.matchz'
       -- AND events.platform  = 'android'
       group by 1,2,3,4) tenjin_base
       LEFT JOIN(

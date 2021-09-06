@@ -869,30 +869,35 @@ explore: rc_events {
     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
     relationship: one_to_one
   }
+}
 
-  # explore: user_attributes {
-  #   join: campaigns {
-  #     type: left_outer
-  #     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
-  #     relationship: many_to_one
-  #   }
+include: "/mz_firebase/mz_attribution.view"
 
-  #   join: ad_networks {
-  #     type: left_outer
-  #     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-  #     relationship: many_to_one
-  #   }
+explore: mz_attribution {
+  label: "mz attribution"
+}
 
-  #   join: apps {
-  #     type: left_outer
-  #     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-  #     relationship: many_to_one
-  #   }
+include: "/dq_firebase/firebase_max.view"
 
-  #   join: campaign_buckets {
-  #     type: left_outer
-  #     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-  #     relationship: many_to_one
-  #   }
-  # }
+explore: firebase_max {
+  label: "dq max"
+
+
+  join: firebase_max__items {
+    view_label: "Firebase Max: Items"
+    sql: LEFT JOIN UNNEST(${firebase_max.items}) as firebase_max__items ;;
+    relationship: one_to_many
+  }
+
+  join: firebase_max__event_params {
+    view_label: "Firebase Max: Event Params"
+    sql: LEFT JOIN UNNEST(${firebase_max.event_params}) as firebase_max__event_params ;;
+    relationship: one_to_many
+  }
+
+  join: firebase_max__user_properties {
+    view_label: "Firebase Max: User Properties"
+    sql: LEFT JOIN UNNEST(${firebase_max.user_properties}) as firebase_max__user_properties ;;
+    relationship: one_to_many
+  }
 }
