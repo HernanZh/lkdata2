@@ -1,4 +1,4 @@
-view: rc_attribution {
+view: dq_attribution {
   derived_table: {
     sql: SELECT  suffix as date,
               user_first_touch_timestamp,
@@ -30,10 +30,10 @@ view: rc_attribution {
         --DATE_DIFF(TIMESTAMP(PARSE_DATE('%Y%m%d',suffix)),TIMESTAMP_MICROS(events.user_first_touch_timestamp) ,DAY) as cohort_day,
         SUM((SELECT value.int_value FROM UNNEST(event_params) WHERE key = "engagement_time_msec" AND value.int_value>0)) as engagement_time,
         COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')AND event_name='ad_revenue_banner' LIMIT 1)  ) ), 0) AS banner_revenue,
-        COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')AND event_name='ad_revenue_interstitial' LIMIT 1)  )), 0) AS interstitial_revenue,
-        COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')AND event_name='ad_revenue_rewarded' LIMIT 1)  )), 0) AS rewarded_revenue,
+        COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')AND event_name='ad_revenue_interstitial' LIMIT 1)  ) ), 0) AS interstitial_revenue,
+        COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')AND event_name='ad_revenue_rewarded' LIMIT 1)  ) ), 0) AS rewarded_revenue,
         COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND (suffix between '20210831' AND '20210914')LIMIT 1)  ) ), 0) AS events_sum_revenue,
-        FROM `lk-datawarehouse-2.rc_firebase.rc_events` events
+        FROM `lk-datawarehouse-2.dragqueen_firebase.events` events
         -- UNNEST(user_properties) as userProperty
         WHERE (suffix BETWEEN '20210831' and '20210914')
         group by 1,2,3,4,5,6,7,8)firebase
@@ -48,7 +48,7 @@ view: rc_attribution {
       FROM `lk-datawarehouse-2.tenjin_dv.events` events
       WHERE events.created_at >= (TIMESTAMP('2021-08-31 00:00:00'))
       AND events.created_at < (TIMESTAMP('2021-09-14 00:00:00'))
-      AND events.bundle_id  = 'com.gezellig.roadcrash'
+      AND events.bundle_id  = 'com.luckykat.dragqueen'
       group by 1,2,3,4) tenjin_base
       LEFT JOIN(
       SELECT
@@ -90,19 +90,19 @@ view: rc_attribution {
     sql: TIMESTAMP(PARSE_DATE('%Y%m%d',(${TABLE}.date))) ;;
   }
 
-  # dimension_group: created {
-  #   type: time
-  #   timeframes: [
-  #     raw,
-  #     time,
-  #     date,
-  #     week,
-  #     month,
-  #     quarter,
-  #     year
-  #   ]
-  #   sql: ${TABLE}.tj_date ;;
-  # }
+    # dimension_group: created {
+    #   type: time
+    #   timeframes: [
+    #     raw,
+    #     time,
+    #     date,
+    #     week,
+    #     month,
+    #     quarter,
+    #     year
+    #   ]
+    #   sql: ${TABLE}.tj_date ;;
+    # }
 
   dimension: event_name {
     type: string

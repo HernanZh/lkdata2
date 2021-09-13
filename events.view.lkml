@@ -18,6 +18,7 @@ view: events {
   dimension: advertising_id {
     type: string
     sql: ${TABLE}.advertising_id ;;
+    primary_key: yes
   }
 
   parameter: id_type {
@@ -217,7 +218,6 @@ view: events {
   }
 
   dimension: uuid {
-    primary_key: yes
     type: string
     sql: ${TABLE}.uuid ;;
   }
