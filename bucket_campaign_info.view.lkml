@@ -1,5 +1,5 @@
 view: bucket_campaign_info {
-  sql_table_name: tenjin_dv.bucket_campaign_info
+  sql_table_name: tenjin.bucket_campaign_info
     ;;
   drill_fields: [id]
 

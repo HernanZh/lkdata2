@@ -1,6 +1,6 @@
 view: reporting_cohort_metrics {
   #sql_table_name: tenjin_BigQuery.reporting_cohort_metrics ;;
-  sql_table_name: tenjin_dv.reporting_cohort_metrics ;;
+  sql_table_name: tenjin.reporting_cohort_metrics ;;
 
   dimension: ad_network_id {
     type: number

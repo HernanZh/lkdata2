@@ -1,5 +1,5 @@
 view: countries {
-  sql_table_name: tenjin_dv.countries;;
+  sql_table_name: tenjin.countries;;
   #sql_table_name: tenjin_BigQuery.countries ;;
 
   dimension: code {

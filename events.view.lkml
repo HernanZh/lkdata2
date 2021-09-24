@@ -1,5 +1,5 @@
 view: events {
-  sql_table_name: tenjin_dv.events ;;
+  sql_table_name: tenjin.events ;;
 
   dimension_group: acquired {
     type: time

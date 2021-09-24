@@ -1,5 +1,5 @@
 view: ad_networks {
-  sql_table_name: tenjin_dv.ad_networks ;;
+  sql_table_name: tenjin.ad_networks ;;
 
   dimension: id {
     primary_key: yes

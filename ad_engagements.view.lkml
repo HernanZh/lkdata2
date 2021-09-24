@@ -1,5 +1,5 @@
 view: ad_engagements {
-  sql_table_name: tenjin_dv.ad_engagements;;
+  sql_table_name: tenjin.ad_engagements;;
   #sql_table_name: tenjin_BigQuery.ad_engagements ;;
 
   dimension: advertising_id {

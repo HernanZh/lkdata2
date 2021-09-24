@@ -1,6 +1,6 @@
 view: campaigns_targeting_tags {
   #sql_table_name: tenjin_BigQuery.campaigns_targeting_tags ;;
-  sql_table_name: tenjin_dv.campaigns_targeting_tags;;
+  sql_table_name: tenjin.campaigns_targeting_tags;;
 
   dimension: campaign_id {
     type: string

@@ -1,6 +1,6 @@
 view: daily_country_spend {
   #sql_table_name: tenjin_BigQuery.daily_country_spend ;;
-  sql_table_name: tenjin_dv.daily_country_spend ;;
+  sql_table_name: tenjin.daily_country_spend ;;
   dimension: id {
     primary_key: yes
     type: number

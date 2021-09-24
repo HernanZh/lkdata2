@@ -1,6 +1,6 @@
 view: daily_spend {
   #sql_table_name: tenjin_BigQuery.daily_spend ;;
-  sql_table_name: tenjin_dv.daily_spend ;;
+  sql_table_name: tenjin.daily_spend ;;
   dimension: id {
     primary_key: yes
     type: number

@@ -1,5 +1,5 @@
 view: campaign_buckets {
-  sql_table_name: tenjin_dv.campaign_buckets;;
+  sql_table_name: tenjin.campaign_buckets;;
   #sql_table_name: tenjin_BigQuery.campaign_buckets ;;
 
   dimension: id {
