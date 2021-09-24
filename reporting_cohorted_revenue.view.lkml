@@ -19,7 +19,7 @@ view: reporting_cohorted_revenue {
        SUM(CASE WHEN days_since_install <= 29 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d30,
        SUM(CASE WHEN days_since_install <= 59 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d60,
        SUM(CASE WHEN days_since_install <= 89 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d90,
-       SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS d1_retained_users
+       SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS tracked_installs
 FROM reporting_cohort_metrics
   LEFT JOIN apps ON apps.id = reporting_cohort_metrics.app_id
   -- LEFT JOIN bucket_campaign_info ON bucket_campaign_info.id = reporting_cohort_metrics.campaign_id
@@ -89,11 +89,6 @@ order BY DATE
   dimension: platform {
     type: string
     sql: ${TABLE}.platform ;;
-  }
-
-  dimension: d1_retained_users {
-    type: number
-    sql: ${TABLE}.d1_retained_users ;;
   }
 
   measure: revenue_d1 {
@@ -180,9 +175,9 @@ order BY DATE
     value_format: "$#,##0.00"
   }
 
-  measure: first_day_users {
+  measure: tracked_installs {
     type: sum
-    sql: ${TABLE}.d1_retained_users ;;
+    sql: ${TABLE}.tracked_installs ;;
   }
 
   set: detail {
@@ -204,7 +199,7 @@ order BY DATE
       revenue_d30,
       revenue_d60,
       revenue_d90,
-      d1_retained_users,
+      tracked_installs,
     ]
   }
 }
