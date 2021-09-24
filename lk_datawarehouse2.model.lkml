@@ -626,6 +626,13 @@ explore: reporting_metrics {
     relationship: many_to_one
   }
 
+#   join: campaigns {
+#     type: left_outer
+# #     sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+#     sql_on: ${bucket_campaign_info.id} = ${campaigns.campaign_bucket_id} OR ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
+#     relationship: many_to_one
+#   }
+
   join: campaigns {
     type: left_outer
     sql_on: ${reporting_metrics.campaign_id} = ${campaigns.id} ;;
