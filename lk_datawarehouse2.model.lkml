@@ -238,18 +238,18 @@ explore: reporting_cohorted_revenue {
     relationship: many_to_one
   }
 
-  join: reporting_metrics {
-    type: left_outer
-    sql_on: ${reporting_cohorted_revenue.ad_network_id} = ${reporting_metrics.ad_network_id} AND
-          ${reporting_cohorted_revenue.app_id} = ${reporting_metrics.app_id} AND
-          ${reporting_cohorted_revenue.campaign_id} = ${reporting_metrics.campaign_id} AND
-          ${reporting_cohorted_revenue.site_id} = ${reporting_metrics.site_id} AND
-          ${reporting_cohorted_revenue.country} = ${reporting_metrics.country} AND
-          ${reporting_cohorted_revenue.install_date} = ${reporting_metrics.date_date} AND
-          ${reporting_cohorted_revenue.platform} = ${reporting_metrics.platform}
-          ;;
-    relationship: many_to_one
-  }
+  # join: reporting_metrics {
+  #   type: left_outer
+  #   sql_on: ${reporting_cohorted_revenue.ad_network_id} = ${reporting_metrics.ad_network_id} AND
+  #         ${reporting_cohorted_revenue.app_id} = ${reporting_metrics.app_id} AND
+  #         ${reporting_cohorted_revenue.campaign_id} = ${reporting_metrics.campaign_id} AND
+  #         ${reporting_cohorted_revenue.site_id} = ${reporting_metrics.site_id} AND
+  #         ${reporting_cohorted_revenue.country} = ${reporting_metrics.country} AND
+  #         ${reporting_cohorted_revenue.install_date} = ${reporting_metrics.date_date} AND
+  #         ${reporting_cohorted_revenue.platform} = ${reporting_metrics.platform}
+  #         ;;
+  #   relationship: many_to_one
+  # }
 
   # join: SKAdNetwork_Test {
   #   type: left_outer
@@ -556,18 +556,18 @@ explore: reporting_cohort_metrics {
     relationship: many_to_one
   }
 
-  join: reporting_metrics {
-    type: left_outer
-    sql_on: ${reporting_cohort_metrics.ad_network_id} = ${reporting_metrics.ad_network_id} AND
-          ${reporting_cohort_metrics.app_id} = ${reporting_metrics.app_id} AND
-          ${reporting_cohort_metrics.campaign_id} = ${reporting_metrics.campaign_id} AND
-          ${reporting_cohort_metrics.site_id} = ${reporting_metrics.site_id} AND
-          ${reporting_cohort_metrics.country} = ${reporting_metrics.country} AND
-          ${reporting_cohort_metrics.install_date} = ${reporting_metrics.date_date} AND
-          ${reporting_cohort_metrics.platform} = ${reporting_metrics.platform}
-          ;;
-    relationship: many_to_one
-  }
+  # join: reporting_metrics {
+  #   type: left_outer
+  #   sql_on: ${reporting_cohort_metrics.ad_network_id} = ${reporting_metrics.ad_network_id} AND
+  #         ${reporting_cohort_metrics.app_id} = ${reporting_metrics.app_id} AND
+  #         ${reporting_cohort_metrics.campaign_id} = ${reporting_metrics.campaign_id} AND
+  #         ${reporting_cohort_metrics.site_id} = ${reporting_metrics.site_id} AND
+  #         ${reporting_cohort_metrics.country} = ${reporting_metrics.country} AND
+  #         ${reporting_cohort_metrics.install_date} = ${reporting_metrics.date_date} AND
+  #         ${reporting_cohort_metrics.platform} = ${reporting_metrics.platform}
+  #         ;;
+  #   relationship: many_to_one
+  # }
 
   # join: sk_ad_network_metrics {
   #   type: inner
