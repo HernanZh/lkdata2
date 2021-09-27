@@ -1,5 +1,5 @@
  view: sk_ad_network_metrics{
-  sql_table_name: tenjin_dv.sk_ad_network_metrics;;
+  sql_table_name: tenjin.sk_ad_network_metrics;;
 
   dimension: ad_network_id {
     type: number

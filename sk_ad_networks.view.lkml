@@ -1,5 +1,5 @@
 view: sk_ad_networks {
-  sql_table_name: `lk-datawarehouse-2.tenjin_dv.sk_ad_networks`
+  sql_table_name: `lk-datawarehouse-2.tenjin.sk_ad_networks`
     ;;
   drill_fields: [id]
 

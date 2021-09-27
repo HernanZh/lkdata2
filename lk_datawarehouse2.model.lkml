@@ -238,6 +238,18 @@ explore: reporting_cohorted_revenue {
     relationship: many_to_one
   }
 
+  join: reporting_metrics {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${reporting_metrics.date_date} = ${reporting_cohorted_revenue.install_date}
+    AND ${reporting_metrics.app_id} = ${reporting_cohorted_revenue.app_id}
+    AND ${reporting_metrics.campaign_id} = ${reporting_cohorted_revenue.campaign_id}
+    AND ${reporting_metrics.site_id} = ${reporting_cohorted_revenue.site_id}
+    AND ${reporting_metrics.country} = ${reporting_cohorted_revenue.country}
+    AND ${reporting_metrics.platform} = ${reporting_cohorted_revenue.platform};;
+    fields: [reporting_metrics.rep_spend]
+  }
+
   # join: reporting_metrics {
   #   type: left_outer
   #   sql_on: ${reporting_cohorted_revenue.ad_network_id} = ${reporting_metrics.ad_network_id} AND
@@ -840,18 +852,18 @@ explore: user_attributes {
 #     relationship: one_to_one
 #   }
 # }
-# explore: sk_ad_network_metrics {
-#   join: apps {
-#     type: inner
-#     sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
-#     relationship: one_to_one
-#   }
-#   join: ad_networks{
-#     type: inner
-#     sql_on: ${ad_networks.id}=${sk_ad_network_metrics.ad_network_id} ;;
-#     relationship: one_to_one
-#   }
-# }
+explore: sk_ad_network_metrics {
+  join: apps {
+    type: inner
+    sql_on: ${apps.id}=${sk_ad_network_metrics.app_id} ;;
+    relationship: one_to_one
+  }
+  join: ad_networks{
+    type: inner
+    sql_on: ${ad_networks.id}=${sk_ad_network_metrics.ad_network_id} ;;
+    relationship: one_to_one
+  }
+}
 # explore: sk_ad_networks {}
 # explore: uar_cohort_test {}
 
