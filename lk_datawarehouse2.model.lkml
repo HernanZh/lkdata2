@@ -840,18 +840,18 @@ explore: user_attributes {
 
 # explore: user_level_ga_uar_new {}
 # explore: user_level_ga_uar{}
-# explore: sk_ad_network_metrics_new {
-#   join: apps {
-#     type: inner
-#     sql_on: ${apps.id}=${sk_ad_network_metrics_new.app_id} ;;
-#     relationship: one_to_one
-#   }
-#   join: ad_networks{
-#     type: inner
-#     sql_on: ${ad_networks.id}=${sk_ad_network_metrics_new.ad_network_id} ;;
-#     relationship: one_to_one
-#   }
-# }
+explore: sk_ad_network_metrics_new {
+  join: apps {
+    type: inner
+    sql_on: ${apps.id}=${sk_ad_network_metrics_new.app_id} ;;
+    relationship: one_to_one
+  }
+  join: ad_networks{
+    type: inner
+    sql_on: ${ad_networks.id}=${sk_ad_network_metrics_new.ad_network_id} ;;
+    relationship: one_to_one
+  }
+}
 explore: sk_ad_network_metrics {
   join: apps {
     type: inner
