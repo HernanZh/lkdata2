@@ -247,7 +247,7 @@ explore: reporting_cohorted_revenue {
     AND ${reporting_metrics.site_id} = ${reporting_cohorted_revenue.site_id}
     AND ${reporting_metrics.country} = ${reporting_cohorted_revenue.country}
     AND ${reporting_metrics.platform} = ${reporting_cohorted_revenue.platform};;
-    fields: [reporting_metrics.rep_spend]
+    fields: [reporting_metrics.rep_spend, reporting_metrics.org_installs]
   }
 
   # join: reporting_metrics {
