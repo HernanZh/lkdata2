@@ -241,7 +241,7 @@ explore: reporting_cohorted_revenue {
   join: reporting_metrics {
     type: left_outer
     relationship: many_to_one
-    sql_on: ${reporting_metrics.date_date} = ${reporting_cohorted_revenue.install_date}
+    sql_on: ${reporting_metrics.date_date} = ${reporting_cohorted_revenue.date}
     AND ${reporting_metrics.app_id} = ${reporting_cohorted_revenue.app_id}
     AND ${reporting_metrics.campaign_id} = ${reporting_cohorted_revenue.campaign_id}
     AND ${reporting_metrics.site_id} = ${reporting_cohorted_revenue.site_id}

@@ -175,7 +175,7 @@ order BY DATE
     value_format: "$#,##0.00"
   }
 
-  measure: tracked_installs {
+  measure: track_installs{
     type: sum
     sql: ${TABLE}.tracked_installs ;;
   }
@@ -199,7 +199,7 @@ order BY DATE
       revenue_d30,
       revenue_d60,
       revenue_d90,
-      tracked_installs,
+      track_installs,
     ]
   }
 }

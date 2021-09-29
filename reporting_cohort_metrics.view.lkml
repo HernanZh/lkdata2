@@ -85,7 +85,7 @@ view: reporting_cohort_metrics {
     ]
     convert_tz: no
     datatype: date
-    sql: ${TABLE}.event_date ;;
+    sql: ${TABLE}.date ;;
   }
 
   dimension: iap_revenue {
