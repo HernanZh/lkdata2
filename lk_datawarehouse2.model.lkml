@@ -247,7 +247,7 @@ explore: reporting_cohorted_revenue {
     AND ${reporting_metrics.site_id} = ${reporting_cohorted_revenue.site_id}
     AND ${reporting_metrics.country} = ${reporting_cohorted_revenue.country}
     AND ${reporting_metrics.platform} = ${reporting_cohorted_revenue.platform};;
-    fields: [reporting_metrics.rep_spend, reporting_metrics.org_installs]
+    fields: [reporting_metrics.rep_spend, reporting_metrics.org_installs,reporting_metrics.track_installs]
   }
 
   # join: reporting_metrics {
@@ -957,6 +957,9 @@ explore: rc_events {
     relationship: one_to_one
   }
 }
+
+include: "armed_firebase/armed_max_attribution.view"
+explore: armed_max_attribution {}
 
 include: "/mz_firebase/mz_attribution.view"
 
