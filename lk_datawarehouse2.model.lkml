@@ -13,104 +13,104 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 # explore: d_conversionValue {}
 
-  explore: nit_events {
-    label: "nit events"
+#   explore: nit_events {
+#     label: "nit events"
 
-## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
-    always_filter: {
-      filters: {
-        field: event_date
-        value: "last 7 days"
-      }
-    }
+# ## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
+#     always_filter: {
+#       filters: {
+#         field: event_date
+#         value: "last 7 days"
+#       }
+#     }
 
-    join: nit_events__event_params {
-      view_label: "Event Properties"
-      sql: LEFT JOIN UNNEST(nit_events.event_params) as nit_events__event_params ;;
-      relationship: one_to_many
-    }
+#     join: nit_events__event_params {
+#       view_label: "Event Properties"
+#       sql: LEFT JOIN UNNEST(nit_events.event_params) as nit_events__event_params ;;
+#       relationship: one_to_many
+#     }
 
-    join: nit_events__event_params__value{
-      view_label: "Event Properties"
-      sql: LEFT JOIN UNNEST([nit_events__event_params.value]) as nit_events__event_params__value ;;
-      relationship: one_to_many
-    }
+#     join: nit_events__event_params__value{
+#       view_label: "Event Properties"
+#       sql: LEFT JOIN UNNEST([nit_events__event_params.value]) as nit_events__event_params__value ;;
+#       relationship: one_to_many
+#     }
 
-    join: nit_events__user_properties {
-      sql: LEFT JOIN UNNEST(nit_events.user_properties) as nit_events__user_properties ;;
-      view_label: "User Properties"
-      relationship: one_to_many
-    }
+#     join: nit_events__user_properties {
+#       sql: LEFT JOIN UNNEST(nit_events.user_properties) as nit_events__user_properties ;;
+#       view_label: "User Properties"
+#       relationship: one_to_many
+#     }
 
-    join: nit_events__user_properties__value {
-      view_label: "User Properties"
-      sql: LEFT JOIN UNNEST([nit_events__user_properties.value]) as nit_events__user_properties__value ;;
-      relationship: one_to_many
-    }
+#     join: nit_events__user_properties__value {
+#       view_label: "User Properties"
+#       sql: LEFT JOIN UNNEST([nit_events__user_properties.value]) as nit_events__user_properties__value ;;
+#       relationship: one_to_many
+#     }
 
-    join: nit_sessions {
-      sql_on: ${nit_events.user_pseudo_id} = ${nit_sessions.user_pseudo_id}
-          AND ${nit_events._event_raw} >= ${nit_sessions.session_start_raw}
-          AND ${nit_events._event_raw} <= ${nit_sessions.session_end_raw} ;;
-      relationship: many_to_one
-    }
+#     join: nit_sessions {
+#       sql_on: ${nit_events.user_pseudo_id} = ${nit_sessions.user_pseudo_id}
+#           AND ${nit_events._event_raw} >= ${nit_sessions.session_start_raw}
+#           AND ${nit_events._event_raw} <= ${nit_sessions.session_end_raw} ;;
+#       relationship: many_to_one
+#     }
 
-    join: events {
-      type: left_outer
-      sql_on: lower(replace(${nit_events.advertising_id},'-',""))=${events.advertising_id} ;;
-      relationship: one_to_one
-    }
+#     join: events {
+#       type: left_outer
+#       sql_on: lower(replace(${nit_events.advertising_id},'-',""))=${events.advertising_id} ;;
+#       relationship: one_to_one
+#     }
 
-    join: campaigns {
-      type: left_outer
-      sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-      relationship: many_to_one
-      }
+#     join: campaigns {
+#       type: left_outer
+#       sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+#       relationship: many_to_one
+#       }
 
-      join: ad_networks {
-        type: left_outer
-        sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-        relationship: many_to_one
-      }
+#       join: ad_networks {
+#         type: left_outer
+#         sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#         relationship: many_to_one
+#       }
 
-      join: apps {
-        type: left_outer
-        sql_on: ${campaigns.app_id} = ${apps.id} ;;
-        relationship: many_to_one
-      }
+#       join: apps {
+#         type: left_outer
+#         sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#         relationship: many_to_one
+#       }
 
-      join: campaign_buckets {
-        type: left_outer
-        sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-        relationship: many_to_one
-      }
+#       join: campaign_buckets {
+#         type: left_outer
+#         sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#         relationship: many_to_one
+#       }
 
-    # explore: user_attributes {
-    #   join: campaigns {
-    #     type: left_outer
-    #     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
-    #     relationship: many_to_one
-    #   }
+#     # explore: user_attributes {
+#     #   join: campaigns {
+#     #     type: left_outer
+#     #     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
+#     #     relationship: many_to_one
+#     #   }
 
-    #   join: ad_networks {
-    #     type: left_outer
-    #     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    #     relationship: many_to_one
-    #   }
+#     #   join: ad_networks {
+#     #     type: left_outer
+#     #     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     #     relationship: many_to_one
+#     #   }
 
-    #   join: apps {
-    #     type: left_outer
-    #     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    #     relationship: many_to_one
-    #   }
+#     #   join: apps {
+#     #     type: left_outer
+#     #     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     #     relationship: many_to_one
+#     #   }
 
-    #   join: campaign_buckets {
-    #     type: left_outer
-    #     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    #     relationship: many_to_one
-    #   }
-    # }
-    }
+#     #   join: campaign_buckets {
+#     #     type: left_outer
+#     #     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     #     relationship: many_to_one
+#     #   }
+#     # }
+#     }
 
 
 # explore: user_ad_revenue_old {
@@ -170,41 +170,6 @@ explore: ad_engagements {
 explore: ad_networks {}
 
 explore: apps {}
-
-# explore: GA_business {
-#   # join: GA_session_end {
-#   #   type: left_outer
-#   #   sql_on: ${GA_business.ios_idfa}=${GA_session_end.ios_idfa} AND
-#   #           ${GA_business.ios_idfv}=${GA_session_end.ios_idfv} AND
-#   #           ${GA_business.user_id}=${GA_session_end.user_id} AND
-#   #           ${GA_business.ios_bundle_id}=${GA_session_end.ios_bundle_id} AND
-#   #           ${GA_business.android_bundle_id}=${GA_session_end.android_bundle_id} AND
-#   #           ${GA_business.client_ts}=${GA_session_end.client_ts} AND
-#   #           ${GA_business.platform}=${GA_session_end.platform} AND
-#   #           ${GA_business.install_ts_date}=${GA_session_end.install_ts_date}
-#   #           ;;
-#   #   fields: [game_id,length, playtime,avg_session_length]
-#   #   relationship: many_to_one
-#   # }
-# }
-# explore: GA_design{}
-# explore: GA_error {}
-# explore: GA_progression {}
-# explore: GA_resource {}
-# explore: GA_sdk_error {}
-# explore: GA_session_end {}
-# explore: GA_session_end_new {}
-# explore: ga_session_end_raw {}
-# explore: GA_user{}
-# explore: ga_minimalistic {}
-# explore: ga_ilrd {}
-# explore: ga_ilrd_cohorts {}
-
-#explore: auditlog_ga {}
-
-#explore:  attribution_table{}
-
-# explore: ga_uar_testing {}
 
 explore: reporting_cohorted_revenue {
   join: ad_networks {
@@ -350,38 +315,6 @@ explore: campaigns_targeting_tags {
   }
 }
 
-# explore: cohort_behavior {
-#   join: campaigns {
-#     type: left_outer
-#     sql_on: ${cohort_behavior.campaign_id} = ${campaigns.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: campaign_buckets {
-#     type: left_outer
-#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: apps {
-#     type: left_outer
-#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: ad_networks {
-#     type: left_outer
-#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-#     relationship: many_to_one
-#   }
-
-  # join: ltv_predict{
-  #   type: left_outer
-  #   sql_on: ${cohort_behavior.xday} = ${ltv_predict.xday} ;;
-  #   relationship: many_to_one
-  # }
-# }
-
 explore: countries {}
 
 explore: daily_ad_revenue {
@@ -403,38 +336,6 @@ explore: daily_ad_revenue {
     relationship: many_to_one
   }
 }
-
-# explore: daily_behavior {
-#   join: campaigns {
-#     type: left_outer
-#     sql_on: ${daily_behavior.campaign_id} = ${campaigns.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: campaign_buckets {
-#     type: left_outer
-#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: apps {
-#     type: left_outer
-#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: ad_networks {
-#     type: left_outer
-#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: events {
-#     type: left_outer
-#     sql_on: ${campaigns.id} = ${events.source_campaign_id} ;;
-#     relationship: many_to_one
-#   }
-# }
 
 explore: daily_country_spend {
   join: campaigns {
@@ -509,9 +410,6 @@ explore: events {
 
 }
 
-# explore: game_analytics {
-#   label: "Game Analytics"
-# }
 
 explore: publisher_apps {
   join: apps {
@@ -526,15 +424,6 @@ explore: publisher_apps {
     relationship: many_to_one
   }
 }
-
-# explore: impressions {
-#   # join: games {
-#   #   type: left_outer
-#   #   sql_on: ${impressions.game_id} = ${games.id} ;;
-#   #   relationship: many_to_one
-#   # }
-# }
-
 
 explore: reporting_cohort_metrics {
   join: ad_networks {
@@ -779,67 +668,6 @@ explore: user_attributes {
   }
 }
 
-# explore: user_ad_revenue {
-#   join: events {
-#     type: left_outer
-#     sql_on: ${events.advertising_id} = ${user_ad_revenue.advertising_id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: campaigns {
-#     type: left_outer
-#     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: apps {
-#     type: left_outer
-#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: ad_networks {
-#     type: left_outer
-#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-#     relationship: many_to_one
-#   }
-
-# }
-
-# explore: uar_cohorts {
-#   join: user_attributes {
-#     type: left_outer
-#     sql_on: ${user_attributes.id} = ${uar_cohorts.advertising_id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: campaigns {
-#     type: left_outer
-#     sql_on: ${user_attributes.campaign_id} = ${campaigns.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: apps {
-#     type: left_outer
-#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: ad_networks {
-#     type: left_outer
-#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-#     relationship: many_to_one
-#   }
-
-#   join: reporting_cohort_metrics {
-#     type: left_outer
-#     sql_on: ${reporting_cohort_metrics.app_id}=${apps.id} ;;
-#     relationship: many_to_one
-#   }
-# }
-
-# explore: user_level_ga_uar_new {}
-# explore: user_level_ga_uar{}
 explore: sk_ad_network_metrics_new {
   join: apps {
     type: inner
@@ -864,16 +692,6 @@ explore: sk_ad_network_metrics {
     relationship: one_to_one
   }
 }
-# explore: sk_ad_networks {}
-# explore: uar_cohort_test {}
-
-# explore: future_revenue_prediction_d3 {}
-
-# explore: future_revenue_prediction_d7 {}
-
-# explore: future_revenue_prediction_d14{}
-
-# explore: future_revenue_prediction_d30 {}
 
 include: "/rc_firebase/rc_events.view"
 include: "/rc_firebase/rc_sessions.view"
@@ -881,6 +699,7 @@ include: "/rc_firebase/rc_attribution.view"
 
 explore: rc_attribution {
   label: "rc attribution"
+  group_label: "Attribution"
 }
 
 explore: rc_events {
@@ -958,23 +777,29 @@ explore: rc_events {
   }
 }
 
+
 include: "armed_firebase/armed_max_attribution.view"
-explore: armed_max_attribution {}
+explore: armed_max_attribution {
+  group_label: "Attribution"
+}
 
 include: "rh_firebase/rh_attribution.view"
-explore: rh_attribution {}
+explore: rh_attribution {
+  group_label: "Attribution"
+}
 
 include: "/mz_firebase/mz_attribution.view"
 
 explore: mz_attribution {
   label: "mz attribution"
+  group_label: "Attribution"
 }
 
 include: "/dq_firebase/firebase_max.view"
 
 explore: firebase_max {
   label: "dq max"
-
+  group_label: "Attribution"
 
   join: firebase_max__items {
     view_label: "Firebase Max: Items"
