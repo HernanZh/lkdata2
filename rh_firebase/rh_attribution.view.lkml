@@ -1,5 +1,5 @@
 view: rh_attribution {
-  sql_table_name: `events_*`  ;;
+  sql_table_name: lk-datawarehouse-2.rh_firebase.rh_attribution ;;
 
 ### app info
   dimension: app_info {
@@ -189,7 +189,7 @@ view: rh_attribution {
   dimension_group: event {
     type: time
     timeframes: [date, week, day_of_week, month, year]
-    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'\d\d\d\d\d\d\d\d'))) ;;
+    sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(suffix,r'\d\d\d\d\d\d\d\d'))) ;;
   }
 
   dimension_group: _event {
