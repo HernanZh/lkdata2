@@ -961,8 +961,8 @@ explore: rc_events {
 include: "armed_firebase/armed_max_attribution.view"
 explore: armed_max_attribution {}
 
-include: "rh_firebase/rh_max_attribution.view"
-explore: rh_max_attribution {}
+include: "rh_firebase/rh_attribution.view"
+explore: rh_attribution {}
 
 include: "/mz_firebase/mz_attribution.view"
 
