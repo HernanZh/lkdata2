@@ -788,6 +788,11 @@ explore: rh_attribution {
   group_label: "Attribution"
 }
 
+include: "rh_firebase/rh_max_attribution.view"
+explore: rh_max_attribution {
+  group_label: "Attribution"
+}
+
 include: "/mz_firebase/mz_attribution.view"
 
 explore: mz_attribution {

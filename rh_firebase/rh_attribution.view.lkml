@@ -7,6 +7,22 @@ view: rh_attribution {
     sql: ${TABLE}.app_info ;;
   }
 
+  dimension: creative_name {
+    type: string
+    sql: ${TABLE}.creative_name ;;
+  }
+
+  dimension: campaign_name  {
+    type: string
+    sql: ${TABLE}.campaign_name ;;
+  }
+
+  dimension: network_name {
+    type: string
+    sql: ${TABLE}.network_name ;;
+  }
+
+
   dimension: id {
     group_label: "App Info"
     description: "The package name or bundle ID of the app."
@@ -826,27 +842,6 @@ view: events__device__web_info {
   #   type: string
   #   sql: ${TABLE}.site_id ;;
   # }
-
-  dimension: creative_name {
-    type: string
-    sql: ${TABLE}.creative_name ;;
-  }
-
-  # dimension: source_campaign_id {
-  #   type: string
-  #   sql: ${TABLE}.source_campaign_id ;;
-  # }
-
-  dimension: campaign_name  {
-    type: string
-    sql: ${TABLE}.campaign_name ;;
-  }
-
-  dimension: network_name {
-    type: string
-    sql: ${TABLE}.network_name ;;
-  }
-
 
 
 
