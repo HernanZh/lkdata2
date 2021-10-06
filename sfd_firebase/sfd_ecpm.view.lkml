@@ -1,5 +1,5 @@
-view: rh_ecpm {
-  sql_table_name: `lk-datawarehouse-2.rh_firebase.rh_eCPM`
+view: sfd_ecpm {
+  sql_table_name: `lk-datawarehouse-2.sfd_firebase.sfd_eCPM`
     ;;
 
   dimension: ad_network {
