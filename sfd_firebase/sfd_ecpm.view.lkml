@@ -36,6 +36,7 @@ view: sfd_ecpm {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "$#.##"
   }
 
   dimension_group: event {

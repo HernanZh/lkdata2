@@ -372,7 +372,7 @@ view: daily_ad_revenue {
 
   measure: Ad_Revenue {
     type: sum
-    sql: cast(${TABLE}.revenue as float) / 100 ;;
+    sql: ${TABLE}.revenue / 100 ;;
     value_format: "$#,##0.00"
   }
 
