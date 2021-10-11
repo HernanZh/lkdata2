@@ -798,6 +798,11 @@ explore: sfd_ecpm {
   group_label: "Attribution"
 }
 
+include: "mf_firebase/mf_ecpm.view"
+explore: mf_ecpm {
+  group_label: "Attribution"
+}
+
 include: "rh_firebase/rh_max_attribution.view"
 explore: rh_max_attribution {
   group_label: "Attribution"
