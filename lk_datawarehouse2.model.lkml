@@ -803,6 +803,11 @@ explore: mf_ecpm {
   group_label: "Attribution"
 }
 
+include: "rc_firebase/rc_ecpm.view"
+explore: rc_ecpm {
+  group_label: "Attribution"
+}
+
 include: "rh_firebase/rh_max_attribution.view"
 explore: rh_max_attribution {
   group_label: "Attribution"
