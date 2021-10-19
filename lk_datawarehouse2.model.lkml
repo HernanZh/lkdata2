@@ -798,6 +798,11 @@ explore: sfd_ecpm {
   group_label: "Attribution"
 }
 
+include: "sfd_firebase/sfd_power_ltv.view"
+explore: sfd_power_ltv {
+  group_label: "LTV"
+}
+
 include: "mf_firebase/mf_ecpm.view"
 explore: mf_ecpm {
   group_label: "Attribution"
