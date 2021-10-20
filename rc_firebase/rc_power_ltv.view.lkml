@@ -1,5 +1,5 @@
 view: rc_power_ltv {
-  sql_table_name: `lk-datawarehouse-2.rc_firebase.rc_events`
+  sql_table_name: `lk-datawarehouse-2.rc_firebase.rc_power_ltv`
     ;;
 
   dimension_group: install {

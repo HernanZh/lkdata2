@@ -1,5 +1,5 @@
 view: mf_power_ltv {
-  sql_table_name: `lk-datawarehouse-2.mf_firebase.mf_events`
+  sql_table_name: `lk-datawarehouse-2.mf_firebase.mf_power_ltv`
     ;;
 
   dimension_group: install {
