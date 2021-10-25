@@ -150,10 +150,11 @@ view: rc_power_ltv {
   #   sql: ${TABLE}.pred_D6_LTV ;;
   # }
 
-  # measure: pred_d7_ltv {
-  #   type: sum
-  #   sql: ${TABLE}.pred_D7_LTV ;;
-  # }
+  measure: pred_d7_ltv {
+    type: sum
+    group_label: "LTV"
+    sql: ${TABLE}.pred_D7_LTV ;;
+  }
 
   # measure: pred_d8_ltv {
   #   type: sum
