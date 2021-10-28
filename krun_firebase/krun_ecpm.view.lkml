@@ -1,5 +1,5 @@
 view: krun_ecpm {
-  sql_table_name: `lk-datawarehouse-2.krun_firebase.krun_ecpm`
+  sql_table_name: `lk-datawarehouse-2.krun_firebase.krun_eCPM`
     ;;
 
   dimension: ad_network {
