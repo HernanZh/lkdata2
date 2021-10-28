@@ -33,6 +33,31 @@ view: rc_power_ltv {
     sql: ${TABLE}.pred_D1_LTV ;;
   }
 
+  measure: pred_d10_ltv {
+    type: sum
+    group_label: "LTV"
+    sql: ${TABLE}.pred_D10_LTV ;;
+  }
+
+  measure: pred_d11_ltv {
+    type: sum
+    group_label: "LTV"
+    sql: ${TABLE}.pred_D11_LTV ;;
+  }
+
+
+  measure: pred_d12_ltv {
+    type: sum
+    group_label: "LTV"
+    sql: ${TABLE}.pred_D12_LTV ;;
+  }
+  measure: pred_d13_ltv {
+    type: sum
+    group_label: "LTV"
+    sql: ${TABLE}.pred_D13_LTV ;;
+  }
+
+
   measure: pred_d2_ltv {
     type: sum
     group_label: "LTV"

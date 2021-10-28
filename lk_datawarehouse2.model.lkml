@@ -798,6 +798,11 @@ explore: sfd_ecpm {
   group_label: "Attribution"
 }
 
+include: "krun_firebase/krun_ecpm.view"
+explore: krun_ecpm {
+  group_label: "Attribution"
+}
+
 include: "sfd_firebase/sfd_power_ltv.view"
 explore: sfd_power_ltv {
   group_label: "LTV"
@@ -817,6 +822,14 @@ include: "mf_firebase/mf_power_ltv.view"
 explore: mf_power_ltv {
   group_label: "LTV"
 }
+
+include: "krun_firebase/krun_power_ltv.view"
+explore: krun_power_ltv {
+  group_label: "LTV"
+}
+
+
+
 
 include: "mf_firebase/mf_ecpm.view"
 explore: mf_ecpm {
