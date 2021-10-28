@@ -21,7 +21,7 @@ view: reporting_cohorted_revenue {
        SUM(CASE WHEN days_since_install <= 89 THEN (cast(publisher_ad_revenue as float64) + Iap_revenue) / 100.0 ELSE 0 END) AS revenue_d90,
        SUM(CASE WHEN days_since_install <= 0 THEN daily_active_users ELSE 0 END) AS tracked_installs
 FROM tenjin.reporting_cohort_metrics
-  LEFT JOIN tenjin.apps ON apps.id = tenjin.reporting_cohort_metrics.app_id
+  LEFT JOIN tenjin.apps ON apps.id = reporting_cohort_metrics.app_id
   -- LEFT JOIN bucket_campaign_info ON bucket_campaign_info.id = reporting_cohort_metrics.campaign_id
   -- LEFT JOIN ad_networks ON ad_networks.id = bucket_campaign_info.ad_network_id
      LEFT JOIN tenjin.ad_networks ON ad_networks.id = reporting_cohort_metrics.ad_network_id
