@@ -1,5 +1,5 @@
-view: sfd_power_ltv_attributed {
-  sql_table_name: `lk-datawarehouse-2.sfd_firebase.sfd_power_ltv_attributed`
+view: rh_power_ltv_attributed {
+  sql_table_name: `lk-datawarehouse-2.rh_firebase.rh_power_ltv_attributed`
     ;;
 
   dimension_group: install {
