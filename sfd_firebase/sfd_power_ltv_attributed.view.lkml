@@ -27,6 +27,11 @@ view: sfd_power_ltv_attributed {
     sql: ${TABLE}.campaign ;;
   }
 
+  # dimension: campaign {
+  #   type: string
+  #   sql: split(${TABLE}.campaign,"@")[OFFSET(0)] ;;
+  # }
+
   dimension: network_name {
     type: string
     sql: ${TABLE}.network_name ;;

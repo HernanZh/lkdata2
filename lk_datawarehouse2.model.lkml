@@ -778,10 +778,10 @@ explore: rc_events {
 }
 
 
-include: "armed_firebase/armed_max_attribution.view"
-explore: armed_max_attribution {
-  group_label: "Attribution"
-}
+# include: "armed_firebase/armed_max_attribution.view"
+# explore: armed_max_attribution {
+#   group_label: "Attribution"
+# }
 
 include: "rh_firebase/rh_attribution.view"
 explore: rh_attribution {
@@ -874,104 +874,104 @@ explore: mz_attribution {
   group_label: "Attribution"
 }
 
-include: "/dq_firebase/firebase_max.view"
+# include: "/dq_firebase/firebase_max.view"
 
-explore: firebase_max {
-  label: "dq max"
-  group_label: "Attribution"
+# explore: firebase_max {
+#   label: "dq max"
+#   group_label: "Attribution"
 
-  join: firebase_max__items {
-    view_label: "Firebase Max: Items"
-    sql: LEFT JOIN UNNEST(${firebase_max.items}) as firebase_max__items ;;
-    relationship: one_to_many
-  }
+#   join: firebase_max__items {
+#     view_label: "Firebase Max: Items"
+#     sql: LEFT JOIN UNNEST(${firebase_max.items}) as firebase_max__items ;;
+#     relationship: one_to_many
+#   }
 
-  join: firebase_max__event_params {
-    view_label: "Firebase Max: Event Params"
-    sql: LEFT JOIN UNNEST(${firebase_max.event_params}) as firebase_max__event_params ;;
-    relationship: one_to_many
-  }
+#   join: firebase_max__event_params {
+#     view_label: "Firebase Max: Event Params"
+#     sql: LEFT JOIN UNNEST(${firebase_max.event_params}) as firebase_max__event_params ;;
+#     relationship: one_to_many
+#   }
 
-  join: firebase_max__user_properties {
-    view_label: "Firebase Max: User Properties"
-    sql: LEFT JOIN UNNEST(${firebase_max.user_properties}) as firebase_max__user_properties ;;
-    relationship: one_to_many
-  }
-}
+#   join: firebase_max__user_properties {
+#     view_label: "Firebase Max: User Properties"
+#     sql: LEFT JOIN UNNEST(${firebase_max.user_properties}) as firebase_max__user_properties ;;
+#     relationship: one_to_many
+#   }
+# }
 
-include: "/dq_firebase/dq_attribution.view"
-include: "/dq_firebase/dq_events.view"
+# include: "/dq_firebase/dq_attribution.view"
+# include: "/dq_firebase/dq_events.view"
 
 
-explore: dq_attribution {
-  label: "dq attribution"
-}
+# explore: dq_attribution {
+#   label: "dq attribution"
+# }
 
-explore: dq_events {
-  label: "Drag Queen events"
+# explore: dq_events {
+#   label: "Drag Queen events"
 
-## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
-  always_filter: {
-    filters: {
-      field: event_date
-      value: "last 7 days"
-    }
-  }
+# ## TO avoid querying the entire database by default, suggest setting up a filter like below, and perhaps limiting GB scanned with 'Max Billing Gigabytes' in the connection
+#   always_filter: {
+#     filters: {
+#       field: event_date
+#       value: "last 7 days"
+#     }
+#   }
 
-  join: dq_events__event_params {
-    view_label: "Event Properties"
-    sql: LEFT JOIN UNNEST(dq_events.event_params) as dq_events__event_params ;;
-    relationship: one_to_many
-  }
+#   join: dq_events__event_params {
+#     view_label: "Event Properties"
+#     sql: LEFT JOIN UNNEST(dq_events.event_params) as dq_events__event_params ;;
+#     relationship: one_to_many
+#   }
 
-  join: dq_events__event_params__value {
-    view_label: "Event Properties"
-    sql: LEFT JOIN UNNEST([dq_events__event_params.value]) as dq_events__event_params__value ;;
-    relationship: one_to_many
-  }
+#   join: dq_events__event_params__value {
+#     view_label: "Event Properties"
+#     sql: LEFT JOIN UNNEST([dq_events__event_params.value]) as dq_events__event_params__value ;;
+#     relationship: one_to_many
+#   }
 
-  join: dq_events__user_properties {
-    sql: LEFT JOIN UNNEST(dq_events.user_properties) as dq_events__user_properties ;;
-    view_label: "User Properties"
-    relationship: one_to_many
-  }
+#   join: dq_events__user_properties {
+#     sql: LEFT JOIN UNNEST(dq_events.user_properties) as dq_events__user_properties ;;
+#     view_label: "User Properties"
+#     relationship: one_to_many
+#   }
 
-  join: dq_events__user_properties__value {
-    view_label: "User Properties"
-    sql: LEFT JOIN UNNEST([dq_events__user_properties.value]) as dq_events__user_properties__value ;;
-    relationship: one_to_many
-  }
+#   join: dq_events__user_properties__value {
+#     view_label: "User Properties"
+#     sql: LEFT JOIN UNNEST([dq_events__user_properties.value]) as dq_events__user_properties__value ;;
+#     relationship: one_to_many
+#   }
 
-  join: events {
-    type: inner
-    sql_on: lower(replace(${dq_events.advertising_id},'-',""))=${events.advertising_id};;
-    # --AND LOWER(${dq_events.platform}) = ${events.platform}
-    # --AND ${dq_events.event_date} = ${events.created_date};;
-    relationship: one_to_one
-  }
+#   join: events {
+#     type: inner
+#     sql_on: lower(replace(${dq_events.advertising_id},'-',""))=${events.advertising_id};;
+#     # --AND LOWER(${dq_events.platform}) = ${events.platform}
+#     # --AND ${dq_events.event_date} = ${events.created_date};;
+#     relationship: one_to_one
+#   }
 
-  join: campaigns {
-    type: left_outer
-    sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
-    relationship: one_to_one
-  }
+#   join: campaigns {
+#     type: left_outer
+#     sql_on: ${events.source_campaign_id} = ${campaigns.id} ;;
+#     relationship: one_to_one
+#   }
 
-  join: ad_networks {
-    type: left_outer
-    sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
-    relationship: one_to_one
-  }
+#   join: ad_networks {
+#     type: left_outer
+#     sql_on: ${campaigns.ad_network_id} = ${ad_networks.id} ;;
+#     relationship: one_to_one
+#   }
 
-  join: apps {
-    type: left_outer
-    sql_on: ${campaigns.app_id} = ${apps.id} ;;
-    relationship: one_to_one
-  }
+#   join: apps {
+#     type: left_outer
+#     sql_on: ${campaigns.app_id} = ${apps.id} ;;
+#     relationship: one_to_one
+#   }
 
-  join: campaign_buckets {
-    type: left_outer
-    sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
-    relationship: one_to_one
-  }
+#   join: campaign_buckets {
+#     type: left_outer
+#     sql_on: ${campaigns.campaign_bucket_id} = ${campaign_buckets.id} ;;
+#     relationship: one_to_one
+#   }
 
-  }
+#   }
