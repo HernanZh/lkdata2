@@ -813,6 +813,11 @@ explore: sfd_power_ltv_attributed {
   group_label: "LTV"
 }
 
+include: "sfd_firebase/sfd_power_ltv_ab.view"
+explore: sfd_power_ltv_ab {
+  group_label: "LTV"
+}
+
 include: "rh_firebase/rh_power_ltv.view"
 explore: rh_power_ltv {
   group_label: "LTV"
