@@ -106,8 +106,8 @@ view: sfd_power_ltv_ab {
       FROM `lk-datawarehouse-2.sfd_firebase.sfd_events` events,
           UNNEST(user_properties) as userProperty
           --End date + 2 days
-          WHERE DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))) >= DATE_SUB({% parameter end_day %}, INTERVAL 14 DAY)
-          AND DATE(TIMESTAMP_MICROS(user_first_touch_timestamp)) BETWEEN DATE_SUB({% parameter end_day %}-2, INTERVAL 12 DAY) AND DATE_SUB({% parameter end_day %}, INTERVAL 2 DAY)
+          WHERE DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))) >= DATE_SUB(DATE({% parameter end_day %}), INTERVAL 14 DAY)
+          AND DATE(TIMESTAMP_MICROS(user_first_touch_timestamp)) BETWEEN DATE_SUB(DATE({% parameter end_day %})-2, INTERVAL 12 DAY) AND DATE_SUB(DATE({% parameter end_day %}), INTERVAL 2 DAY)
           and geo.country = "United States"
       group by 1, 2, 3, 4, 5, 6, suffix,user_first_touch_timestamp
       order by 2
