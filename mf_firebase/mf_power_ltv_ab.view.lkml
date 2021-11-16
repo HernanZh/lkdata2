@@ -1,4 +1,4 @@
-view: sfd_power_ltv_ab {
+view: mf_power_ltv_ab {
   derived_table: {
     sql: SELECT
           install_date,
@@ -103,7 +103,7 @@ view: sfd_power_ltv_ab {
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =2 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D2_revenue,
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =3 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D3_revenue,
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =4 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D4_revenue,
-      FROM `lk-datawarehouse-2.sfd_firebase.sfd_events` events,
+      FROM `lk-datawarehouse-2.mf_firebase.mf_events` events,
           UNNEST(user_properties) as userProperty
           --End date + 2 days
           WHERE DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))) >= DATE_SUB(DATE({% parameter end_day %}), INTERVAL 14 DAY)

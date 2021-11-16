@@ -827,6 +827,11 @@ explore: rh_power_ltv_attributed {
   group_label: "LTV"
 }
 
+include: "rh_firebase/rh_power_ltv_ab.view"
+explore: rh_power_ltv_ab {
+  group_label: "LTV"
+}
+
 include: "rc_firebase/rc_power_ltv.view"
 explore: rc_power_ltv {
   group_label: "LTV"
@@ -837,6 +842,11 @@ explore: rc_power_ltv_attributed {
   group_label: "LTV"
 }
 
+include: "rc_firebase/rc_power_ltv_ab.view"
+explore: rc_power_ltv_ab {
+  group_label: "LTV"
+}
+
 include: "mf_firebase/mf_power_ltv.view"
 explore: mf_power_ltv {
   group_label: "LTV"
@@ -844,6 +854,11 @@ explore: mf_power_ltv {
 
 include: "mf_firebase/mf_power_ltv_attributed.view"
 explore: mf_power_ltv_attributed {
+  group_label: "LTV"
+}
+
+include: "mf_firebase/mf_power_ltv_ab.view"
+explore: mf_power_ltv_ab {
   group_label: "LTV"
 }
 
