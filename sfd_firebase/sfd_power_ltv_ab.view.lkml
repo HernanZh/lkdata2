@@ -79,25 +79,23 @@ view: sfd_power_ltv_ab {
 
       FROM(
       SELECT
-          (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp))) as install_date,
+          install_date,
           platform,
           experiment,
           AB_group,
-          sum(track_installs) as track_installs,
+          COUNT(DISTINCT user_pseudo_id) as track_installs,
           round(sum(D0_revenue),2) as D0_revenue,
           round(sum(D1_revenue),2) as D1_revenue,
           round(sum(D2_revenue),2) as D2_revenue,
           round(sum(D3_revenue),2) as D3_revenue,
           round(sum(D4_revenue),2) as D4_revenue
       from (
-      SELECT DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))) as date,
-          user_first_touch_timestamp,
+      SELECT
+          (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp))) as install_date,
           user_pseudo_id,
           userProperty.key as experiment,
           userProperty.value.string_value as AB_group,
           platform,
-          DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) as retention_day,
-          (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =0 ) THEN COUNT(DISTINCT user_pseudo_id) ELSE NULL END) as track_installs,
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =0 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D0_revenue,
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =1 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D1_revenue,
           (CASE WHEN (DATE_DIFF(DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))), (DATE(TIMESTAMP_MICROS(user_first_touch_timestamp) )), DAY) =2 )THEN COALESCE(SUM(((select value.double_value from UNNEST(events.event_params) where value.double_value IS NOT NULL AND event_name='ad_revenue'  ) ) ), 0)  ELSE 0.0 END) as D2_revenue,
@@ -109,7 +107,7 @@ view: sfd_power_ltv_ab {
           WHERE DATE(PARSE_DATE('%Y%m%d',replace(suffix,"intraday_",""))) >= DATE_SUB(DATE({% parameter end_day %}), INTERVAL 14 DAY)
           AND DATE(TIMESTAMP_MICROS(user_first_touch_timestamp)) BETWEEN DATE_SUB(DATE({% parameter end_day %})-2, INTERVAL 12 DAY) AND DATE_SUB(DATE({% parameter end_day %}), INTERVAL 2 DAY)
           and geo.country = "United States"
-      group by 1, 2, 3, 4, 5, 6, suffix,user_first_touch_timestamp
+      group by 1, 2, 3, 4, 5, suffix,user_first_touch_timestamp
       order by 2
           ) base
       group by 1,2,3,4
