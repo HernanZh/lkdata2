@@ -140,6 +140,8 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 # }
 
+explore: mf_test {}
+
 
 explore: ad_engagements {
   join: apps {
