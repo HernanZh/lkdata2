@@ -142,6 +142,8 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: mf_test {}
 
+explore: SOL_transactions_head {}
+
 
 explore: ad_engagements {
   join: apps {
