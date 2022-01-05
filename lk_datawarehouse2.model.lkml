@@ -142,7 +142,15 @@ persist_with: lk_datawarehouse2_default_datagroup
 
 explore: mf_test {}
 
-explore: SOL_transactions_head {}
+include: "Panzerdogs/sol_price.view"
+explore: sol_price {
+  group_label: "Panzerdogs"
+}
+
+include: "Panzerdogs/transactions_head.view"
+explore: SOL_transactions_head {
+  group_label: "Panzerdogs"
+}
 
 
 explore: ad_engagements {
