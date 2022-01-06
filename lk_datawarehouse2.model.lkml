@@ -152,6 +152,12 @@ explore: SOL_transactions_head {
   group_label: "Panzerdogs"
 }
 
+include: "Panzerdogs/dog_owners.view"
+explore: dog_owners {
+  group_label: "Panzerdogs"
+}
+
+
 
 explore: ad_engagements {
   join: apps {
