@@ -26,8 +26,8 @@ view: dog_owners {
     sql: ${TABLE}.holder ;;
   }
 
-  dimension: holder_sol {
-    type: number
+  measure: holder_sol {
+    type: average
     sql: ${TABLE}.holder_SOL ;;
   }
 
@@ -39,5 +39,15 @@ view: dog_owners {
   measure: count {
     type: count
     drill_fields: []
+  }
+
+  measure: owners {
+    type: count_distinct
+    sql: ${TABLE}.holder ;;
+  }
+
+  measure: Panzerdogs {
+    type: count_distinct
+    sql: ${TABLE}.dog_token ;;
   }
 }
