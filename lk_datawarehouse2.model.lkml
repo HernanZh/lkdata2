@@ -144,19 +144,19 @@ explore: mf_test {}
 
 include: "Panzerdogs/sol_price.view"
 explore: sol_price {
-  persist_for: "1 hour"
+  persist_for: "30 minutes"
   group_label: "Panzerdogs"
 }
 
 include: "Panzerdogs/transactions_head.view"
 explore: SOL_transactions_head {
-  persist_for: "1 hour"
+  persist_for: "30 minutes"
   group_label: "Panzerdogs"
 }
 
 include: "Panzerdogs/dog_owners.view"
 explore: dog_owners {
-  persist_for: "1 hour"
+  persist_for: "30 minutes"
   group_label: "Panzerdogs"
 }
 
